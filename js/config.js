@@ -28,6 +28,7 @@ CK.CONFIG = {
     lowSpeedMult: 1.35,     // gassed strikes are this much slower
     lowDmgMult: 0.75,       // and hit this much softer
     lowBlockMult: 1.6,      // and blocks cost this much more
+    emptySpeedMult: 1.7, emptyDmgMult: 0.5,   // strike started with stamina < its cost: slower, half damage, half ref weight, no knockdown (tuning pass 1)
     betweenRounds: 0.6,     // fraction of missing stamina refilled between rounds
     bodyDmgToMax: 0.45,     // max stamina lost per point of body damage
     minMax: 45,             // max stamina never drops below this
@@ -35,8 +36,8 @@ CK.CONFIG = {
     cardioRegenMult: [0.7, 1.3]
   },
 
-  DAMAGE_SCALE: 0.65,        // global multiplier on every landed strike (quick balance knob)
-  HEALTH: { head: 100, body: 100, leg: 100, headHealBetweenRounds: 10 },
+  DAMAGE_SCALE: 0.40,        // global multiplier on every landed strike (quick balance knob)
+  HEALTH: { head: 100, body: 100, leg: 100, headHealBetweenRounds: 15 },
 
   // ---- Movement ----
   MOVE: {
@@ -58,7 +59,7 @@ CK.CONFIG = {
     highBlockStops: ['head', 'body']
   },
 
-  HITSTUN: { light: 230, heavy: 400 },
+  HITSTUN: { light: 170, heavy: 400 },
   COUNTER_HIT_MULT: 1.25,
   COUNTER_STRIKER_MULT: 1.35,
   SLIP: { perDefense: 0.0022, boxingBonus: 0.06, creativePenalty: 0.04 },
@@ -76,15 +77,18 @@ CK.CONFIG = {
   // fighter is hurt (head below hurtHead or staggered) or downed. Roughly 8 unanswered hits in ~4s fills it.
   // It drains over time and drops when the fighter answers (blocks, lands a strike, escapes, sweeps, stands).
   REF: {
-    perHit: 10, perDmg: 0.6,
-    hurtHead: 40, hurtMult: 1.5, downedMult: 2.0,
-    groundMult: { guard: 0.45, mount: 0.9, back: 0.8 },  // on the ground the meter is driven by position (guard is safest)
+    perHit: 2, perDmg: 2.0,     // the meter tracks damage, not hit count (QA CK-01 / tuning pass 1)
+    strikeWeight: { jab: 0.5, jab_body: 0.4, teep: 0.4, leg_kick: 0.7, kick_head: 1.3, spin_fist: 1.2, spin_kick: 1.1 },  // others 1
+    capUnhurt: 55,
+    wearBelow: 40,              // moves with wear:true (jabs) do half damage to a head below this              // the ref can't stop a fighter who isn't hurt, downed or leg-gone
+    hurtHead: 40, hurtMult: 2.0, downedMult: 2.0,
+    groundMult: { guard: 0.35, mount: 0.75, back: 0.65 },  // on the ground the meter is driven by position (guard is safest)
     knockdownAdd: 25,
-    decayPerSec: 6, answerDrop: 24,
+    decayPerSec: 8, answerDrop: 24,
     tkoAt: 100,
     legGoneAdd: 45,            // a leg at 0 health drops the fighter and adds this much
     legGoneHitMult: 1.6,       // further hits while the leg is gone fill faster
-    bellHeadBelow: 12, bellChance: 0.5  // TKO "did not answer the bell": AI corner checks at the break
+    bellHeadBelow: 7, bellChance: 0.2  // TKO "did not answer the bell": AI corner checks at the break
   },
   CHIN_HEAD_DMG: [1.18, 0.86],  // head damage taken mult at chin 0 .. 100
 
@@ -92,8 +96,8 @@ CK.CONFIG = {
   // startup/active/recovery ms, dmg, stamina cost, reach px (at scale 1),
   // target head|body|leg, kd = knockdown weight, heavy = longer hitstun
   MOVES: {
-    jab:        { anim: 'jab',        startup: 85,  active: 60, recovery: 150, dmg: 4,   stam: 4.5, reach: 120, target: 'head', kd: 0.25, kind: 'punch' },
-    jab_body:   { anim: 'jab_body',   startup: 95,  active: 60, recovery: 170, dmg: 4,   stam: 4.5, reach: 116, target: 'body', kd: 0,    kind: 'punch' },
+    jab:        { anim: 'jab',        startup: 85,  active: 60, recovery: 150, dmg: 4,   stam: 4.5, reach: 120, target: 'head', kd: 0.25, kind: 'punch', wear: true },
+    jab_body:   { anim: 'jab_body',   startup: 95,  active: 60, recovery: 170, dmg: 4,   stam: 4.5, reach: 116, target: 'body', kd: 0,    kind: 'punch', wear: true },
     power:      { anim: 'power',      startup: 210, active: 80, recovery: 330, dmg: 11,  stam: 11,  reach: 124, target: 'head', kd: 1.0,  kind: 'punch', heavy: true },
     power_body: { anim: 'power_body', startup: 220, active: 80, recovery: 340, dmg: 10,  stam: 10,  reach: 118, target: 'body', kd: 0,    kind: 'punch', heavy: true },
     hook:       { anim: 'hook',       startup: 180, active: 70, recovery: 300, dmg: 10,  stam: 10,  reach: 104, target: 'head', kd: 1.1,  kind: 'punch', heavy: true, chain: 'uppercut' },
@@ -123,45 +127,47 @@ CK.CONFIG = {
     punch: { dmg: 3.5, stam: 3, cd: 380 },
     elbow: { dmg: 7, stam: 6, cd: 520 },
     knee: { dmg: 7, stam: 6, cd: 560, thaiHeadDmg: 7, thaiKd: 0.6 },
-    breakBase: 0.32, breakPerStr: 0.008, thaiBreakPenalty: 0.15, breakStam: 8, breakCd: 450, breakGap: 150,
-    tdBase: 0.32, tdStam: 12, tdCd: 900,
+    breakBase: 0.18, ctrlBreakBonus: 0.15, breakPerStr: 0.008, thaiBreakPenalty: 0.15, breakStam: 8, breakCd: 650, breakGap: 150,
+    tdBase: 0.32, tdStam: 12, tdCd: 1500, failedTdStays: true,
     refBreakMs: 9000, blockMult: 0.4
   },
 
   // ---- Takedowns ----
   TAKEDOWN: {
     // windup = visible level change before the dash (the sprawl window)
-    minRange: 0, maxRange: 230, windup: 200, startup: 260, dashSpeed: 560, contact: 72, stam: 13,
-    base: 0.42, perGrapple: 0.006, perDefense: 0.005, wrestlingBonus: 0.15,
+    minRange: 95, maxRange: 230, windup: 300, wrWindupMult: 0.8, sprawlGraceMs: 100, startup: 260, dashSpeed: 560, contact: 72, stam: 13,
+    stuffToClinch: 0.7, caughtBase: 0.55,
+    base: 0.34, perGrapple: 0.006, perDefense: 0.005, wrestlingBonus: 0.15,
     sprawlMult: 0.25, wrestlingSprawlBonus: 0.15, gassedDefBonus: 0.15,
     missRecovery: 480, sprawledMs: 650, reShotStamMult: 0.5,
-    kneeCounterDmg: 14, guardPullRange: 125, guardPullStam: 6
+    kneeCounterDmg: 14, kneeCounterRange: 210, kneeCounterStartup: 70, guardPullRange: 125, guardPullStam: 6
   },
 
   // ---- Ground ----
   GROUND: {
-    gnp: { dmg: 2.6, stam: 4.5, cd: 400 },
-    gnpHeavy: { dmg: 5.3, stam: 9, cd: 680 },   // 12-6 / downward elbows are legal (2024 rules)
+    gnp: { dmg: 2.0, stam: 4.5, cd: 400 },
+    gnpHeavy: { dmg: 4.2, stam: 9, cd: 680 },   // 12-6 / downward elbows are legal (2024 rules)
     // damage multiplier for ground strikes by position (guard GnP is weaker, mount strongest)
-    posDmg: { guard: 0.55, mount: 1.1, back: 0.85, guardBottom: 1.0 },
+    posDmg: { guard: 0.45, mount: 1.1, back: 0.85, guardBottom: 1.0 },
     backStrike: { dmg: 4, stam: 3, cd: 380 },
     upStrike: { dmg: 2.5, stam: 3, cd: 420 },   // strikes from the bottom of guard
     blockMult: 0.25,
     advanceBase: 0.24, advanceStam: 9, advanceCd: 900, bjjBackBonus: 0.15, wrestlingMountBonus: 0.15,
     sweepBase: 0.2, sweepStam: 10, sweepCd: 1000, bjjSweepBonus: 0.18,
-    scrambleBase: 0.32, scrambleStam: 10, scrambleCd: 900,
+    scrambleBase: 0.50, scrambleStam: 10, scrambleCd: 750,
     handFightPerPress: 9, handFightStam: 3,
     turnBase: 0.18, turnStam: 8,
-    stallWorkMs: 10000, standupMs: 13000,   // design: ~10s with no strikes/advance = "Work!", then stand-up
+    stallWorkMs: 5000, standupMs: 8000,   // only the TOP fighter's work counts: 'Work!' at 5s, stand-up at 8s
+    workPerDmg: 40, workCreditMs: 1500,  // top's landed strikes take dmg*40 ms off; a failed advance 1.5s
     subStam: 8, subCd: 1200,
     bridgeBase: 0.22, bridgeStam: 12, bridgeCd: 1000
   },
 
   // ---- Submission tug-of-war ----
   SUB: {
-    startBar: 34, beatMs: 440, beatWindowMs: 95, minPressGapMs: 110,
+    startBar: 38, beatMs: 440, beatWindowMs: 95, minPressGapMs: 110,
     press: 6.2, onBeatMult: 1.55, offBeatMult: 0.6,
-    bjjMult: 1.25, pressStam: 2.6, drift: -5, timeoutMs: 5500,
+    bjjMult: 1.25, pressStam: 2.6, drift: -3, timeoutMs: 3800,
     gassedMult: 0.65,
     entryBonus: { guillotine: 6, armbar: 4, triangle: 2, rnc: 8 },
     names: { guillotine: 'Guillotine', armbar: 'Armbar', triangle: 'Triangle', rnc: 'Rear-Naked Choke' }
@@ -174,7 +180,9 @@ CK.CONFIG = {
     nearSubDmg: 8,           // a sub that got past 75% counts as this much damage
     tieMargin: 0.12,         // damage within 12% is "close": aggression decides, then control
     noise: 0.10,             // each judge reads each fighter's work +/-10% (per judge, per fighter, per criterion)
-    tenEightRatio: 2.6, tenEightMin: 40
+    tenEightRatio: 10, tenEightMin: 90,           // 10-8 without a knockdown = total domination
+    tenEightKdRatio: 3.5, tenEightKdMin: 40,     // a KD alone isn't a 10-8
+    tenEightPerJudge: true, aggrLandedOnly: true  // aggression = landed + 2*TD + 1.5*sub attempts
   },
   CLOCK: { displaySeconds: 300 },   // 60s rounds show a 5:00 clock running at 5x
   CORNER: { minMs: 3000, maxMs: 5000 },
@@ -183,7 +191,15 @@ CK.CONFIG = {
   AI: {
     easy:   { react: 460, think: 420, block: 0.30, perfect: 0.05, sprawl: 0.25, counter: 0.20, floor: 8,  subRate: 160, subAcc: 0.35, pressGap: 200, mistake: 0.25 },
     normal: { react: 300, think: 300, block: 0.55, perfect: 0.18, sprawl: 0.5,  counter: 0.45, floor: 22, subRate: 130, subAcc: 0.6,  pressGap: 160, mistake: 0.1 },
-    hard:   { react: 170, think: 210, block: 0.75, perfect: 0.38, sprawl: 0.72, counter: 0.7,  floor: 32, subRate: 115, subAcc: 0.82, pressGap: 130, mistake: 0.03 }
+    hard:   { react: 170, think: 210, block: 0.75, perfect: 0.38, sprawl: 0.72, counter: 0.7,  floor: 32, subRate: 115, subAcc: 0.82, pressGap: 130, mistake: 0.03 },
+    // style weights (tuning pass 1; were hard-coded in ai.js)
+    weights: {
+      shootDisc: { WR: 0.6, BJJ: 0.5, MT: 0.2, BOX: 0.1 }, grappleFloor: { WR: 0.45, BJJ: 0.35 },
+      stepIn: 1.2, stepInMs: 150, shotCooldownMs: 12000,
+      clinchDisc: { MT: 1.2, WR: 0.9, BJJ: 0.5, BOX: 0.3 }, clinchRange: 125, clinchBreak: 0.35, clinchTd: 0.35,
+      catchDump: { WR: 0.9, BJJ: 0.7, MT: 0.4, BOX: 0.15 }, subAttempt: 0.6,
+      kneeCounter: { MT: 0.5, other: 0.15 }   // chance an AI that reads a shot answers it with the knee (CK-03)
+    }
   },
 
   // ---- Weight classes ----

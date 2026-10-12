@@ -7,7 +7,8 @@ body { font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; co
 #ui { position: absolute; inset: 0; pointer-events: none; }
 #ui > * { pointer-events: auto; }
 button { font: inherit; color: #eef; background: #1b1f2e; border: 1px solid #3a4160; border-radius: 8px; padding: 8px 14px; cursor: pointer; transition: background .12s, transform .08s; }
-button:hover:not(:disabled) { background: #283050; } button:active:not(:disabled) { transform: scale(.97); }
+@media (hover: hover) { button:hover:not(:disabled) { background: #283050; } }  /* CK-11: no sticky hover on touch */
+button:active:not(:disabled) { transform: scale(.97); }
 button:disabled { opacity: .4; cursor: default; }
 button.primary { background: linear-gradient(#e0b020, #b8860b); color: #111; border-color: #f5d060; font-weight: 700; }
 button.on { border-color: #d4a017; box-shadow: 0 0 0 2px #d4a017 inset; background: #2b2a1a; }
@@ -101,14 +102,25 @@ blockquote { font-style: italic; font-size: 18px; max-width: 600px; margin: 14px
 #stickBase { position: absolute; left: 90px; top: 280px; width: 160px; height: 160px; border-radius: 50%; background: rgba(255,255,255,.07); border: 2px solid rgba(255,255,255,.18); }
 #stickBase.on { background: rgba(255,255,255,.12); }
 #stickKnob { position: absolute; left: 45px; top: 45px; width: 70px; height: 70px; border-radius: 50%; background: rgba(255,255,255,.3); }
-#btnZone { position: absolute; right: 30px; bottom: 30px; width: 330px; height: 300px; pointer-events: auto; }
-.tbtn { position: absolute; width: 104px; height: 104px; border-radius: 50%; background: rgba(30,36,60,.6); border: 2px solid rgba(255,255,255,.3); font-weight: 800; font-size: 15px; padding: 0; }
+#btnZone { position: absolute; right: 24px; bottom: 20px; width: 352px; height: 320px; pointer-events: auto; }
+.tbtn { position: absolute; width: 104px; height: 104px; border-radius: 50%; background: rgba(30,36,60,.35); border: 2px solid rgba(255,255,255,.28); font-weight: 800; font-size: 15px; padding: 0; }
 .tbtn.on { background: rgba(212,160,23,.7); } .tbtn.dim { opacity: .35; }
-.tbtn[data-b=j] { left: 0; bottom: 70px; } .tbtn[data-b=k] { left: 112px; bottom: 140px; } .tbtn[data-b=l] { left: 224px; bottom: 190px; } .tbtn[data-b=u] { left: 224px; bottom: 70px; }
-.tbtn.blockbtn { left: 112px; bottom: 0; width: 104px; height: 120px; border-radius: 40px; bottom: 10px; display: none; }
-.blockbtn { left: 112px !important; bottom: 20px !important; height: 104px !important; display: block !important; }
-.tbtn[data-b=k] { bottom: 130px !important; }
-#tPause { position: absolute; left: 50%; top: 106px; transform: translateX(-50%); pointer-events: auto; width: 54px; height: 38px; padding: 0; opacity: .7; }
+.tbtn[data-b=j] { left: 0; bottom: 84px; } .tbtn[data-b=k] { left: 124px; bottom: 150px; } .tbtn[data-b=l] { left: 248px; bottom: 216px; } .tbtn[data-b=u] { left: 248px; bottom: 84px; }
+.tbtn.blockbtn { left: 124px; bottom: 0; width: 104px; height: 100px; border-radius: 40px; display: block; }   /* CK-10: >=20 virtual px between buttons */
+/* CK-08: big target under the right HUD panel, clear of the centre position label and WORK! countdown */
+#tPause { position: absolute; right: 24px; top: 144px; pointer-events: auto; width: 84px; height: 64px; padding: 0; font-size: 24px; font-weight: 900; opacity: .8; }
 #rotateHint { display: none; position: fixed; inset: 0; background: #0b0b10; color: #fff; z-index: 99; align-items: center; justify-content: center; text-align: center; font-size: 22px; }
 #rotateHint.show { display: flex; }
 .finfo .notable { font-size: 11px; margin-bottom: 4px; }
+
+/* CK-09: phone layer (body.touch is set when the pointer is coarse) */
+body.touch button { font-size: 18px; min-height: 48px; }
+body.touch .fcard i, body.touch .fcard small, body.touch .stat, body.touch .bio, body.touch .note, body.touch .desc, body.touch .log, body.touch .offer, body.touch .finfo .notable { font-size: 16px; }
+body.touch .stat { height: 20px; }
+body.touch .tbtn { font-size: 17px; }
+body.touch #tPause { font-size: 26px; }
+/* the info cards never cover the picker row (Fight button, difficulty, rounds) */
+.panel.select { z-index: 2; }
+body.touch .finfo { max-height: 360px; overflow: hidden; width: 360px; }
+body.touch .finfo .bio, body.touch .finfo .hook { display: none; }
+body.touch .stat { font-size: 15px; height: 18px; }

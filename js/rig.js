@@ -185,6 +185,12 @@
       ctx.translate(view.x, yOff);
       ctx.scale(view.facing, 1);
       if (view.alpha != null) ctx.globalAlpha = view.alpha;
+      // legs-only overdraw: the bottom fighter's guard wraps the top fighter (drawn after him)
+      if (view.legsOnly) {
+        const L0 = view.look, dmg0 = view.dmg || { head: 0, body: 0, leg: 0 };
+        this.leg(ctx, view, J.hip, J.fKn, J.fAn, pr, L0.skin, L0.shorts[0], L0, dmg0.leg, true);
+        ctx.restore(); return { J, yOff, pr };
+      }
       // shadow
       ctx.save(); ctx.scale(1, 0.18); ctx.fillStyle = 'rgba(0,0,0,0.28)';
       ctx.beginPath(); ctx.ellipse(J.hip[0], (view.floorY - yOff) / 0.18, 46 * pr.s, 40 * pr.s, 0, 0, Math.PI * 2); ctx.fill(); ctx.restore();

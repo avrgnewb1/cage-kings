@@ -24,6 +24,7 @@
       window.addEventListener('keyup', e => { const a = keyToAction[e.key.toLowerCase()]; if (a) I.down[a] = false; });
       window.addEventListener('blur', () => { I.down = {}; });
       I.touchEnabled = (window.matchMedia && matchMedia('(pointer: coarse)').matches) || /[?&]touch=1/.test(location.search);
+      if (I.touchEnabled) document.body.classList.add('touch');   // CK-09: larger type and targets
       I.buildTouch();
     },
     // Called once per fixed tick by the fight; returns a snapshot and clears edges.
@@ -32,7 +33,7 @@
       const s = {
         left: !!d.left || t.sx < -0.35, right: !!d.right || t.sx > 0.35,
         low: !!d.low || t.sy > 0.5, up: !!d.up || t.sy < -0.55,
-        block: !!d.block || !!t.btn.block,
+        block: !!d.block || !!t.btn.block || (t.blockLatch || 0) > performance.now(),   // CK-15: a quick tap still blocks for a beat
         pressed: Object.assign({}, I.edges)
       };
       I.edges = {};
@@ -59,7 +60,7 @@
       const toVirt = (e) => CK.Engine.clientToVirtual(e.clientX, e.clientY);
       zone.addEventListener('pointerdown', e => {
         pid = e.pointerId; zone.setPointerCapture(pid); const v = toVirt(e); cx = v.x; cy = v.y;
-        base.style.left = (cx - 80) + 'px'; base.style.top = (cy - 80) + 'px'; base.classList.add('on');
+        /* CK-04: the base is positioned inside the zone, so convert stage coords to zone coords */ base.style.left = (cx - zone.offsetLeft - 80) + 'px'; base.style.top = (cy - zone.offsetTop - 80) + 'px'; base.classList.add('on');
         I.touch.sx = 0; I.touch.sy = 0; I.touch.lastCenterT = performance.now(); e.preventDefault();
       });
       zone.addEventListener('pointermove', e => {
@@ -76,7 +77,7 @@
       zone.addEventListener('pointerup', end); zone.addEventListener('pointercancel', end);
       root.querySelectorAll('.tbtn').forEach(b => {
         const k = b.dataset.b;
-        b.addEventListener('pointerdown', e => { e.preventDefault(); b.setPointerCapture(e.pointerId); if (k === 'block') I.touch.btn.block = true; else I.edges[k] = true; b.classList.add('on'); });
+        b.addEventListener('pointerdown', e => { e.preventDefault(); b.setPointerCapture(e.pointerId); if (k === 'block') { I.touch.btn.block = true; I.touch.blockLatch = performance.now() + 120; } else I.edges[k] = true; b.classList.add('on'); });
         const up = () => { if (k === 'block') I.touch.btn.block = false; b.classList.remove('on'); };
         b.addEventListener('pointerup', up); b.addEventListener('pointercancel', up);
       });

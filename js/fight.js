@@ -173,7 +173,8 @@
           if (o.st === 'shoot' && f.buffer && f.buffer.k === 'u' && this.dist() < 140 * f.size) { f.buffer = null; return this.startSub(f, o, 'guillotine', 'vsShoot'); }
           if (f.catchUntil > this.time && f.buffer && (f.buffer.k === 'i' || f.buffer.k === 'u')) { f.buffer = null; f.catchUntil = 0; return this.resolveTakedown(f, o, { caught: true }); }
           if (o.st === 'knockdown' && f.buffer && (f.buffer.k === 'i' || f.buffer.k === 'k') && this.dist() < 190 * f.size) { f.buffer = null; return this.pounce(f, o); }
-          if (it.block && !f.buffer) {
+          // stick-down alone sprawls against a shot (QA CK-07: block+down was too slow to input)
+          if ((it.block || (it.low && o.st === 'shoot')) && !f.buffer) {
             if (f.st !== 'block') { f.setState('block'); f.blockStart = this.time; }
             f.blockLow = !!it.low; regen = S.regenBlock;
             break;
@@ -222,13 +223,15 @@
         if (bf.low) key = 'leg_kick';
         else if (bf.up) key = 'kick_head';
         else if (fwd && f.has('teep')) key = 'teep';
-        else if (dist < 92 * f.size) key = 'knee';
+        else if (dist < 92 * f.size || (o.st === 'shoot' && dist < C.TAKEDOWN.kneeCounterRange * f.size)) key = 'knee';
         else key = 'kick_body';
       } else if (bf.k === 'u') {
         f.spend(C.CLINCH.grabStam); f.setState('grab'); f.rs.thrown++; return true;
       } else if (bf.k === 'i') {
         if (f.has('pull') && dist < C.TAKEDOWN.guardPullRange * f.size) { f.spend(C.TAKEDOWN.guardPullStam); this.callout('guardPull', 'GUARD PULL', f); this.startGround(o, f, 'guard'); return true; }
         if (dist > C.TAKEDOWN.maxRange * f.size + 40) return false;
+        if (dist < C.TAKEDOWN.minRange * f.size) { f.spend(C.CLINCH.grabStam); f.setState('grab'); f.rs.thrown++; return true; }
+        f.contactT = null;
         const reshot = f.reShotUntil > this.time;
         f.spend(C.TAKEDOWN.stam * (reshot ? C.TAKEDOWN.reShotStamMult : 1)); f.rs.tdAtt++; f.reShot = reshot;
         f.setState('shoot'); this.emit('sound', { name: 'whiff' }); return true;
@@ -236,7 +239,10 @@
       if (!key) return false;
       const mv = M[key]; const tm = f.timeMult();
       f.mvKey = key; f.mv = mv; f.mvT = 0; f.hitDone = false;
-      f.mvTimes = { s: mv.startup * tm, a: mv.active, r: mv.recovery * tm };
+      f.emptyStrike = C.STAMINA.emptySpeedMult && f.stam < mv.stam * f.costMult();
+      const em = f.emptyStrike ? C.STAMINA.emptySpeedMult : 1;
+      f.mvTimes = { s: mv.startup * tm * em, a: mv.active, r: mv.recovery * tm * em };
+      if (key === 'knee' && o.st === 'shoot' && !f.emptyStrike) f.mvTimes = { s: C.TAKEDOWN.kneeCounterStartup, a: mv.active + 120, r: mv.recovery * tm };
       f.setState('attack'); f.spend(mv.stam); f.rs.thrown++;
       return true;
     }
@@ -284,12 +290,7 @@
     resolveHit(f, o, mv) {
       const B = C.BLOCK; const rng = this.rng;
       // knee vs a shooter = knee counter
-      if (o.st === 'shoot' && (mv.kind === 'knee' || f.mvKey === 'uppercut')) {
-        const dmg = C.TAKEDOWN.kneeCounterDmg * f.powerMult() * f.discMult.knee;
-        this.applyDamage(f, o, dmg, 'head', 1.6, true, mv);
-        this.text('KNEE COUNTER!', f, '#ffcf3f'); if (o.st !== 'knockdown' && this.phase === 'fight') o.setState('stagger', 650);
-        return;
-      }
+      if (o.st === 'shoot' && (mv.kind === 'knee' || f.mvKey === 'uppercut')) return this.kneeCounter(f, o, mv);
       // slip (head movement)
       if (mv.target === 'head' && mv.kind === 'punch' && (o.st === 'idle' || o.st === 'walk' || o.st === 'block' && false)) {
         let p = o.s.defense * C.SLIP.perDefense + (o.disc === 'BOX' ? C.SLIP.boxingBonus : 0) - (o.appr === 'CREATIVE' ? C.SLIP.creativePenalty : 0);
@@ -322,7 +323,9 @@
       let mult = 1; let counter = false;
       if (o.st === 'attack' || o.st === 'whiff' || o.st === 'shootmiss') { mult *= C.COUNTER_HIT_MULT; counter = true; if (f.appr === 'COUNTER') mult *= C.COUNTER_STRIKER_MULT / C.COUNTER_HIT_MULT; }
       if (o.st === 'stagger' || o.st === 'caught') mult *= 1.15;
-      const dmg = mv.dmg * this.dmgMult(f, mv) * mult * rng.range(0.9, 1.1);
+      let dmg = mv.dmg * this.dmgMult(f, mv) * mult * rng.range(0.9, 1.1);
+      // jabs wear a fighter down but rarely finish him (QA CK-01): half damage once the head is below WEAR_BELOW
+      if (mv.wear && o.head < C.REF.wearBelow) dmg *= 0.5;
       if (counter && f.appr === 'COUNTER') this.text('COUNTER!', f, '#ffcf3f');
       this.applyDamage(f, o, dmg, mv.target, mv.kd, mv.heavy, mv);
       if (this.phase !== 'fight' || o.st === 'knockdown') return;
@@ -336,7 +339,7 @@
       let m = f.powerMult() * (f.discMult[mv.kind] || 1);
       if (f.mvKey === 'leg_kick' && f.discMult.legKick) m *= f.discMult.legKick;
       if (mv.kind === 'kick') m *= 0.6 + f.leg / 250; // a damaged leg weakens kicks
-      return m * (0.85 + f.s.striking * 0.003);
+      return m * (0.85 + f.s.striking * 0.003) * (f.emptyStrike ? C.STAMINA.emptyDmgMult : 1);
     }
     // central damage application (standing, clinch, ground)
     applyDamage(f, o, dmg, target, kd, heavy, mv, opts) {
@@ -353,8 +356,9 @@
       // ref meter: unanswered clean hits
       const downed = this.isDowned(o);
       const posMult = this.mode === 'ground' && this.ground ? (C.REF.groundMult[this.ground.pos] || 1) : (downed ? C.REF.downedMult : 1);
-      let add = (C.REF.perHit + dmg * C.REF.perDmg) * (o.hurt ? C.REF.hurtMult : 1) * posMult * (o.legGone ? C.REF.legGoneHitMult : 1);
-      o.ref += add; o.rs.refPeak = Math.max(o.rs.refPeak, o.ref);
+      const RW = C.REF.strikeWeight || {}; const rw = (opts.refKey && RW[opts.refKey] != null) ? RW[opts.refKey] : (mv && f.mvKey && RW[f.mvKey] != null ? RW[f.mvKey] : 1);
+      let add = (C.REF.perHit + dmg * C.REF.perDmg) * rw * (f.emptyStrike && mv && this.mode === 'stand' ? 0.5 : 1) * (o.hurt ? C.REF.hurtMult : 1) * posMult * (o.legGone ? C.REF.legGoneHitMult : 1);
+      o.ref += add; if (C.REF.capUnhurt != null && !o.hurt && !downed && !o.legGone) o.ref = Math.min(o.ref, C.REF.capUnhurt); o.rs.refPeak = Math.max(o.rs.refPeak, o.ref);
       if (this.mode === 'stand') { rs.standLanded += dmg; o.rs.standTaken += dmg; }
       if (mv && mv.kind === 'kick') rs.kicks++; if (mv && mv.heavy) rs.power++;
       if (target === 'head' && o.hurt && !o.wobbled) { o.wobbled = true; this.emit('sound', { name: 'hurt' }); this.emit('sound', { name: 'crowd_ooh' }); }
@@ -364,7 +368,7 @@
       if (o.head <= 0) return this.finish(f, 'KO', this.finishDetail(f, mv, opts));
       if (o.ref >= C.REF.tkoAt) return this.finish(f, 'TKO', 'Ref stoppage (' + this.finishDetail(f, mv, opts).toLowerCase() + ')');
       // knockdown (standing only)
-      if (this.mode === 'stand' && target === 'head' && kd > 0) {
+      if (this.mode === 'stand' && target === 'head' && kd > 0 && !f.emptyStrike) {
         const K = C.KNOCKDOWN;
         const p = K.base * dmg * kd * (1 + (1 - o.head / 100) * K.lowHeadMult) * (1.45 - o.s.chin / 100) * (o.st === 'attack' ? 1.2 : 1);
         if (this.rng.chance(p)) this.knockdown(f, o);
@@ -398,27 +402,39 @@
       this.callout(leg ? 'tkoLegDamage' : 'knockdown', leg ? 'DOWN!' : 'KNOCKDOWN!', o, '#ff4d4d'); this.emit('knockdown', { who: o.idx }); this.emit('sound', { name: 'knockdown' }); this.emit('sound', { name: 'vo_knockdown' }); this.emit('sound', { name: 'crowd_swell' });
       if (o.ref >= C.REF.tkoAt) this.finish(f, 'TKO', 'Ref stoppage');
     }
+    // knee/uppercut timed into a level change (QA CK-03): stuffs the shot and hurts the shooter
+    kneeCounter(f, o, mv) {
+      const dmg = C.TAKEDOWN.kneeCounterDmg * f.powerMult() * f.discMult.knee;
+      f.hitDone = true; f.rs.landed = (f.rs.landed || 0);
+      this.applyDamage(f, o, dmg, 'head', 1.6, true, mv || C.MOVES.knee, { detail: 'Knee' });
+      this.answer(f); this.text('KNEE COUNTER!', f, '#ffcf3f'); this.emit('sound', { name: 'crowd_ooh' });
+      if (this.phase === 'fight' && o.st !== 'knockdown' && this.mode === 'stand') { o.setState('stagger', 650); o.x -= o.facing * 40; }
+    }
     answer(f) { f.ref = Math.max(0, f.ref - C.REF.answerDrop); f.answeredAt = this.time; if (f.ref < 40) f.dangerCalled = false; }
     pounce(f, o) { this.text('POUNCE', f); this.startGround(f, o, 'guard'); }
 
     // ---- Takedowns ----
     stepShoot(f, o, dt) {
       const T = C.TAKEDOWN, dist = this.dist();
-      const wind = T.windup * (f.disc === 'WR' ? 0.75 : 1) * (f.gassed ? 1.3 : 1);
+      const wind = T.windup * (f.disc === 'WR' ? T.wrWindupMult : 1) * (f.gassed ? 1.3 : 1);
       if (f.stT < wind) return;   // level change: readable tell
       if (dist > T.contact * f.size) f.x += f.facing * T.dashSpeed * Math.min(1, f.wc.speed) * dt / 1000;
-      if (Math.abs(o.x - f.x) <= T.contact * f.size) return this.resolveTakedown(f, o, {});
-      if (f.stT >= wind + T.startup) { f.setState('shootmiss', T.missRecovery); if (f.has('reshot')) f.reShotUntil = this.time + 1200; }
+      if (Math.abs(o.x - f.x) <= T.contact * f.size) { if (f.contactT == null) f.contactT = f.stT; const spr = o.st === 'block' && o.blockLow; if (spr || f.stT - f.contactT >= (T.sprawlGraceMs || 0)) return this.resolveTakedown(f, o, {}); return; }
+      if (f.contactT == null && f.stT >= wind + T.startup) { f.setState('shootmiss', T.missRecovery); if (f.has('reshot')) f.reShotUntil = this.time + 1200; }
     }
     resolveTakedown(f, o, opt) {
       const T = C.TAKEDOWN; let p = T.base + (f.s.grappling - o.s.defense) * T.perGrapple - (o.s.defense - 50) * 0 + (f.disc === 'WR' ? T.wrestlingBonus : 0)
         + (o.s.grappling - 50) * -0.002 + (f.s.strength - o.s.strength) * 0.003;
       if (o.gassed) p += T.gassedDefBonus;
       if (f.reShot) p += 0.08;
-      if (o.st === 'attack' || o.st === 'whiff' || o.st === 'hitstun' || o.st === 'stagger') p += 0.15;
+      const kneeing = !opt.caught && !opt.clinch && o.st === 'attack' && (o.mvKey === 'knee' || o.mvKey === 'uppercut');
+      if (kneeing && o.mvT >= o.mvTimes.s - 40 && o.mvT <= o.mvTimes.s + o.mvTimes.a) { o.mv = null; o.hitbox = null; o.setState('idle'); return this.kneeCounter(o, f, C.MOVES[o.mvKey]); }
+      // caught mid-strike gives the shooter a bonus, but not a defender already loading a knee for it (CK-03 had this backwards)
+      if (!kneeing && (o.st === 'attack' || o.st === 'whiff' || o.st === 'hitstun' || o.st === 'stagger')) p += 0.15;
+      if (kneeing && o.mvT < o.mvTimes.s - 40) p -= 0.05;
       const sprawling = o.st === 'block' && o.blockLow && !opt.caught;
       if (sprawling) p *= T.sprawlMult * (o.disc === 'WR' ? (1 - T.wrestlingSprawlBonus * 2) : 1);
-      if (opt.caught) p = Math.max(p, 0.7) + 0.1;
+      if (opt.caught) p = T.caughtBase != null ? Math.max(p, T.caughtBase) : Math.max(p, 0.7) + 0.1;
       if (opt.clinch) p = C.CLINCH.tdBase + (f.s.grappling + f.s.strength - o.s.defense - o.s.strength) * 0.004 + (f.disc === 'WR' ? 0.12 : 0) + (o.gassed ? 0.12 : 0) - (o.st === 'block' && o.blockLow ? 0.15 : 0);
       p = clamp(p, 0.05, 0.92);
       if (this.rng.chance(p)) {
@@ -426,6 +442,8 @@
         this.startGround(f, o, 'guard');
       } else {
         this.callout('takedownDefended', sprawling ? 'SPRAWL!' : 'STUFFED', o, '#7fd3ff'); this.emit('sound', { name: 'sprawl' }); this.answer(o);
+        if (opt.clinch && C.CLINCH.failedTdStays) { f.cd = Math.max(f.cd, C.CLINCH.tdCd); o.cd = Math.max(o.cd, 300); return; }
+        if (!opt.clinch && !sprawling && !opt.caught && this.rng.chance(T.stuffToClinch || 0)) { return this.startClinch(f, o); }
         this.mode = 'stand'; this.clinch = null;
         f.setState('sprawled', T.sprawledMs); o.setState('sprawl', 420); f.spend(4);
         if (f.has('reshot')) f.reShotUntil = this.time + T.sprawledMs + 900;
@@ -463,7 +481,7 @@
         else if (p.u) {
           if (it.low) { return this.startSub(f, o, 'guillotine', 'clinch'); }
           f.spend(CL.breakStam); f.cd = CL.breakCd;
-          let pb = CL.breakBase + (f.s.strength - o.s.strength) * CL.breakPerStr - (c.thai && c.ctrl === o ? CL.thaiBreakPenalty : 0) + (c.ctrl === f ? 0.4 : 0) + (o.gassed ? 0.15 : 0);
+          let pb = CL.breakBase + (f.s.strength - o.s.strength) * CL.breakPerStr - (c.thai && c.ctrl === o ? CL.thaiBreakPenalty : 0) + (c.ctrl === f ? (CL.ctrlBreakBonus != null ? CL.ctrlBreakBonus : 0.4) : 0) + (o.gassed ? 0.15 : 0);
           if (this.rng.chance(clamp(pb, 0.08, 0.95))) { this.breakClinch('BREAK', f); return; }
           else this.text('HELD', o);
         }
@@ -558,7 +576,7 @@
       }
       if (a.act === 'sub') { f.spend(G.subStam); f.cd = G.subCd; return this.startSub(f, o, a.sub, 'ground'); }
       if (a.act === 'advance') {
-        f.spend(G.advanceStam); f.cd = G.advanceCd; g.idleT = 0;
+        f.spend(G.advanceStam); f.cd = G.advanceCd; g.idleT = G.workCreditMs ? Math.max(0, g.idleT - G.workCreditMs) : 0;
         let p = G.advanceBase + (f.s.grappling - o.s.defense) * 0.006 + (f.s.strength - o.s.strength) * 0.002 + (o.gassed ? 0.15 : 0) - (o.blockHeld ? 0.08 : 0);
         if (a.to === 'mount' && f.disc === 'WR') p += G.wrestlingMountBonus;
         if (a.to === 'back' && f.disc === 'BJJ') p += G.bjjBackBonus;
@@ -567,19 +585,19 @@
         return;
       }
       if (a.act === 'scramble') {
-        f.spend(G.scrambleStam); f.cd = G.scrambleCd; g.idleT = Math.max(0, g.idleT - 2000);
+        f.spend(G.scrambleStam); f.cd = G.scrambleCd; if (!G.workCreditMs) g.idleT = Math.max(0, g.idleT - 2000);
         const p = G.scrambleBase + (f.s.strength + f.s.grappling - o.s.strength - o.s.grappling) * 0.003 + (o.gassed ? 0.15 : 0) - (f.gassed ? 0.12 : 0) + (f.appr === 'PRESSURE' || f.disc === 'BOX' ? 0.04 : 0);
         if (rng.chance(clamp(p, 0.06, 0.85))) { this.callout('scramble', 'BACK UP!', f, '#7fd3ff'); this.standUp(f); } else this.text('HELD DOWN', o);
         return;
       }
       if (a.act === 'sweep') {
-        f.spend(G.sweepStam); f.cd = G.sweepCd; g.idleT = 0;
+        f.spend(G.sweepStam); f.cd = G.sweepCd; if (!G.workCreditMs) g.idleT = 0;
         const p = G.sweepBase + (f.disc === 'BJJ' ? G.bjjSweepBonus : 0) + (f.s.grappling - o.s.grappling) * 0.006 + (o.gassed ? 0.12 : 0) + (o.act ? 0.1 : 0);
         if (rng.chance(clamp(p, 0.05, 0.85))) { this.answer(f); this.callout('reversal', 'SWEEP!', f, '#ffcf3f'); this.startGround(f, o, 'guard'); } else this.text('BASED OUT', o);
         return;
       }
       if (a.act === 'escape') {
-        const kind = a.kind; const cost = kind === 'bridge' ? G.bridgeStam : G.turnStam; f.spend(cost); f.cd = G.bridgeCd; g.idleT = Math.max(0, g.idleT - 1500);
+        const kind = a.kind; const cost = kind === 'bridge' ? G.bridgeStam : G.turnStam; f.spend(cost); f.cd = G.bridgeCd; if (!G.workCreditMs) g.idleT = Math.max(0, g.idleT - 1500);
         let p = (kind === 'bridge' ? G.bridgeBase : G.turnBase) + (f.s.strength - o.s.strength) * 0.004 + (f.s.grappling - o.s.grappling) * 0.003 + (o.gassed ? 0.12 : 0);
         if (f.stam < 30) p *= 0.4;   // bridge is a stamina check
         if (rng.chance(clamp(p, 0.04, 0.8))) { this.answer(f); if (kind === 'bridge') this.callout('bridgeEscape', 'BRIDGE ESCAPE', f, '#7fd3ff'); else this.text('ESCAPED', f, '#7fd3ff'); f.act = { name: 'bridge', t: 0, wind: 99999, dur: 400 }; this.setGroundPos(a.to, f); }
@@ -594,10 +612,11 @@
       }
     }
     groundStrikeLand(f, o, act) {
-      const g = this.ground, G = C.GROUND; g.idleT = 0;
+      const g = this.ground, G = C.GROUND; if (!G.workCreditMs) g.idleT = 0;
       const role = g.top === f ? 'top' : 'bot';
       const posMult = role === 'bot' ? G.posDmg.guardBottom : (G.posDmg[GROUND_POS[g.pos].dmgKey] || 1);
       let dmg = act.dmg * f.powerMult() * posMult * (f.disc === 'WR' ? 1.1 : 1) * this.rng.range(0.85, 1.15);
+      if (G.workCreditMs && role === 'top' && !(o.blockHeld && g.pos !== 'back')) g.idleT = Math.max(0, g.idleT - (G.workPerDmg != null ? dmg * C.DAMAGE_SCALE * G.workPerDmg : G.workCreditMs));
       if (o.blockHeld && g.pos !== 'back') { dmg *= G.blockMult; this.answer(o); this.emit('sound', { name: 'block' }); o.head -= dmg * 0.6; return; }
       if (o.blockHeld && g.pos === 'back') dmg *= 0.6;
       this.applyDamage(f, o, dmg, 'head', 0, act.heavy, null, { elbow: act.elbow, detail: act.elbow ? 'Elbows on the ground' : 'Ground and pound' });
@@ -621,7 +640,7 @@
       if (name === 'guillotine') { att.facing = def.x >= att.x ? 1 : -1; def.facing = -att.facing; def.x = clamp(att.x + att.facing * 50 * sz, C.ARENA.left, C.ARENA.right); }
       else if (name === 'rnc') { att.facing = def.facing; att.x = def.x - def.facing * 30 * sz; }
       else { att.facing = def.x >= att.x ? 1 : -1; def.facing = -att.facing; def.x = clamp(att.x + att.facing * 62 * sz, C.ARENA.left, C.ARENA.right); }
-      this.text((CK.Text ? CK.Text.label('submissions', name, S.names[name]) : S.names[name]).toUpperCase() + '!', att, '#ff4dff'); this.emit('subStart', { name }); this.emit('sound', { name: 'sub_lock' }); this.emit('sound', { name: 'crowd_ooh' });
+      /* the sub HUD already shows the name, so no floating text here (rough spot: name showed twice) */ this.emit('subStart', { name }); this.emit('sound', { name: 'sub_lock' }); this.emit('sound', { name: 'crowd_ooh' });
       if (this.ground) this.ground.idleT = 0;
     }
     subBeat() { const S = C.SUB, ph = (this.sub.t % S.beatMs); return Math.min(ph, S.beatMs - ph) <= S.beatWindowMs; }
@@ -702,7 +721,7 @@
     // per-round criteria for each fighter
     roundCriteria(ri) {
       const J = C.JUDGE; const rs = this.roundStats[ri];
-      return rs.map(r => ({ dmg: r.dmg + r.kd * J.kdDmg + r.nearSub * J.nearSubDmg, aggr: r.thrown + r.fwd / 120 + r.tdAtt * 2 + r.subAtt * 2, ctrl: r.ctrl, kd: r.kd }));
+      return rs.map(r => ({ dmg: r.dmg + r.kd * J.kdDmg + r.nearSub * J.nearSubDmg, aggr: J.aggrLandedOnly ? r.landed + r.td * 2 + r.subAtt * 1.5 : r.thrown + r.fwd / 120 + r.tdAtt * 2 + r.subAtt * 2, ctrl: r.ctrl, kd: r.kd }));
     }
     scoreRound(ri, noNoise) {
       const J = C.JUDGE, cr = this.roundCriteria(ri), out = [];
@@ -716,8 +735,9 @@
         else if (Math.abs(ag[0] - ag[1]) / Math.max(ag[0], ag[1], 1) > 0.1) win = ag[0] > ag[1] ? 0 : 1;
         else if (Math.abs(ct[0] - ct[1]) > 1) win = ct[0] > ct[1] ? 0 : 1;
         else win = d[0] !== d[1] ? (d[0] > d[1] ? 0 : 1) : (noNoise ? 0 : (this.rng() < 0.5 ? 0 : 1));
-        const lose = 1 - win, ratio = cr[win].dmg / Math.max(1, cr[lose].dmg);
-        const tenEight = (cr[win].kd > cr[lose].kd && ratio >= 1.8) || (ratio >= J.tenEightRatio && cr[win].dmg - cr[lose].dmg >= J.tenEightMin);
+        const lose = 1 - win, dw = J.tenEightPerJudge ? d[win] : cr[win].dmg, dl = J.tenEightPerJudge ? d[lose] : cr[lose].dmg, ratio = dw / Math.max(1, dl);
+        const kdD = cr[win].kd - cr[lose].kd;
+        const tenEight = (kdD > 0 && ratio >= (J.tenEightKdRatio || 1.8) && dw - dl >= (J.tenEightKdMin || 0)) || (J.tenEightKdMin != null && kdD >= 2) || (ratio >= J.tenEightRatio && dw - dl >= J.tenEightMin);
         const sc = [0, 0]; sc[win] = 10; sc[lose] = tenEight ? 8 : 9; out.push(sc);
       }
       return out;

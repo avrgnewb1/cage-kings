@@ -37,7 +37,7 @@
       case 'caught': return P.kick_body_ext;
       case 'knockdown': return rig.sampleAnim('knockdown', f.stT);
       case 'getup': return rig.sampleAnim('getup', f.stT * 500 / Math.max(1, f.stDur));
-      case 'shoot': { const w = C.TAKEDOWN.windup * (f.disc === 'WR' ? 0.75 : 1); return f.stT < w ? rig.lerpPose(P.stance, P.shoot, 0.55 * f.stT / w) : P.shoot; }
+      case 'shoot': { const w = C.TAKEDOWN.windup * (f.disc === 'WR' ? C.TAKEDOWN.wrWindupMult : 1); return f.stT < w ? rig.lerpPose(P.stance, P.shoot, 0.55 * f.stT / w) : P.shoot; }
       case 'shootmiss': return rig.lerpPose(P.shoot, P.stance, clamp(f.stT / f.stDur, 0, 1));
       case 'sprawled': return P.sprawled_on;
       case 'sprawl': return P.sprawl;
@@ -106,13 +106,17 @@
       const order = fight.f.slice();
       if (fight.mode === 'ground' && fight.ground) order.sort((a, b) => (a === fight.ground.bot ? -1 : 1));
       else if (fight.mode === 'sub' && fight.sub) order.sort((a) => (a === fight.sub.def ? (fight.sub.name === 'rnc' ? -1 : 1) : (fight.sub.name === 'rnc' ? 1 : -1)));
+      let guardLegs = null;
       for (const f of order) {
         const pose = this.smoothPose(f, poseFor(fight, f), dt);
         // spinning attacks: the fighter turns his back during the first part of the windup
         const spin = f.st === 'attack' && f.mv && f.mv.spin && f.mvT < f.mvTimes.s * 0.6 && f.mvT > f.mvTimes.s * 0.15;
         CK.Renderer.drawFighter(ctx, { x: f.x, floorY: C.ARENA.floorY, facing: spin ? -f.facing : f.facing, pose, wc: f.wcKey, look: f.look, skin: f.skin,
           dmg: { head: 100 - f.head, body: 100 - f.body, leg: 100 - f.leg }, flash: f.flash * 0.5 });
+        if (fight.mode === 'ground' && fight.ground && f === fight.ground.bot && /guard/.test(fight.ground.pos))
+          guardLegs = { x: f.x, floorY: C.ARENA.floorY, facing: f.facing, pose, wc: f.wcKey, look: f.look, skin: f.skin, dmg: { head: 0, body: 0, leg: 100 - f.leg }, legsOnly: true };
       }
+      if (guardLegs) CK.Renderer.drawFighter(ctx, guardLegs);   // bottom fighter's legs show around the top fighter in guard
       this.drawFront(ctx);
       if (this.showHitboxes || fight.debug) this.drawBoxes(ctx, fight);
       this.drawParticles(ctx, dt);
@@ -173,6 +177,7 @@
       this.drawTexts(ctx, dt);
       if (player && !CK.Input.touchEnabled) this.drawKeyHints(ctx, fight, player);
     },
+    tz() { return CK.Input && CK.Input.touchEnabled ? 3 : 0; },   // CK-09: bigger HUD type on phones
     drawPanel(ctx, f, x, dir, fight) {
       ctx.save(); ctx.translate(x, 16);
       const tx = dir > 0 ? 0 : -470;
@@ -193,17 +198,17 @@
       const sw = bw * clamp(f.stam / 100, 0, 1);
       ctx.fillStyle = f.gassed ? (Math.floor(performance.now() / 200) % 2 ? '#ff4d4d' : '#b33') : '#2fd47a';
       ctx.fillRect(dir > 0 ? bx : bx + bw - sw, by, sw, 16);
-      ctx.fillStyle = 'rgba(255,255,255,0.85)'; ctx.font = '700 11px system-ui'; ctx.textAlign = dir > 0 ? 'left' : 'right';
+      ctx.fillStyle = 'rgba(255,255,255,0.85)'; ctx.font = '700 ' + (11 + this.tz()) + 'px system-ui'; ctx.textAlign = dir > 0 ? 'left' : 'right';
       ctx.fillText(CK.Text.ui('hud.stamina', null, 'STAMINA'), dir > 0 ? bx + 4 : bx + bw - 4, by + 12);
       // ref meter
       const rw = 140, rx = dir > 0 ? nx : nx - rw, ry = 86;
       ctx.fillStyle = '#222'; ctx.fillRect(rx, ry, rw, 8);
       ctx.fillStyle = f.ref > 65 ? '#ff4d4d' : '#ff9f43'; const rf = rw * clamp(f.ref / C.REF.tkoAt, 0, 1); ctx.fillRect(dir > 0 ? rx : rx + rw - rf, ry, rf, 8);
-      ctx.fillStyle = '#aaa'; ctx.font = '700 10px system-ui'; ctx.fillText(CK.Text.ui('hud.refMeter', null, 'REF'), dir > 0 ? rx + rw + 6 : rx - 6, ry + 8);
+      ctx.fillStyle = '#aaa'; ctx.font = '700 ' + (10 + this.tz()) + 'px system-ui'; ctx.fillText(CK.Text.ui('hud.refMeter', null, 'REF'), dir > 0 ? rx + rw + 6 : rx - 6, ry + 8);
       // part readouts
-      ctx.font = '600 11px system-ui'; ctx.fillStyle = '#bbb';
+      ctx.font = '600 ' + (11 + this.tz()) + 'px system-ui'; ctx.fillStyle = '#bbb';
       const parts = [['hud.head', 'HEAD', f.head], ['hud.body', 'BODY', f.body], ['hud.leg', 'LEG', f.leg]];
-      parts.forEach((pt, i) => { ctx.fillStyle = hpColor(pt[2]); const px = dir > 0 ? nx + 170 + i * 58 : nx - 170 - i * 58; ctx.fillText(CK.Text.ui(pt[0], null, pt[1]) + ' ' + Math.max(0, Math.round(pt[2])), px, 102); });
+      parts.forEach((pt, i) => { ctx.fillStyle = hpColor(pt[2]); const gap = 58 + this.tz() * 5, x0 = 170 + this.tz() * 2; const px = dir > 0 ? nx + x0 + i * gap : nx - x0 - i * gap; ctx.fillText(CK.Text.ui(pt[0], null, pt[1]) + ' ' + Math.max(0, Math.round(pt[2])), px, 102); });
       ctx.restore();
     },
     damageFigure(ctx, x, y, f) {
@@ -244,7 +249,7 @@
       if (player) {
         const mine = s.att === player;
         ctx.font = '800 16px system-ui'; ctx.fillStyle = '#fff';
-        ctx.fillText(CK.Text.ui(mine ? 'hud.submissionMinigame.attackPrompt' : 'hud.submissionMinigame.defendPrompt', null, mine ? 'TAP J IN RHYTHM!' : 'TAP J TO ESCAPE!'), W / 2, y + 96);
+        ctx.fillText(CK.Text.ui(mine ? 'hud.submissionMinigame.attackPrompt' : 'hud.submissionMinigame.defendPrompt', null, mine ? 'TAP J IN RHYTHM!' : 'TAP J TO ESCAPE!').replace(/TAP J\b/, CK.Input.touchEnabled ? 'TAP ANY BUTTON' : 'TAP J'), W / 2, y + 96);
       }
       ctx.restore();
     },

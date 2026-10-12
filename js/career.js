@@ -145,6 +145,12 @@
       }
       return out;
     },
+    // a fight that was started but never finished (tab closed / reloaded mid-fight) is a forfeit loss (QA CK-02)
+    resolveAbandoned() {
+      const s = Career.s; if (!s || !s.inFight || !s.booked || s.inFight.event !== s.event) { if (s && s.inFight) { s.inFight = null; Career.save(); } return null; }
+      const res = Career.applyResult({ winner: 1, method: 'TKO', detail: 'Forfeit', round: 1, clock: '0:00' });
+      s.pendingNews = null; Career.save(); return res;
+    },
     // ---- fight result ----
     applyResult(result) {
       const s = Career.s, o = s.booked, n = Career.npc(o.opp); const won = result.winner === 0, draw = result.winner === -1;
@@ -176,10 +182,13 @@
       for (let i = 0; i < 4; i++) { const a = rng.pick(ids), b = rng.pick(ids); if (a === b) continue; const A = s.div.npcs[a], B = s.div.npcs[b]; const aw = rng.chance(0.5 + (A.rating - B.rating) / 800); (aw ? A : B).rating += 18; (aw ? B : A).rating -= 18; (aw ? A : B).w++; (aw ? B : A).l++; }
       const entry = { event: o.event, opp: o.opp, oppName: n.def.name, result: won ? 'W' : draw ? 'D' : 'L', method: result.method, detail: result.detail, round: result.round, clock: result.clock, title: o.title, purse: purse + bonus };
       s.history.unshift(entry);
-      s.booked = null; s.event++; s.week = 0;
+      s.booked = null; s.event++; s.week = 0; s.inFight = null;
       const newRank = Career.rankOf('player');
-      Career.makeOffers(); Career.save();
-      return { entry, oldRank, newRank, purse, bonus, titleNote, dr };
+      Career.makeOffers();
+      const res = { entry, oldRank, newRank, purse, bonus, titleNote, dr };
+      s.pendingNews = res;   // shown by the hub even if the game is reloaded before Continue
+      Career.save();
+      return res;
     },
     // text helpers
     rivalLine(id) {

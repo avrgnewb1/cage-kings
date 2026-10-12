@@ -18,13 +18,14 @@
   // shared background: arena + idle fighters
   function drawShowcase(ctx, list, t) {
     CK.FightView.drawArena(ctx);
+    // dim the arena, not the fighters (rough spot: the showcase fighters were lost behind the UI)
+    ctx.fillStyle = 'rgba(5,6,12,0.45)'; ctx.fillRect(0, 0, C.VIEW.W, C.VIEW.H);
     list.forEach((it, i) => {
       if (!it) return;
       const pose = it.pose || CK.Rig.sampleAnim(it.anim || 'idle', t + i * 333);
       CK.Renderer.drawFighter(ctx, { x: it.x, floorY: C.ARENA.floorY, facing: it.facing, pose, wc: it.def.wc, look: it.def.look, skin: it.def.skin, dmg: { head: 0, body: 0, leg: 0 } });
     });
     CK.FightView.drawFront(ctx);
-    ctx.fillStyle = 'rgba(5,6,12,0.45)'; ctx.fillRect(0, 0, C.VIEW.W, C.VIEW.H);
   }
 
   // ======================= MAIN MENU =======================
@@ -117,7 +118,7 @@
   // ======================= FIGHT =======================
   const FightScreen = {
     enter(p) {
-      this.params = p; CK.FightView.reset(); this.cornerOpen = false; this.resultShown = false; this.paused = false;
+      this.params = p; CK.FightView.reset(); this.cornerOpen = false; this.resultShown = false; this.careerRes = null; this.paused = false;
       const ctrlA = p.ctrlA || (p.spectate ? CK.AI.make(p.difficulty || 'normal', p.a) : new CK.AI.PlayerController());
       const ctrlB = p.ctrlB || CK.AI.make(p.difficulty || 'normal', p.b);
       this.fight = new CK.Fight({ a: p.a, b: p.b, ctrlA, ctrlB, rounds: p.rounds, title: p.title, seed: p.seed });
@@ -137,6 +138,8 @@
       f.step(dt);
       for (const e of f.events) { CK.FightView.onEvent(e, f); CK.evlog.push(e.type + (e.name ? ':' + e.name : '')); if (CK.evlog.length > 800) CK.evlog.shift(); } f.events.length = 0;
       if (this.player) CK.Input.setLabels(f.labelsFor(this.player));
+      // QA CK-02: save the career result as soon as the fight is decided (finish phase), before any results screen
+      if (f.result && this.params.onEnd && !this.careerRes) this.careerRes = this.params.onEnd(f.result, f);
       if (f.phase === 'over' && !this.resultShown) this.showResults();
     },
     render(ctx) {
@@ -238,8 +241,11 @@
           : `<button data-act="rematch" id="btnRematch">${tx('results.buttons.rematch', 'Rematch')}</button><button data-act="menu" class="primary" id="btnMenu">${tx('results.buttons.mainMenu', 'Main Menu')}</button>`}</div>`);
       click(p, {
         rematch: () => E.go('fight', Object.assign({}, this.params, { seed: undefined })), menu: () => E.go('menu'),
-        continue: () => { const res = this.params.onEnd ? this.params.onEnd(r, f) : null; E.go('careerHub', { after: res }); }
+        continue: () => E.go('careerHub', { after: this.careerRes })
       });
+      // QA CK-02: the career result is saved the moment the fight ends, not when Continue is pressed,
+      // so reloading on the results screen can't erase a loss.
+      if (this.params.onEnd && !this.careerRes) this.careerRes = this.params.onEnd(r, f);
       if (this.params.onResult) this.params.onResult(r, f);
     }
   };

@@ -63,11 +63,14 @@
     enter(p) {
       CK.Audio.music('music_menu'); CK.Audio.stop('crowd_loop');
       if (!Car().s && !Car().load()) return E.go('menu');
+      const abandoned = !p.after && Car().resolveAbandoned();
       const s = Car().s; if (!s.booked && (!s.offers || !s.offers.length)) Car().makeOffers();
       this.tab = this.tab || 'camp'; this.log = [];
       this.draw();
       if (p.welcome) this.toast(T().ui('career.hub.title', null, 'Career'), `Welcome to the ${T().ui('meta.promotionName', null, 'Apex Fighting League')}, ${s.player.first}. Pick your first fight.`);
-      if (p.after) this.postFight(p.after);
+      const news = p.after || abandoned || s.pendingNews;
+      if (s.pendingNews) { s.pendingNews = null; Car().save(); }
+      if (news) this.postFight(news);
     },
     toast(title, html) {
       const m = panel('modal news', `<h2>${esc(title)}</h2><div class="newsbody">${html}</div><button class="primary" data-act="ok" id="btnNewsOk">${tx('common.ok', 'OK')}</button>`);
@@ -117,7 +120,7 @@
     logTrain(act, r) {
       const s = Car().s, gains = Object.keys(r.gains).map(k => `+${r.gains[k]} ${T().label('stats', k, k)}`).join(', ');
       const ev = T().event('trainingWeek', act, { fighter: s.player.first, fighterLast: s.player.last, week: s.week, totalWeeks: s.campWeeks, stats: gains }, '');
-      this.log.unshift(`<b>Wk ${s.week}</b> ${lbl('activities', act, act)}: ${esc(gains || 'recovered')}${ev && ev.text ? ' · <i>' + esc(ev.text) + '</i>' : ''}`);
+      this.log.unshift(`<b>Wk ${s.week}</b> ${lbl('trainingActivities', act, act)}: ${esc(gains || 'recovered')}${ev && ev.text ? ' · <i>' + esc(ev.text) + '</i>' : ''}`);
       if (r.unlocked) { CK.Audio.play('unlock'); const uv = T().event('trainingWeek', 'crossTrainUnlock', { move: Car().MOVE_NAMES[r.unlocked], fighter: s.player.first }, 'New move unlocked: {move}!'); this.log.unshift(`<b class="gold">${esc(uv.text)}</b>`); }
     },
     tab_camp() {
@@ -141,7 +144,7 @@
       const o = s.booked, n = Car().npc(o.opp), done = s.week >= s.campWeeks;
       const acts = Object.keys(Car().ACTIVITIES).map(a => {
         const A = Car().ACTIVITIES[a], cross = A.disc && A.disc !== p.disc ? ` <small>cross-train ${Math.min(100, Math.round((p.cross[A.disc] || 0) / C.CAREER.crossTrainUnlockWeeks * 100))}%</small>` : '';
-        return `<button data-act="train" data-arg="${a}" ${done ? 'disabled' : ''} id="train-${a}"><b>${lbl('activities', a, a)}</b><small>${A.stats.map(k => T().label('stats', k, k)).join(' + ') || 'Recover fatigue'}</small>${cross}</button>`;
+        return `<button data-act="train" data-arg="${a}" ${done ? 'disabled' : ''} id="train-${a}"><b>${lbl('trainingActivities', a, a)}</b><small>${A.stats.map(k => T().label('stats', k, k)).join(' + ') || 'Recover fatigue'}</small>${cross}</button>`;
       }).join('');
       return `<div class="camp"><h3>vs ${esc(fullName(n.def))} <small>${esc(o.event)}${o.title ? ' · TITLE' : ''}</small></h3>
         <div class="sub">${done ? `<b class="gold">${tx('career.hub.fightWeek', 'Fight Week!')}</b>` : tx('career.training.weekLabel', '', { week: s.week + 1, totalWeeks: s.campWeeks }) + ' · ' + tx('career.training.subtitle', '')}</div>
@@ -183,6 +186,7 @@
       click(m, { go: () => {
         CK.Audio.play('walkout_sting');
         const pd = Car().playerDef(), od = Object.assign({}, n.def);
+        s.inFight = { event: s.event, opp: o.opp }; Car().save();   // QA CK-02: leaving mid-fight counts as a forfeit
         E.go('fight', { a: pd, b: od, difficulty: s.difficulty, rounds: o.rounds, title: o.title, mode: 'career', onEnd: (r) => Car().applyResult(r) });
       } });
     },

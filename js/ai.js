@@ -39,12 +39,28 @@
       this.lastOppSt = threatSt; if (!threatSt) this.threat = null;
       const free = me.st === 'idle' || me.st === 'walk' || me.st === 'block';
       // caught a kick -> dump him
-      if (me.catchUntil > fight.time && free) { this.press(it, 'i'); return it; }
+      if (me.catchUntil > fight.time && free) { if (this.catchPick == null || this.catchPick < me.catchUntil - 2000) { this.catchPick = me.catchUntil; this.catchDump = rng.chance(C.AI.weights.catchDump[this.disc] || 0.3); } this.press(it, this.catchDump ? 'i' : 'k'); return it; }
       // opponent down -> pounce (grapplers) or wait
       if (o.st === 'knockdown' && free) {
         if (rng.chance((0.02 + A.grapple * 0.08) * (this.level === 'easy' ? 0.5 : 1)) && dist < 170 * s) { this.press(it, 'i'); return it; }
         it.dir = dist > 160 * s ? fwd : 0; return it;
       }
+      // anticipatory guard (QA CK-05): a jab (~85 ms) is faster than any reaction, so the AI could never block one.
+      // Like a real fighter it reads rhythm: after the opponent has thrown in range recently, it pre-loads the guard.
+      if (o.st === 'attack' && o.mvTimes && o.mvTimes !== this.lastMvObj && (o.mvKey === 'jab' || o.mvKey === 'jab_body')) {   // the read is on the jab rhythm
+        this.lastMvObj = o.mvTimes; this.recentAtk = (this.recentAtk || []).filter(x => this.t - x < 1800); this.recentAtk.push(this.t);
+      }
+      if (this.recentAtk && this.recentAtk.length && this.t - this.recentAtk[this.recentAtk.length - 1] > 1800) this.recentAtk = [];
+      const inJabRange = dist < C.MOVES.jab.reach * o.size * o.reach + 30;
+      if (free && inJabRange && this.t >= (this.guardCheck || 0)) {
+        this.guardCheck = this.t + 400;
+        // reading a busy opponent: high guard most of the time; otherwise a fighter in range still keeps his hands up now and then
+        const busy = this.recentAtk && this.recentAtk.length >= 2;
+        const pg = busy ? L.block * 0.8 + (A.counter > 0.6 ? 0.1 : 0) - (me.gassed ? 0.2 : 0) : L.block * 0.3;
+        this.guardUntil = rng.chance(pg) ? this.t + 380 : 0;
+        if (this.guardUntil && rng.chance(L.counter * (0.4 + A.counter))) this.counterAt = this.t + 320;
+      }
+      if (free && this.guardUntil && this.t < this.guardUntil && o.st !== 'shoot') { it.block = true; it.low = o.mvKey === 'leg_kick'; return it; }
       if (this.threat && this.t >= this.threat.at && free) {
         const th = this.threat;
         if (!th.decided) {
@@ -59,7 +75,8 @@
             th.back = !th.block && th.inRange && rng.chance(0.25 + A.counter * 0.3);
           } else if (th.kind === 'shoot') {
             th.sprawl = rng.chance(L.sprawl + (this.disc === 'WR' ? 0.15 : 0));
-            th.knee = !th.sprawl && this.disc === 'MT' && rng.chance(0.35 + L.counter * 0.3);
+            const KC = C.AI.weights.kneeCounter;   // CK-03: any striker can time a knee, Muay Thai most often
+            th.knee = !th.sprawl && rng.chance((KC[this.disc] != null ? KC[this.disc] : KC.other) * (0.6 + L.counter));
             th.guillo = !th.sprawl && !th.knee && rng.chance(this.disc === 'BJJ' ? 0.4 : this.def.id === 'hollander' ? 0.4 : 0.1);
           }
         }
@@ -73,11 +90,12 @@
           if (th.back) { it.dir = -fwd; return it; }
         } else if (th.kind === 'shoot' && o.st === 'shoot') {
           if (th.sprawl) { it.block = true; it.low = true; return it; }
-          if (th.knee && dist < 110 * s) { this.press(it, 'l'); return it; }
+          if (th.knee && dist < 150 * s) { this.press(it, 'l'); return it; }
           if (th.guillo && dist < 130 * s) { this.press(it, 'u'); return it; }
         }
       }
-      if (this.counterAt && this.t >= this.counterAt && free && !(o.st === 'attack')) {
+      // counter into the opponent's recovery too (a jab spammer is never out of 'attack', so counters never fired)
+      if (this.counterAt && this.t >= this.counterAt && free && !(o.st === 'attack' && o.mvTimes && o.mvT < o.mvTimes.s + o.mvTimes.a)) {
         this.counterAt = 0;
         if (dist < 130 * s * me.reach) { this.press(it, rng.chance(0.55) ? 'k' : 'j'); return it; }
       }
@@ -106,6 +124,7 @@
         if (act) { this.press(it, act.k, act); if (act.then) this.queue = act.then.slice(); return it; }
       }
       // --- footwork toward preferred range
+      if (this.stepUntil && this.t < this.stepUntil) { it.dir = fwd; return it; }
       const R = this.A.range * s + this.jitter;
       if (dist > R + 18) it.dir = fwd;
       else if (dist < R - 28 && A.forward < 0.7) it.dir = -fwd;
@@ -115,7 +134,7 @@
     }
     chooseAttack(fight, me, o, dist, rng) {
       const A = this.A, L = this.L, s = me.size, M = C.MOVES, disc = this.disc;
-      if (!rng.chance(A.aggression * (this.level === 'easy' ? 0.75 : 1))) return null;
+      if (!rng.chance(Math.min(0.95, A.aggression * (this.level === 'easy' ? 0.75 : 1) * (o.gassed && this.level !== 'easy' ? 1.8 : 1)))) return null;   // jump on a gassed opponent
       const can = (mk) => me.stam > M[mk].stam * me.costMult() + L.floor * A.floorMult * 0.6;
       const reach = (mk) => M[mk].reach * s * me.reach;
       const w = {};
@@ -128,8 +147,10 @@
       if (disc === 'MT' && dist < M.elbow.closeOnly * s && can('elbow')) w.elbow = 0.6;
       if (me.appr === 'CREATIVE' && dist < reach('spin_fist') && can('spin_fist')) w.spin_fist = 0.35;
       if (me.appr === 'CREATIVE' && dist < reach('spin_kick') && dist > 90 * s && can('spin_kick')) w.spin_kick = 0.3;
-      if (dist < 112 * s && me.stam > 15) w.clinch = A.grapple * 0.9 + (disc === 'MT' ? 0.5 : 0.1);
-      if (dist < C.TAKEDOWN.maxRange * s && dist > 80 * s && me.stam > 22) w.shoot = A.grapple * (disc === 'WR' ? 1.6 : disc === 'BJJ' ? 0.8 : 0.35) * (o.gassed ? 1.5 : 1);
+      const AW = C.AI.weights;
+      if (dist < AW.clinchRange * s && me.stam > 15) w.clinch = A.grapple * 0.9 + (AW.clinchDisc[disc] || 0.1);
+      if (dist < C.TAKEDOWN.maxRange * s && dist > 80 * s && me.stam > 22) if (this.t - (this.lastShot || -1e9) >= AW.shotCooldownMs * (o.gassed ? 0.5 : 1)) {   // a gassed striker is there to be taken down
+        w.shoot = Math.max(A.grapple, AW.grappleFloor[disc] || 0) * (AW.shootDisc[disc] || 0.1) * (o.gassed ? 1.5 : 1); if (dist > reach('jab') + 6) w.step = AW.stepIn; }
       if (disc === 'BJJ' && dist < C.TAKEDOWN.guardPullRange * s && me.stam > 15) w.pull = 0.35;
       if (!Object.keys(w).length) return null;
       const pick = rng.weighted(w);
@@ -148,7 +169,9 @@
         case 'spin_fist': return { k: 'k', fwd: -me.facing };
         case 'spin_kick': return { k: 'l', fwd: -me.facing };
         case 'clinch': return { k: 'u' };
-        case 'shoot': case 'pull': return { k: 'i' };
+        case 'shoot': this.lastShot = this.t; return { k: 'i' };
+        case 'pull': return { k: 'i' };
+        case 'step': this.stepUntil = this.t + C.AI.weights.stepInMs; return null;
       }
       return null;
     }
@@ -160,7 +183,7 @@
       if (me.cd > 0 || me.act || this.t < this.nextThink) return it;
       this.nextThink = this.t + L.think * rng.range(0.8, 1.4);
       const controlled = c.ctrl === o && c.thai;
-      const w = { punch: 0.6, elbow: this.disc === 'MT' ? 0.7 : 0.3, knee: this.disc === 'MT' ? 1.2 : 0.6, td: A.grapple * (this.disc === 'WR' ? 1.6 : 1), brk: (controlled ? 1.0 : 0.25) + (me.stam < 30 ? 0.8 : 0) + A.counter * 0.5,
+      const w = { punch: 0.6, elbow: this.disc === 'MT' ? 0.7 : 0.3, knee: this.disc === 'MT' ? 1.2 : 0.6, td: A.grapple * (this.disc === 'WR' ? 1.6 : 1) * C.AI.weights.clinchTd, brk: ((controlled ? 1.0 : 0.25) + (me.stam < 30 ? 0.8 : 0) + A.counter * 0.5) * C.AI.weights.clinchBreak,
         guillo: (this.disc === 'BJJ' || this.def.id === 'hollander') ? 0.15 : 0.02 };
       if (me.stam < 14) return it;
       const pick = rng.weighted(w);
@@ -185,7 +208,7 @@
         const a = P[k]; if (!a) continue;
         if (a.act === 'strike') w[k] = (a.heavy || a.strike.indexOf('heavy') >= 0 ? 0.5 : 1.0) * (me.stam > 18 ? 1 : 0.1) * (A.power > 0.3 ? 1.2 : 1);
         else if (a.act === 'advance') w[k] = 0.35 * grap;
-        else if (a.act === 'sub') w[k] = (0.05 + (o.gassed ? 0.12 : 0) + (o.head < 50 ? 0.05 : 0)) * grap * (me.stam > 30 ? 1 : 0.15) * (a.sub === 'rnc' ? 2.0 : 1);
+        else if (a.act === 'sub') w[k] = (0.05 + (o.gassed ? 0.12 : 0) + (o.head < 50 ? 0.05 : 0)) * grap * (me.stam > 30 ? 1 : 0.15) * (a.sub === 'rnc' ? 2.0 : 1) * C.AI.weights.subAttempt;
         else if (a.act === 'scramble') w[k] = (this.disc === 'BJJ' ? 0.3 : 1.0) * (me.stam > 20 ? 1 : 0.3);
         else if (a.act === 'sweep') w[k] = 0.6 * grap;
         else if (a.act === 'escape') w[k] = 1.0;
