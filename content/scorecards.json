@@ -1,0 +1,150 @@
+{
+  "schemaVersion": 1,
+  "notes": "Ring-announcer read-outs for decisions (design v3: cards are read aloud). Show 'intro', then the result line for the decision type. Cards are pre-formatted from the WINNER's side, dissent listed as reversed (e.g. \"28-29\"); for draws use the order judges 1-3. titleSuffix.01 is for a new champion, .02 for a defense; append after the winner name in title fights. finishAnnouncement is for KO/TKO/submission results.",
+  "placeholders": {
+    "totalRounds": "Number of scheduled rounds, written as a number (3 or 5).",
+    "card1": "Judge 1 card, pre-formatted, e.g. \"29-28\".",
+    "card2": "Judge 2 card.",
+    "card3": "Judge 3 card.",
+    "judge1Name": "Judge name from judgeNames.",
+    "judge2Name": "Judge name.",
+    "judge3Name": "Judge name.",
+    "winner": "Winner's display name, with nickname, e.g. Dante \"Sawblade\" Okafor.",
+    "promotionShort": "\"AFL\".",
+    "weightClass": "Weight class label, e.g. \"Lightweight\".",
+    "refName": "Referee name from refereeNames.",
+    "time": "Clock time of the finish on the 5:00 display, m:ss.",
+    "round": "Round number.",
+    "method": "Lowercase method (ui.json labels.methodsInline)."
+  },
+  "judgeNames": [
+    "Ruth Ellery",
+    "Gene Harwick",
+    "Priya Dalal",
+    "Walt Summerby",
+    "Ines Varga",
+    "Tomasz Brell",
+    "Corinne Abara",
+    "Lyle Fenwick"
+  ],
+  "refereeNames": [
+    "Sam Ostrander",
+    "Dee Calloway",
+    "Rafael Mondragón",
+    "Jo Pembrook"
+  ],
+  "readouts": {
+    "intro": [
+      {
+        "id": "intro.01",
+        "text": "Ladies and gentlemen, after {totalRounds} rounds, we go to the judges' scorecards."
+      },
+      {
+        "id": "intro.02",
+        "text": "We go to the scorecards for a decision."
+      },
+      {
+        "id": "intro.03",
+        "text": "Ladies and gentlemen, that's {totalRounds} rounds, and we have a decision."
+      }
+    ],
+    "readCards": [
+      {
+        "id": "readCards.01",
+        "text": "{judge1Name} scores it {card1}. {judge2Name}, {card2}. {judge3Name}, {card3}."
+      },
+      {
+        "id": "readCards.02",
+        "text": "{card1}. {card2}. {card3}."
+      }
+    ],
+    "unanimous": [
+      {
+        "id": "unanimous.01",
+        "text": "All three judges score the bout {card1}, {card2}, {card3}, for the winner by unanimous decision... {winner}!"
+      },
+      {
+        "id": "unanimous.02",
+        "text": "{card1}, {card2}, and {card3}, for your winner by unanimous decision... {winner}!"
+      },
+      {
+        "id": "unanimous.03",
+        "text": "Unanimous decision. Your winner... {winner}!"
+      }
+    ],
+    "split": [
+      {
+        "id": "split.01",
+        "text": "{card1}, {card2}, {card3}, for the winner by split decision... {winner}!"
+      },
+      {
+        "id": "split.02",
+        "text": "We have a split decision. {card1}, {card2}, {card3}... your winner... {winner}!"
+      },
+      {
+        "id": "split.03",
+        "text": "Two judges to one. Split decision. Your winner... {winner}!"
+      }
+    ],
+    "majority": [
+      {
+        "id": "majority.01",
+        "text": "{card1}, {card2}, {card3}, for the winner by majority decision... {winner}!"
+      },
+      {
+        "id": "majority.02",
+        "text": "One judge scores it a draw, but the other two have a winner. By majority decision... {winner}!"
+      }
+    ],
+    "unanimousDraw": [
+      {
+        "id": "unanimousDraw.01",
+        "text": "All three judges score it {card1}, {card2}, {card3}. This bout is a unanimous draw!"
+      },
+      {
+        "id": "unanimousDraw.02",
+        "text": "{card1}, {card2}, {card3}. Ladies and gentlemen, we have a draw!"
+      }
+    ],
+    "majorityDraw": [
+      {
+        "id": "majorityDraw.01",
+        "text": "{card1}, {card2}, {card3}. This bout is a majority draw!"
+      },
+      {
+        "id": "majorityDraw.02",
+        "text": "Two judges see it even. This one is a majority draw!"
+      }
+    ],
+    "splitDraw": [
+      {
+        "id": "splitDraw.01",
+        "text": "{card1}, {card2}, {card3}. One judge for each fighter, one even. It's a split draw!"
+      },
+      {
+        "id": "splitDraw.02",
+        "text": "We have a split draw! Nobody leaves with the win tonight."
+      }
+    ],
+    "titleSuffix": [
+      {
+        "id": "titleSuffix.01",
+        "text": "...and NEW {promotionShort} {weightClass} champion of the world!"
+      },
+      {
+        "id": "titleSuffix.02",
+        "text": "...and STILL the {promotionShort} {weightClass} champion!"
+      }
+    ],
+    "finishAnnouncement": [
+      {
+        "id": "finish.01",
+        "text": "Ladies and gentlemen, referee {refName} stops this contest at {time} of round {round}. Your winner by {method}... {winner}!"
+      },
+      {
+        "id": "finish.02",
+        "text": "At {time} of round {round}, your winner by {method}... {winner}!"
+      }
+    ]
+  }
+}

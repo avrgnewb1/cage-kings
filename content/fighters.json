@@ -1,0 +1,452 @@
+{
+  "schemaVersion": 1,
+  "promotion": {
+    "name": "Apex Fighting League",
+    "short": "AFL"
+  },
+  "champions": {
+    "FLY": "reyes",
+    "LW": "aslanov",
+    "MW": "dorsey",
+    "HW": "vale"
+  },
+  "fighters": [
+    {
+      "id": "okafor",
+      "firstName": "Dante",
+      "lastName": "Okafor",
+      "nickname": "Sawblade",
+      "displayName": "Dante \"Sawblade\" Okafor",
+      "hometown": "Lagos",
+      "country": "Nigeria",
+      "fightsOutOf": "Houston, Texas, USA",
+      "weightClass": "LW",
+      "discipline": "MT",
+      "approach": "PRESSURE",
+      "southpaw": false,
+      "styleHook": "Relentless leg kicks; eats shots to land bombs.",
+      "bio": "Dante learned Muay Thai in a converted tire shop in Houston, kicking tractor tires until the white wraps on his shins wore through. He walks forward behind a granite chin and chops at the legs until opponents can't plant to punch back. The one man he couldn't chop down was Aslanov, and he hasn't stopped thinking about it.",
+      "signatureMove": {
+        "name": "Sawblade Leg Kick",
+        "flavor": "Three kicks to the same thigh. The fourth one ends the night."
+      },
+      "walkoutLines": [
+        "Hope you stretched. It won't help.",
+        "I'm cutting the tree down at the roots.",
+        "Stand your ground. I dare you."
+      ],
+      "announcerIntro": [
+        "Fighting out of Houston, Texas... he chops them down one kick at a time... DANTE \"SAWBLADE\" OKAFOR!",
+        "Born in Lagos, built in Houston... bring a stretcher for the legs... \"SAWBLADE\"!"
+      ],
+      "look": {
+        "hair": "Shaved head (bald dome)",
+        "facialHair": "none",
+        "build": "Lightweight, thick-set and dense; upright pressure stance (shares the LW rig scale)",
+        "tattoo": "none",
+        "distinguishingFeature": "White striped shin wraps on both legs + red/black split shorts",
+        "primaryColor": "#D7263D",
+        "secondaryColor": "#141114",
+        "colorNote": "Red shorts with a black split panel",
+        "skinRef": "#7a4a2c"
+      },
+      "isChampion": false
+    },
+    {
+      "id": "hollander",
+      "firstName": "Wes",
+      "lastName": "Hollander",
+      "nickname": "Lockjaw",
+      "displayName": "Wes \"Lockjaw\" Hollander",
+      "hometown": "Duluth",
+      "country": "USA",
+      "fightsOutOf": "Duluth, Minnesota, USA",
+      "weightClass": "MW",
+      "discipline": "BOX",
+      "approach": "VOLUME",
+      "southpaw": true,
+      "styleHook": "Southpaw middleweight grinder with crisp combos and a sneaky guillotine.",
+      "bio": "A former amateur boxing standout who spent his twenties working the docks, Wes moved up to middleweight and brought his work ethic with him: long shifts, no breaks. His southpaw combos come in fours and fives, and anyone who ducks under them finds a guillotine waiting. He thinks Dorsey has held the belt long enough and says so to anyone holding a microphone.",
+      "signatureMove": {
+        "name": "Lockjaw Guillotine",
+        "flavor": "Duck your head on him once. Just once."
+      },
+      "walkoutLines": [
+        "I clock in at the bell. I clock out when you quit.",
+        "Go ahead and shoot. My arms are warm.",
+        "Five rounds, five punches at a time. Let's work."
+      ],
+      "announcerIntro": [
+        "From the docks of Duluth, Minnesota... the southpaw who never stops swinging... WES \"LOCKJAW\" HOLLANDER!",
+        "Keep your head up, folks... because he'll take it if you don't... \"LOCKJAW\"!"
+      ],
+      "look": {
+        "hair": "Curly mullet",
+        "facialHair": "Full beard",
+        "build": "Middleweight: square and sturdy; southpaw stance",
+        "tattoo": "none",
+        "distinguishingFeature": "Mullet + beard head shape",
+        "primaryColor": "#14A3A0",
+        "secondaryColor": "#0B5E5C",
+        "colorNote": "Teal shorts (keep it bluer than stamina teal #2FD3B0 so the HUD stays distinct)",
+        "skinRef": "#e2b08c"
+      },
+      "isChampion": false
+    },
+    {
+      "id": "aslanov",
+      "firstName": "Timur",
+      "lastName": "Aslanov",
+      "nickname": "The Vise",
+      "displayName": "Timur \"The Vise\" Aslanov",
+      "hometown": "Rotterdam",
+      "country": "Netherlands",
+      "fightsOutOf": "Rotterdam, Netherlands",
+      "weightClass": "LW",
+      "discipline": "WR",
+      "approach": "SMOTHER",
+      "southpaw": false,
+      "styleHook": "Throw-first Greco-Roman champion: ties you up in the clinch, launches body-lock throws, then piles on heavy top pressure.",
+      "bio": "Timur is a former Greco-Roman wrestler who still runs a harbor crane in Rotterdam on his days off, and his grip shows it. He hunts the clinch, locks his hands around your waist, and launches you with a body-lock throw before landing on top like dropped cargo. His only loss was an early split decision to Joost Brandsma, which he avenged in the rematch; Okafor and Marchetti have since learned the same lesson the hard way.",
+      "signatureMove": {
+        "name": "The Vise",
+        "flavor": "Hands locked, hips in, and over you go. The laugh comes after."
+      },
+      "walkoutLines": [
+        "Relax. The mat is very comfortable. You'll see.",
+        "I lift containers all week. You are lighter.",
+        "Hug first, questions later."
+      ],
+      "announcerIntro": [
+        "From the harbor of Rotterdam, Netherlands... one loss, and he paid it back... the AFL lightweight champion... TIMUR \"THE VISE\" ASLANOV!",
+        "Big grip, bigger laugh, bigger throws... \"THE VISE\"!"
+      ],
+      "look": {
+        "hair": "Shaved head with a copper top knot",
+        "facialHair": "Square, boxed copper beard",
+        "build": "Lightweight: heavy-set, low wide wrestling stance",
+        "tattoo": "none",
+        "distinguishingFeature": "Copper top knot + boxed copper beard on fair skin; walks out in a hooded olive-and-brass robe",
+        "primaryColor": "#7D838E",
+        "secondaryColor": "#4A4D52",
+        "colorNote": "Grey shorts with darker grey panel; hair/beard copper #9C4A1E; robe olive and brass",
+        "skinRef": "#d9a77f"
+      },
+      "isChampion": true,
+      "lore": {
+        "notableResults": [
+          {
+            "opponent": "Joost Brandsma",
+            "result": "loss",
+            "method": "split decision",
+            "stage": "early career, regional circuit"
+          },
+          {
+            "opponent": "Joost Brandsma",
+            "result": "win",
+            "method": "rematch; loss avenged",
+            "stage": "early career, regional circuit"
+          },
+          {
+            "opponent": "Dante Okafor",
+            "result": "win",
+            "method": "unanimous decision"
+          },
+          {
+            "opponent": "Lucien Marchetti",
+            "result": "win",
+            "method": "submission"
+          }
+        ],
+        "note": "Fictional backstory only; the engine owns real records. Brandsma is not on the AFL roster and is reserved in names.json."
+      }
+    },
+    {
+      "id": "marchetti",
+      "firstName": "Lucien",
+      "lastName": "Marchetti",
+      "nickname": "Snapback",
+      "displayName": "Lucien \"Snapback\" Marchetti",
+      "hometown": "Turin",
+      "country": "Italy",
+      "fightsOutOf": "Turin, Italy",
+      "weightClass": "LW",
+      "discipline": "BOX",
+      "approach": "COUNTER",
+      "southpaw": true,
+      "styleHook": "Southpaw counter-puncher: chin tucked, weight on the back foot, pivots off your rush with a check hook. Deadpan, impeccably polite.",
+      "bio": "Lucien was a competitive ballroom dancer in Turin until a cousin dragged him to a boxing gym at twenty-two; he kept the footwork and lost the sequins. From a compact southpaw guard he lets you rush in, pivots off the line, and snaps a lead check hook as you go past. He never raises his voice and compliments every opponent, though he is noticeably less polite about the night Aslanov pinned him and made him tap.",
+      "signatureMove": {
+        "name": "Snapback Check Hook",
+        "flavor": "You charge, he pivots, and the hook meets you halfway. He apologizes afterward. He means it."
+      },
+      "walkoutLines": [
+        "After you. I insist.",
+        "Lovely jab. Truly. Shame about the rest.",
+        "Take your time. I'll be right here. Well, slightly to the left."
+      ],
+      "announcerIntro": [
+        "From Turin, Italy... the gentleman of the lightweight division... LUCIEN \"SNAPBACK\" MARCHETTI!",
+        "Rush him at your own risk... he's already pivoting... \"SNAPBACK\"!"
+      ],
+      "look": {
+        "hair": "Tall, tight near-black curls",
+        "facialHair": "Pencil mustache (otherwise clean-shaven)",
+        "build": "Lightweight: slim, compact chin-tucked southpaw guard, weight on the back foot (no strut)",
+        "tattoo": "none",
+        "distinguishingFeature": "Tall curls + pencil mustache; checker-hem shorts",
+        "primaryColor": "#F2B124",
+        "secondaryColor": "#141114",
+        "colorNote": "Gold shorts with a black-and-white checker hem",
+        "skinRef": "#e6b994"
+      },
+      "isChampion": false
+    },
+    {
+      "id": "lind",
+      "firstName": "Oskar",
+      "lastName": "Lind",
+      "nickname": "Millstone",
+      "displayName": "Oskar \"Millstone\" Lind",
+      "hometown": "Gothenburg",
+      "country": "Sweden",
+      "fightsOutOf": "Gothenburg, Sweden",
+      "weightClass": "HW",
+      "discipline": "WR",
+      "approach": "PRESSURE",
+      "southpaw": false,
+      "styleHook": "Squat, heavy-handed wrestler-brawler: walks through the reach, grabs a body lock, and grinds you under heavy hands.",
+      "bio": "Oskar was a junior wrestling champion who grew wider instead of taller and kept every pound of it. The shortest man in the heavyweight division, he walks straight through long jabs, wraps up a body lock, and drops overhand rights and short hammer fists until something gives. Fighting him is like being slowly ground into flour, hence the name.",
+      "signatureMove": {
+        "name": "The Millstone",
+        "flavor": "Body lock, mat, heavy hands. Round and round until there's nothing left."
+      },
+      "walkoutLines": [
+        "Long arms are nice. I'm already inside them.",
+        "I'm not tall. I'm close.",
+        "Heavy is a style too."
+      ],
+      "announcerIntro": [
+        "From Gothenburg, Sweden... short, wide, and impossible to move... OSKAR \"MILLSTONE\" LIND!",
+        "He doesn't need reach... he needs one grip... \"MILLSTONE\"!"
+      ],
+      "look": {
+        "hair": "Near-white blond crew cut",
+        "facialHair": "Clean-shaven",
+        "build": "Heavyweight: the shortest and widest man in the division; squat, no visible neck, huge forearms",
+        "tattoo": "none",
+        "distinguishingFeature": "Block-shaped squat silhouette, the opposite of Vale's long frame",
+        "primaryColor": "#1B2A5C",
+        "secondaryColor": "#3F5AA8",
+        "colorNote": "Navy shorts, lighter blue trim",
+        "skinRef": "#f0c9a8"
+      },
+      "isChampion": false
+    },
+    {
+      "id": "dorsey",
+      "firstName": "Hank",
+      "lastName": "Dorsey",
+      "nickname": "Shell Game",
+      "displayName": "Hank \"Shell Game\" Dorsey",
+      "hometown": "Tulsa",
+      "country": "USA",
+      "fightsOutOf": "Tulsa, Oklahoma, USA",
+      "weightClass": "MW",
+      "discipline": "BOX",
+      "approach": "PRESSURE",
+      "southpaw": false,
+      "styleHook": "Grumpy veteran champion: high shoulder-roll guard, endless jab, walks you onto the fence.",
+      "bio": "Hank spent fifteen years in small-town boxing gyms before anyone thought to put him in a cage, and he's held the middleweight belt longer than some of his challengers have been shaving. He tucks behind a high shoulder roll, pumps a jab you could set a watch to, and walks you onto the fence where his hooks live. He complains about the music, the lights, and the young guys, and he's still champion.",
+      "signatureMove": {
+        "name": "Shell Game",
+        "flavor": "Roll the right, return the left. Now you see it. Now you're on the mat."
+      },
+      "walkoutLines": [
+        "Find my chin. I'll wait.",
+        "Plenty of room behind you. For now.",
+        "Turn that music down. Then I'll beat you."
+      ],
+      "announcerIntro": [
+        "From Tulsa, Oklahoma... the longest-reigning champion in the AFL... HANK \"SHELL GAME\" DORSEY!",
+        "Now you see him... now you don't... still champion... \"SHELL GAME\"!"
+      ],
+      "look": {
+        "hair": "Short buzz, greying",
+        "facialHair": "Bleached handlebar mustache",
+        "build": "Middleweight: thick, slightly soft middle, high shoulder-roll guard",
+        "tattoo": "none",
+        "distinguishingFeature": "Handlebar mustache + lead shoulder raised to the chin",
+        "primaryColor": "#5B6B3A",
+        "secondaryColor": "#8A7A4A",
+        "colorNote": "Faded camo shorts",
+        "skinRef": "#e8b48e"
+      },
+      "isChampion": true
+    },
+    {
+      "id": "vale",
+      "firstName": "Marcus",
+      "lastName": "Vale",
+      "nickname": "Stilts",
+      "displayName": "Marcus \"Stilts\" Vale",
+      "hometown": "Kingston",
+      "country": "Jamaica",
+      "fightsOutOf": "Toronto, Ontario, Canada",
+      "weightClass": "HW",
+      "discipline": "MT",
+      "approach": "CREATIVE",
+      "southpaw": false,
+      "styleHook": "Unpredictable heavyweight champion: long-limbed striker who throws spinning back fists, spinning back kicks, and switch head kicks. Pure striker.",
+      "bio": "Marcus was a pro volleyball blocker in Toronto until a teammate dared him to try a Muay Thai class; he never went back to the net. He has the longest arms in the heavyweight division and a habit of spinning when nobody expects it: back fists, back kicks, and switch kicks that start at the floor. Even his own coaches say they don't know what he's throwing next, which is both the danger and the opening.",
+      "signatureMove": {
+        "name": "Skyline Spin",
+        "flavor": "A spinning back kick from a man that tall. You'll see it on the replay."
+      },
+      "walkoutLines": [
+        "You're gonna need a ladder.",
+        "Long arms. Short night.",
+        "I don't know what I'm throwing either. Fun, right?"
+      ],
+      "announcerIntro": [
+        "Born in Kingston, fighting out of Toronto... the AFL heavyweight champion... MARCUS \"STILTS\" VALE!",
+        "Look up... further... further... and watch out for the spin... \"STILTS\"!"
+      ],
+      "look": {
+        "hair": "Tight buzz cut with a bleached zigzag stripe dyed along one side",
+        "facialHair": "Short goatee",
+        "build": "Heavyweight: very tall with long arms and legs on a broad, full heavyweight frame (not lanky)",
+        "tattoo": "none",
+        "distinguishingFeature": "Tallest silhouette in the game + bleached zigzag stripe; showboat hands-low stance",
+        "primaryColor": "#F4F4F4",
+        "secondaryColor": "#E0283C",
+        "colorNote": "White shorts with ink trim and a red side panel (white needs ink trim per art rule 5)",
+        "skinRef": "#5a3420"
+      },
+      "isChampion": true
+    },
+    {
+      "id": "reyes",
+      "firstName": "Mateo",
+      "lastName": "Reyes",
+      "nickname": "Anaconda",
+      "displayName": "Mateo \"Anaconda\" Reyes",
+      "hometown": "Cali",
+      "country": "Colombia",
+      "fightsOutOf": "Curitiba, Brazil",
+      "weightClass": "FLY",
+      "discipline": "BJJ",
+      "approach": "VOLUME",
+      "southpaw": false,
+      "styleHook": "Veteran champion: pulls guard, scrambles to the back, finishes with the rear-naked choke.",
+      "bio": "Mateo started jiu-jitsu at six and was teaching adult classes by fifteen; now he's the flyweight champion and the division's most experienced man. He's happy to pull guard, because every scramble from there is a chance to slip behind you, and once he's there the rear-naked choke is only a matter of time. A teenager named Salgado keeps saying it's his turn, and Mateo keeps smiling.",
+      "signatureMove": {
+        "name": "Anaconda Choke",
+        "flavor": "He doesn't strike. He coils."
+      },
+      "walkoutLines": [
+        "Turn your back once. That's all I need.",
+        "Tap early. Nobody will judge you.",
+        "Every scramble ends the same way."
+      ],
+      "announcerIntro": [
+        "Born in Cali, Colombia, fighting out of Curitiba, Brazil... the AFL flyweight champion... MATEO \"ANACONDA\" REYES!",
+        "Don't give him your back... don't give him anything... \"ANACONDA\"!"
+      ],
+      "look": {
+        "hair": "Slick ponytail",
+        "facialHair": "none",
+        "build": "Flyweight: lean, long torso, crouched grappling stance",
+        "tattoo": "none",
+        "distinguishingFeature": "Ponytail; rash-guard tan lines",
+        "primaryColor": "#1F8F3A",
+        "secondaryColor": "#F2D21B",
+        "colorNote": "Green-and-yellow shorts",
+        "skinRef": "#b97f55"
+      },
+      "isChampion": true
+    },
+    {
+      "id": "torres",
+      "firstName": "Kai",
+      "lastName": "Torres",
+      "nickname": "Rapidfire",
+      "displayName": "Kai \"Rapidfire\" Torres",
+      "hometown": "San Antonio",
+      "country": "USA",
+      "fightsOutOf": "San Antonio, Texas, USA",
+      "weightClass": "FLY",
+      "discipline": "BOX",
+      "approach": "VOLUME",
+      "southpaw": false,
+      "styleHook": "Young, blazing hand speed, volume punching.",
+      "bio": "Kai is twenty-one, wiry, and throws punches faster than most people blink. He lands in bunches of six and seven, steps out before the return fire comes, then does it again. Veterans call him reckless; the stat sheets call him the busiest flyweight in the AFL.",
+      "signatureMove": {
+        "name": "Rapidfire Flurry",
+        "flavor": "Count the punches if you can. The judges can't."
+      },
+      "walkoutLines": [
+        "Try to keep up.",
+        "I brought a hundred punches. You'll see all of them.",
+        "Blink and you miss it. Blink twice and you're done."
+      ],
+      "announcerIntro": [
+        "From San Antonio, Texas... the fastest hands in the AFL... KAI \"RAPIDFIRE\" TORRES!",
+        "Twenty-one years old and already a blur... \"RAPIDFIRE\"!"
+      ],
+      "look": {
+        "hair": "Short twists",
+        "facialHair": "none",
+        "build": "Flyweight: wiry, narrow, fast-twitch; bladed boxing stance",
+        "tattoo": "none",
+        "distinguishingFeature": "Twists + skinny frame; hands always moving",
+        "primaryColor": "#F07A12",
+        "secondaryColor": "#A34A00",
+        "colorNote": "Orange shorts",
+        "skinRef": "#8a5634"
+      },
+      "isChampion": false
+    },
+    {
+      "id": "salgado",
+      "firstName": "Nico",
+      "lastName": "Salgado",
+      "nickname": "Whiz Kid",
+      "displayName": "Nico \"Whiz Kid\" Salgado",
+      "hometown": "Albuquerque",
+      "country": "USA",
+      "fightsOutOf": "Albuquerque, New Mexico, USA",
+      "weightClass": "FLY",
+      "discipline": "WR",
+      "approach": "SMOTHER",
+      "southpaw": false,
+      "styleHook": "Teen phenom: explosive shots, chokes in transitions, hunting the champion.",
+      "bio": "Nico won a state wrestling title at sixteen and signed with the AFL the week he turned eighteen. He hits double-legs like flipping a light switch and hunts chokes in every scramble, which veterans find extremely rude. He's nineteen, his mom still packs his gym bag, and he has a poster of Mateo Reyes on his wall that he says is for target practice.",
+      "signatureMove": {
+        "name": "Whiz Kid Shot",
+        "flavor": "Blink-fast double-leg, choke on the way down."
+      },
+      "walkoutLines": [
+        "I have homework after this. Let's be quick.",
+        "Nobody told me I was supposed to be nervous.",
+        "Veterans tap too. Ask Reyes. Soon."
+      ],
+      "announcerIntro": [
+        "From Albuquerque, New Mexico... nineteen years old and coming for the belt... NICO \"WHIZ KID\" SALGADO!",
+        "The youngest fighter on the card... and maybe the scariest... \"WHIZ KID\"!"
+      ],
+      "look": {
+        "hair": "Black bowl cut",
+        "facialHair": "none (baby-faced)",
+        "build": "Flyweight: smallest frame on the roster, explosive low stance (renders at 0.9x)",
+        "tattoo": "none",
+        "distinguishingFeature": "Bowl cut + baby face",
+        "primaryColor": "#7B3FC4",
+        "secondaryColor": "#B07AE0",
+        "colorNote": "Purple shorts with a light-purple stripe, as drawn",
+        "skinRef": "#c9926a"
+      },
+      "isChampion": false
+    }
+  ]
+}

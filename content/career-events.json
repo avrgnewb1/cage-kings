@@ -1,0 +1,917 @@
+{
+  "schemaVersion": 1,
+  "placeholders": {
+    "fighter": "Player fighter's full name, e.g. \"Sam Kincaid\".",
+    "fighterFirst": "Player's first name.",
+    "fighterLast": "Player's last name.",
+    "nickname": "Player's nickname without quotes (may be empty; avoid in required text).",
+    "opponent": "Opponent's full name (for signature fighters, use first + last, no nickname).",
+    "opponentNickname": "Opponent nickname without quotes.",
+    "opponentRecord": "Opponent record as W-L-D, e.g. \"14-3-0\".",
+    "opponentRank": "Opponent rank number only, 1-10 (text adds the #). Only used in rankedOpponent offers.",
+    "opponentDiscipline": "Label from ui.json labels.disciplines, e.g. \"Muay Thai\".",
+    "opponentApproach": "Label from ui.json labels.approaches, e.g. \"Pressure Brawler\".",
+    "champion": "Current champion's full name in the player's weight class.",
+    "rank": "Player's current/new rank number only, 1-10 (text adds the #).",
+    "oldRank": "Player's previous rank number only.",
+    "weightClass": "Label from ui.json labels.weightClasses, e.g. \"Lightweight\".",
+    "promotion": "\"Apex Fighting League\".",
+    "promotionShort": "\"AFL\".",
+    "eventName": "Event name, e.g. \"AFL 27\" or \"AFL Fight Night: Houston\".",
+    "purse": "Pre-formatted money string, e.g. \"$24,000\".",
+    "weeksLabel": "Pre-formatted, pluralized duration, e.g. \"1 week\", \"6 weeks\".",
+    "stat": "Label of the main stat raised, from ui.json labels.stats.",
+    "statGain": "Pre-formatted gain, e.g. \"+2\".",
+    "stat2": "Label of a second stat raised.",
+    "stat2Gain": "Pre-formatted gain for stat2. If there's no second stat, use a variant without {stat2} or trim the trailing clause.",
+    "move": "Name of a signature move unlocked by cross-training, from ui.json labels.moves.",
+    "discipline": "Discipline label being cross-trained.",
+    "bodyPart": "Lowercase body part, e.g. \"shoulder\", \"knee\", \"ribs\" (see ui.json labels.bodyParts).",
+    "method": "Lowercase finish method, e.g. \"rear-naked choke\", \"knockout\", \"leg-kick TKO\" (see ui.json labels.methodsInline).",
+    "round": "Round number of the finish.",
+    "time": "Clock time of the finish, \"m:ss\".",
+    "record": "Player's final record, W-L-D.",
+    "fights": "Player's total number of pro fights.",
+    "rankJumpLabel": "Pre-formatted, pluralized possible rank jump shown on the offer card, e.g. \"3 spots\", \"1 spot\".",
+    "planSummary": "Short Auto-plan summary built from training labels, e.g. \"2 weeks of wrestling, 2 of sparring, roadwork, and a rest week\".",
+    "defensesLabel": "Pre-formatted, pluralized, e.g. \"1 title defense\", \"4 title defenses\"."
+  },
+  "events": {
+    "fightOffer": {
+      "standard": [
+        {
+          "id": "fightOffer.standard.01",
+          "title": "Fight Offer",
+          "text": "{promotionShort} matchmakers want you against {opponent} at {eventName}. {opponentDiscipline} base, {opponentApproach} style. Camp: {weeksLabel}."
+        },
+        {
+          "id": "fightOffer.standard.02",
+          "title": "New Fight on the Table",
+          "text": "{opponent} ({opponentRecord}) has agreed to face you at {eventName}. The purse is {purse}. Your call."
+        },
+        {
+          "id": "fightOffer.standard.03",
+          "title": "Matchup Proposed",
+          "text": "Your manager just hung up with the {promotionShort}: {opponent} at {eventName}, {weeksLabel} out. \"Good fight, good money,\" he says. \"Your call.\""
+        },
+        {
+          "id": "fightOffer.standard.04",
+          "title": "Contract Arrived",
+          "text": "A bout agreement for {eventName} is sitting in your inbox. Opponent: {opponent}, a {opponentApproach}. Purse: {purse}."
+        },
+        {
+          "id": "fightOffer.standard.05",
+          "title": "They Asked for You",
+          "text": "{opponent} called you out by name. The {promotionShort} is happy to book it for {eventName}. Purse: {purse}."
+        },
+        {
+          "id": "fightOffer.standard.06",
+          "title": "Solid Test",
+          "text": "{opponent} brings a {opponentRecord} record and a {opponentDiscipline} base. Win this one at {eventName} and people start paying attention."
+        }
+      ],
+      "shortNotice": [
+        {
+          "id": "fightOffer.shortNotice.01",
+          "title": "Short-Notice Call",
+          "text": "Someone on the {eventName} card just pulled out. Can you face {opponent} in {weeksLabel}? Purse: {purse}, short-notice bonus included."
+        },
+        {
+          "id": "fightOffer.shortNotice.02",
+          "title": "The Phone Rings",
+          "text": "Your manager, out of breath: \"{opponent} needs a dance partner at {eventName}. Only {weeksLabel} out. It's a lot of money, kid.\""
+        },
+        {
+          "id": "fightOffer.shortNotice.03",
+          "title": "Fill-In Opportunity",
+          "text": "The {promotionShort} needs a replacement against {opponent}. Half a camp, but the spotlight is real and so is the purse: {purse}."
+        },
+        {
+          "id": "fightOffer.shortNotice.04",
+          "title": "Last-Minute Offer",
+          "text": "A {weightClass} bout at {eventName} fell apart. Step in against {opponent} with {weeksLabel} to prepare? Fortune favors the bold. Usually."
+        },
+        {
+          "id": "fightOffer.shortNotice.05",
+          "title": "Be a Hero",
+          "text": "Take {opponent} on short notice and the {promotionShort} won't forget it. Lose and nobody will blame you. Much."
+        }
+      ],
+      "rankedOpponent": [
+        {
+          "id": "fightOffer.rankedOpponent.01",
+          "title": "Ranked Opponent",
+          "text": "#{opponentRank} {opponent} is willing to fight you at {eventName}. Beat a ranked name and you skip a few rungs on the ladder."
+        },
+        {
+          "id": "fightOffer.rankedOpponent.02",
+          "title": "Step Up in Competition",
+          "text": "The {promotionShort} offers you #{opponentRank} {opponent}. Big risk, bigger reward. Purse: {purse}."
+        },
+        {
+          "id": "fightOffer.rankedOpponent.03",
+          "title": "Contender Bout",
+          "text": "{opponent} sits at #{opponentRank} in the {weightClass} rankings and wants to stay there. Go take the spot. {eventName}, {weeksLabel} out."
+        },
+        {
+          "id": "fightOffer.rankedOpponent.04",
+          "title": "Rankings on the Line",
+          "text": "A win over #{opponentRank} {opponent} at {eventName} puts your name on the list everyone reads. A loss puts you back in line."
+        },
+        {
+          "id": "fightOffer.rankedOpponent.05",
+          "title": "Big Jump Available",
+          "text": "Beat #{opponentRank} {opponent} and you could climb {rankJumpLabel}. That's the kind of win that changes a career."
+        }
+      ],
+      "mainEvent": [
+        {
+          "id": "fightOffer.mainEvent.01",
+          "title": "Main Event Offer",
+          "text": "Your name on top of the poster: {fighter} vs. {opponent}, headlining {eventName}. Purse: {purse}."
+        },
+        {
+          "id": "fightOffer.mainEvent.02",
+          "title": "Headliner",
+          "text": "The {promotionShort} wants you closing the show at {eventName} against {opponent}. Bright lights, big check: {purse}."
+        },
+        {
+          "id": "fightOffer.mainEvent.03",
+          "title": "Top of the Card",
+          "text": "{eventName} needs a main event and the fans voted for you vs. {opponent}. Don't let them down."
+        }
+      ],
+      "rematch": [
+        {
+          "id": "fightOffer.rematch.01",
+          "title": "Rematch Offer",
+          "text": "{opponent} wants the rematch, and so do the fans. Run it back at {eventName}? Purse: {purse}."
+        },
+        {
+          "id": "fightOffer.rematch.02",
+          "title": "Unfinished Business",
+          "text": "Last time with {opponent} left questions. The {promotionShort} wants answers at {eventName}."
+        },
+        {
+          "id": "fightOffer.rematch.03",
+          "title": "Run It Back",
+          "text": "{opponent} hasn't stopped talking about your first fight. Settle it for good at {eventName}."
+        }
+      ],
+      "declined": [
+        {
+          "id": "fightOffer.declined.01",
+          "title": "Offer Declined",
+          "text": "You passed on {opponent}. The matchmakers will call again, but they keep score too."
+        },
+        {
+          "id": "fightOffer.declined.02",
+          "title": "Not This Time",
+          "text": "You turned down {eventName}. Your manager sighs and goes back to his phone."
+        },
+        {
+          "id": "fightOffer.declined.03",
+          "title": "Pass",
+          "text": "Fight declined. {opponent} is already telling reporters you ducked him."
+        }
+      ]
+    },
+    "trainingCamp": {
+      "great": [
+        {
+          "id": "trainingCamp.great.01",
+          "title": "Camp Report: Excellent",
+          "text": "Best camp of your career. Your coaches have nothing left to fix. {stat} {statGain}, {stat2} {stat2Gain}."
+        },
+        {
+          "id": "trainingCamp.great.02",
+          "title": "Camp Report: Peak Form",
+          "text": "You're sharp, fast, and dangerous. Sparring partners started calling in sick. {stat} {statGain}."
+        },
+        {
+          "id": "trainingCamp.great.03",
+          "title": "Camp Report: Locked In",
+          "text": "Every drill clicked. You walk into fight week in the best shape of your life. {stat} {statGain}, {stat2} {stat2Gain}."
+        },
+        {
+          "id": "trainingCamp.great.04",
+          "title": "Camp Report: On Fire",
+          "text": "Your coach used the word \"scary\" twice this week, and he never says anything nice. {stat} {statGain}."
+        }
+      ],
+      "good": [
+        {
+          "id": "trainingCamp.good.01",
+          "title": "Camp Report: Solid",
+          "text": "A good, honest camp. No surprises, steady gains. {stat} {statGain}."
+        },
+        {
+          "id": "trainingCamp.good.02",
+          "title": "Camp Report: On Track",
+          "text": "You hit your targets and made weight easy. {stat} {statGain}, {stat2} {stat2Gain}."
+        },
+        {
+          "id": "trainingCamp.good.03",
+          "title": "Camp Report: Ready",
+          "text": "Not your flashiest camp, but you did the work. You're ready for {opponent}. {stat} {statGain}."
+        },
+        {
+          "id": "trainingCamp.good.04",
+          "title": "Camp Report: Building",
+          "text": "Small improvements everywhere. Your coach nods, which counts as a compliment. {stat} {statGain}."
+        }
+      ],
+      "bad": [
+        {
+          "id": "trainingCamp.bad.01",
+          "title": "Camp Report: Rough",
+          "text": "Nothing clicked. You're heavy-legged and a step slow. Fatigue is high going into fight week."
+        },
+        {
+          "id": "trainingCamp.bad.02",
+          "title": "Camp Report: Overtrained",
+          "text": "You pushed too hard and your body pushed back. You'll walk out tired. Consider more rest weeks next camp."
+        },
+        {
+          "id": "trainingCamp.bad.03",
+          "title": "Camp Report: Distracted",
+          "text": "Bad sleep, bad sparring, bad vibes. {stat} barely moved. Time to fight through it."
+        },
+        {
+          "id": "trainingCamp.bad.04",
+          "title": "Camp Report: Flat",
+          "text": "Your coach watched you hit pads and said nothing. That's worse than yelling."
+        }
+      ],
+      "injury": [
+        {
+          "id": "trainingCamp.injury.01",
+          "title": "Camp Setback",
+          "text": "You tweaked your {bodyPart} in sparring. Training slows down this week."
+        },
+        {
+          "id": "trainingCamp.injury.02",
+          "title": "Injury Scare",
+          "text": "A bad scramble left your {bodyPart} sore. The doctor says rest; your coach says ice. You lose a week of training."
+        },
+        {
+          "id": "trainingCamp.injury.03",
+          "title": "Banged Up",
+          "text": "You'll fight, but your {bodyPart} isn't 100%. Expect it to slow you down on fight night."
+        },
+        {
+          "id": "trainingCamp.injury.04",
+          "title": "Pulled From Camp Work",
+          "text": "Your {bodyPart} needs time. Do you want to keep the fight or ask for a new date?"
+        }
+      ]
+    },
+    "trainingWeek": {
+      "sparring": [
+        {
+          "id": "trainingWeek.sparring.01",
+          "title": "Sparring Week",
+          "text": "Hard rounds with the team. You traded, learned, and only got embarrassed a little. {stat} {statGain}."
+        },
+        {
+          "id": "trainingWeek.sparring.02",
+          "title": "Sparring Week",
+          "text": "You spent the week getting punched by people who are good at punching. It helped. {stat} {statGain}."
+        },
+        {
+          "id": "trainingWeek.sparring.03",
+          "title": "Sparring Week",
+          "text": "Your timing is sharper and your nose is slightly crooked-er. {stat} {statGain}."
+        }
+      ],
+      "wrestling": [
+        {
+          "id": "trainingWeek.wrestling.01",
+          "title": "Wrestling Week",
+          "text": "Shots, sprawls, and a lot of mat burn. {stat} {statGain}."
+        },
+        {
+          "id": "trainingWeek.wrestling.02",
+          "title": "Wrestling Week",
+          "text": "The wrestling coach made you drill chain shots until you dreamed about them. {stat} {statGain}."
+        },
+        {
+          "id": "trainingWeek.wrestling.03",
+          "title": "Wrestling Week",
+          "text": "You finished every practice face-down on the mat. That's how you know it worked. {stat} {statGain}."
+        }
+      ],
+      "bjj": [
+        {
+          "id": "trainingWeek.bjj.01",
+          "title": "BJJ Week",
+          "text": "Rolling every day. You got tapped a lot and learned twice as much. {stat} {statGain}."
+        },
+        {
+          "id": "trainingWeek.bjj.02",
+          "title": "BJJ Week",
+          "text": "Sweeps, back takes, and choke defense. Your grappling feels slicker. {stat} {statGain}."
+        },
+        {
+          "id": "trainingWeek.bjj.03",
+          "title": "BJJ Week",
+          "text": "A blue belt half your size tied you in a knot. Humbling. Useful. {stat} {statGain}."
+        }
+      ],
+      "muayThaiPads": [
+        {
+          "id": "trainingWeek.muayThaiPads.01",
+          "title": "Muay Thai Pads",
+          "text": "Your pad holder's arms are shaking. Kicks, knees, elbows, repeat. {stat} {statGain}."
+        },
+        {
+          "id": "trainingWeek.muayThaiPads.02",
+          "title": "Muay Thai Pads",
+          "text": "Teeps, leg kicks, and a hundred elbows a round. {stat} {statGain}."
+        },
+        {
+          "id": "trainingWeek.muayThaiPads.03",
+          "title": "Muay Thai Pads",
+          "text": "Your shins are bruised and your kicks are louder. {stat} {statGain}."
+        }
+      ],
+      "roadwork": [
+        {
+          "id": "trainingWeek.roadwork.01",
+          "title": "Roadwork Week",
+          "text": "Early miles, hill sprints, and zero excuses. {stat} {statGain}."
+        },
+        {
+          "id": "trainingWeek.roadwork.02",
+          "title": "Roadwork Week",
+          "text": "You ran until your lungs filed a complaint. {stat} {statGain}."
+        },
+        {
+          "id": "trainingWeek.roadwork.03",
+          "title": "Roadwork Week",
+          "text": "Sunrise runs every morning. Your gas tank just got bigger. {stat} {statGain}."
+        }
+      ],
+      "rest": [
+        {
+          "id": "trainingWeek.rest.01",
+          "title": "Rest Week",
+          "text": "Sleep, food, stretching. Your body says thank you. Fatigue down."
+        },
+        {
+          "id": "trainingWeek.rest.02",
+          "title": "Rest Week",
+          "text": "You took the week easy. Your coach pretended not to be annoyed. Fatigue down."
+        },
+        {
+          "id": "trainingWeek.rest.03",
+          "title": "Rest Week",
+          "text": "Recovery is training too. You feel fresh again. Fatigue down."
+        }
+      ],
+      "autoPlan": [
+        {
+          "id": "trainingWeek.autoPlan.01",
+          "title": "Auto-Plan Set",
+          "text": "Your coach built this camp around {opponent}: {planSummary}. You just show up and work."
+        },
+        {
+          "id": "trainingWeek.autoPlan.02",
+          "title": "Coach's Plan",
+          "text": "Camp is on autopilot. Your coach picked {planSummary} for the next {weeksLabel}."
+        },
+        {
+          "id": "trainingWeek.autoPlan.03",
+          "title": "Plan Locked In",
+          "text": "Auto-plan ready: {planSummary}. Change any week if you disagree."
+        }
+      ],
+      "crossTrainUnlock": [
+        {
+          "id": "trainingWeek.crossTrainUnlock.01",
+          "title": "New Move Unlocked",
+          "text": "Cross-training paid off: you've added the {move} from {discipline} to your game."
+        },
+        {
+          "id": "trainingWeek.crossTrainUnlock.02",
+          "title": "New Weapon",
+          "text": "All those {discipline} sessions finally clicked. {move} unlocked."
+        },
+        {
+          "id": "trainingWeek.crossTrainUnlock.03",
+          "title": "Skill Learned",
+          "text": "Your coach finally signed off on the {move}. Time to use it on fight night."
+        }
+      ]
+    },
+    "ranking": {
+      "up": [
+        {
+          "id": "ranking.up.01",
+          "title": "Rankings Update",
+          "text": "You climb to #{rank} in the {weightClass} rankings."
+        },
+        {
+          "id": "ranking.up.02",
+          "title": "Moving Up",
+          "text": "Up from #{oldRank} to #{rank}. The contenders above you just got a little nervous."
+        },
+        {
+          "id": "ranking.up.03",
+          "title": "Climbing",
+          "text": "The {promotionShort} rankings panel moves you to #{rank}. Keep winning and they'll have to keep moving you."
+        },
+        {
+          "id": "ranking.up.04",
+          "title": "New Rank: #{rank}",
+          "text": "That win got noticed. You're now the #{rank} {weightClass} in the {promotionShort}."
+        }
+      ],
+      "down": [
+        {
+          "id": "ranking.down.01",
+          "title": "Rankings Update",
+          "text": "You slip to #{rank} in the {weightClass} rankings."
+        },
+        {
+          "id": "ranking.down.02",
+          "title": "Moving Down",
+          "text": "Down from #{oldRank} to #{rank}. Time to get back to work."
+        },
+        {
+          "id": "ranking.down.03",
+          "title": "Setback",
+          "text": "The loss costs you: you're now #{rank}. The ladder is still there. Climb it again."
+        },
+        {
+          "id": "ranking.down.04",
+          "title": "New Rank: #{rank}",
+          "text": "A tough result drops you to #{rank}. Nobody remembers the fall if you come back."
+        }
+      ],
+      "entered": [
+        {
+          "id": "ranking.entered.01",
+          "title": "You're Ranked!",
+          "text": "Your name is officially on the list: #{rank} in the {promotionShort} {weightClass} division."
+        },
+        {
+          "id": "ranking.entered.02",
+          "title": "Top 10",
+          "text": "The panel can't ignore you anymore. Welcome to the rankings at #{rank}."
+        },
+        {
+          "id": "ranking.entered.03",
+          "title": "Somebody Now",
+          "text": "Unranked to #{rank}. Your phone won't stop buzzing."
+        },
+        {
+          "id": "ranking.entered.04",
+          "title": "On the Board",
+          "text": "You've cracked the {weightClass} top 10 at #{rank}. The real fights start now."
+        }
+      ],
+      "droppedOut": [
+        {
+          "id": "ranking.droppedOut.01",
+          "title": "Out of the Rankings",
+          "text": "You've fallen out of the {weightClass} top 10. Win your way back in."
+        },
+        {
+          "id": "ranking.droppedOut.02",
+          "title": "Unranked",
+          "text": "Your name is off the list. Plenty of champions have been here before."
+        },
+        {
+          "id": "ranking.droppedOut.03",
+          "title": "Back to the Grind",
+          "text": "The rankings moved on without you. Time to make them notice again."
+        }
+      ],
+      "numberOne": [
+        {
+          "id": "ranking.numberOne.01",
+          "title": "#1 Contender",
+          "text": "You're the #1 {weightClass} contender. Only {champion} stands above you."
+        },
+        {
+          "id": "ranking.numberOne.02",
+          "title": "Top of the Ladder",
+          "text": "Number one. Every road in the {weightClass} division now leads to {champion}."
+        },
+        {
+          "id": "ranking.numberOne.03",
+          "title": "Next in Line",
+          "text": "You're #1. The {promotionShort} can't keep the title from you much longer."
+        }
+      ]
+    },
+    "titleShot": {
+      "offered": [
+        {
+          "id": "titleShot.offered.01",
+          "title": "Title Shot!",
+          "text": "It's official: you will challenge {champion} for the {promotionShort} {weightClass} championship at {eventName}. Five rounds."
+        },
+        {
+          "id": "titleShot.offered.02",
+          "title": "The Call",
+          "text": "The {promotionShort} president himself called: \"You earned it. {champion}. {eventName}. Five rounds for the belt.\""
+        },
+        {
+          "id": "titleShot.offered.03",
+          "title": "Championship Bout",
+          "text": "{fighter} vs. {champion} for the {weightClass} title. {weeksLabel} to prepare. Purse: {purse}."
+        },
+        {
+          "id": "titleShot.offered.04",
+          "title": "Everything You Worked For",
+          "text": "From an unknown with a gym bag to the main event: you're fighting {champion} for the belt at {eventName}."
+        }
+      ],
+      "finishStreak": [
+        {
+          "id": "titleShot.finishStreak.01",
+          "title": "Earned the Hard Way",
+          "text": "Finish after finish, and the fans are chanting your name. The {promotionShort} is jumping you to a title shot against {champion}."
+        },
+        {
+          "id": "titleShot.finishStreak.02",
+          "title": "Too Dangerous to Wait",
+          "text": "You're only #{rank}, but nobody wants to fight you anymore. {champion} has to. Title fight at {eventName}."
+        },
+        {
+          "id": "titleShot.finishStreak.03",
+          "title": "Fast Track",
+          "text": "Your finishing streak forced their hand: you get {champion} for the belt at {eventName}."
+        }
+      ]
+    },
+    "titleFight": {
+      "win": [
+        {
+          "id": "titleFight.win.01",
+          "title": "NEW CHAMPION!",
+          "text": "You beat {champion} by {method} to become the {promotionShort} {weightClass} champion!"
+        },
+        {
+          "id": "titleFight.win.02",
+          "title": "And NEW!",
+          "text": "The belt is yours. {fighter} is the {weightClass} champion of the {promotionShort}."
+        },
+        {
+          "id": "titleFight.win.03",
+          "title": "King of the Cage",
+          "text": "You came in a challenger and leave with gold. {method} in round {round}. Nobody can take this night away."
+        },
+        {
+          "id": "titleFight.win.04",
+          "title": "Champion",
+          "text": "From the bottom of the ladder to the top of the division. Enjoy it. Everyone's coming for you now."
+        }
+      ],
+      "defense": [
+        {
+          "id": "titleFight.defense.01",
+          "title": "Title Retained",
+          "text": "You defend the {weightClass} belt against {opponent} by {method}. {defensesLabel} and counting."
+        },
+        {
+          "id": "titleFight.defense.02",
+          "title": "Still Champion",
+          "text": "{opponent} came for the crown and left without it. {defensesLabel}."
+        },
+        {
+          "id": "titleFight.defense.03",
+          "title": "Defense Complete",
+          "text": "Another challenger, another answer: {method} in round {round}. The belt stays home."
+        },
+        {
+          "id": "titleFight.defense.04",
+          "title": "Untouchable",
+          "text": "{defensesLabel}. People are starting to call this an era."
+        }
+      ],
+      "loss": [
+        {
+          "id": "titleFight.loss.01",
+          "title": "Title Lost",
+          "text": "{opponent} takes your {weightClass} belt by {method}. The reign is over. For now."
+        },
+        {
+          "id": "titleFight.loss.02",
+          "title": "Dethroned",
+          "text": "You gave everything, but tonight belonged to {opponent}. You'll want that rematch."
+        },
+        {
+          "id": "titleFight.loss.03",
+          "title": "End of the Reign",
+          "text": "{defensesLabel} as champion. Tonight, {opponent} wrote a new chapter."
+        },
+        {
+          "id": "titleFight.loss.04",
+          "title": "The Belt Changes Hands",
+          "text": "It hurts. It's supposed to. Get back up and climb again."
+        }
+      ],
+      "challengerLoss": [
+        {
+          "id": "titleFight.challengerLoss.01",
+          "title": "So Close",
+          "text": "{champion} retains by {method}. You were five rounds from history. Next time."
+        },
+        {
+          "id": "titleFight.challengerLoss.02",
+          "title": "Not Tonight",
+          "text": "The champ was better tonight. You'll learn from this, and you'll be back."
+        },
+        {
+          "id": "titleFight.challengerLoss.03",
+          "title": "Fell Short",
+          "text": "Your first title shot ends in a loss to {champion}. Plenty of champions lost their first one too."
+        }
+      ]
+    },
+    "postFight": {
+      "winKo": [
+        {
+          "id": "postFight.winKo.01",
+          "title": "Knockout Win!",
+          "text": "You stopped {opponent} cold in round {round}. That one will be on highlight reels for a while."
+        },
+        {
+          "id": "postFight.winKo.02",
+          "title": "Lights Out",
+          "text": "One clean shot at {time} of round {round}, and {opponent} was done. Clean KO."
+        },
+        {
+          "id": "postFight.winKo.03",
+          "title": "Flatlined",
+          "text": "Knockout! The crowd is still on its feet."
+        },
+        {
+          "id": "postFight.winKo.04",
+          "title": "Statement Win",
+          "text": "You walked through {opponent} and knocked him out. Message sent to the division."
+        }
+      ],
+      "winTko": [
+        {
+          "id": "postFight.winTko.01",
+          "title": "TKO Win!",
+          "text": "The referee saved {opponent} at {time} of round {round}. Your win by {method}."
+        },
+        {
+          "id": "postFight.winTko.02",
+          "title": "Stoppage",
+          "text": "You broke {opponent} down until the ref had seen enough. TKO in round {round}."
+        },
+        {
+          "id": "postFight.winTko.03",
+          "title": "Ref Waves It Off",
+          "text": "Too much, too fast. {opponent} couldn't keep up, and the ref stepped in."
+        }
+      ],
+      "winSubmission": [
+        {
+          "id": "postFight.winSubmission.01",
+          "title": "Submission Win!",
+          "text": "{opponent} taps to a {method} in round {round}. Beautiful work on the mat."
+        },
+        {
+          "id": "postFight.winSubmission.02",
+          "title": "Tap, Tap, Tap",
+          "text": "You locked in the {method} and {opponent} had no choice. Submission win."
+        },
+        {
+          "id": "postFight.winSubmission.03",
+          "title": "Mat Magic",
+          "text": "Submission at {time} of round {round}. Your grappling coach is very smug right now."
+        }
+      ],
+      "winDecision": [
+        {
+          "id": "postFight.winDecision.01",
+          "title": "Decision Win",
+          "text": "You go the distance and take a unanimous decision over {opponent}."
+        },
+        {
+          "id": "postFight.winDecision.02",
+          "title": "Clear on the Cards",
+          "text": "All three judges saw it your way. A smart, disciplined win."
+        },
+        {
+          "id": "postFight.winDecision.03",
+          "title": "Went the Distance",
+          "text": "No finish, but no doubt either. You outworked {opponent} for the win."
+        }
+      ],
+      "winSplitDecision": [
+        {
+          "id": "postFight.winSplitDecision.01",
+          "title": "Split Decision Win",
+          "text": "Two judges had it for you, one didn't. A win is a win."
+        },
+        {
+          "id": "postFight.winSplitDecision.02",
+          "title": "Squeaked By",
+          "text": "A razor-close fight, and you get the nod by split decision. Exhale."
+        },
+        {
+          "id": "postFight.winSplitDecision.03",
+          "title": "Close Call",
+          "text": "{opponent} might argue it, but the scorecards say you won."
+        }
+      ],
+      "lossKo": [
+        {
+          "id": "postFight.lossKo.01",
+          "title": "Knockout Loss",
+          "text": "{opponent} caught you in round {round}. You'll watch the replay once, then never again."
+        },
+        {
+          "id": "postFight.lossKo.02",
+          "title": "Lights Out",
+          "text": "You woke up to the ref and the doctor. Tough night. Rest up."
+        },
+        {
+          "id": "postFight.lossKo.03",
+          "title": "Caught Clean",
+          "text": "One shot changed everything. It happens to the best. Get back to the gym."
+        }
+      ],
+      "lossTko": [
+        {
+          "id": "postFight.lossTko.01",
+          "title": "TKO Loss",
+          "text": "The referee stepped in at {time} of round {round}. You wanted to keep going. He didn't let you."
+        },
+        {
+          "id": "postFight.lossTko.02",
+          "title": "Stopped",
+          "text": "{opponent} broke you down by {method}. Regroup and come back smarter."
+        },
+        {
+          "id": "postFight.lossTko.03",
+          "title": "Waved Off",
+          "text": "The ref saw enough. You'll be back, and you'll be better."
+        }
+      ],
+      "lossSubmission": [
+        {
+          "id": "postFight.lossSubmission.01",
+          "title": "Submission Loss",
+          "text": "{opponent} caught you in a {method} in round {round}. Tapping is smart. Now go drill defense."
+        },
+        {
+          "id": "postFight.lossSubmission.02",
+          "title": "Caught",
+          "text": "You tapped to a {method}. Your grappling coach has a few notes. A lot of notes."
+        },
+        {
+          "id": "postFight.lossSubmission.03",
+          "title": "Tapped Out",
+          "text": "The {method} was tight and you had nowhere to go. Learn it. Fix it."
+        }
+      ],
+      "lossDecision": [
+        {
+          "id": "postFight.lossDecision.01",
+          "title": "Decision Loss",
+          "text": "You lose a unanimous decision to {opponent}. Learn from the tape."
+        },
+        {
+          "id": "postFight.lossDecision.02",
+          "title": "Outpointed",
+          "text": "{opponent} did more on the cards tonight. Time to get back in the lab."
+        },
+        {
+          "id": "postFight.lossDecision.03",
+          "title": "Went the Distance",
+          "text": "You lasted every round, but the judges went the other way."
+        }
+      ],
+      "lossSplitDecision": [
+        {
+          "id": "postFight.lossSplitDecision.01",
+          "title": "Split Decision Loss",
+          "text": "One judge had it for you. Two didn't. That one's going to sting."
+        },
+        {
+          "id": "postFight.lossSplitDecision.02",
+          "title": "Robbed?",
+          "text": "The crowd booed the decision. Doesn't change the record, but people saw it."
+        },
+        {
+          "id": "postFight.lossSplitDecision.03",
+          "title": "So Close",
+          "text": "Split decision for {opponent}. One more good round and it was yours."
+        }
+      ],
+      "draw": [
+        {
+          "id": "postFight.draw.01",
+          "title": "Draw",
+          "text": "The judges couldn't split you. Nobody wins, nobody loses, everybody wants a rematch."
+        },
+        {
+          "id": "postFight.draw.02",
+          "title": "Dead Even",
+          "text": "A draw against {opponent}. You'll both be thinking about this one."
+        },
+        {
+          "id": "postFight.draw.03",
+          "title": "No Winner Tonight",
+          "text": "Even on the cards. The fans got their money's worth, anyway."
+        }
+      ]
+    },
+    "retirement": {
+      "legend": [
+        {
+          "id": "retirement.legend.01",
+          "title": "A Legend Retires",
+          "text": "{fighter} retires as one of the greatest {weightClass}s the {promotionShort} has ever seen: {record}, {defensesLabel}. They'll be talking about you for years."
+        },
+        {
+          "id": "retirement.legend.02",
+          "title": "The King Steps Down",
+          "text": "You hang up the gloves on top. {record}. {defensesLabel}. No one will forget this reign."
+        },
+        {
+          "id": "retirement.legend.03",
+          "title": "Hall of Fame Career",
+          "text": "Champion. Icon. Legend. {fighter} walks away with the respect of everyone who ever stepped in the cage."
+        }
+      ],
+      "champion": [
+        {
+          "id": "retirement.champion.01",
+          "title": "Former Champion Retires",
+          "text": "{fighter} retires with a {record} record and a championship to show for it. Not many can say that."
+        },
+        {
+          "id": "retirement.champion.02",
+          "title": "Walking Away a Champion",
+          "text": "You reached the top of the {weightClass} division. Whatever happens next, that belt is forever."
+        },
+        {
+          "id": "retirement.champion.03",
+          "title": "Gold Forever",
+          "text": "Retirement after a career that included {promotionShort} gold. Your old gym already hung your poster on the wall."
+        }
+      ],
+      "contender": [
+        {
+          "id": "retirement.contender.01",
+          "title": "A Contender Retires",
+          "text": "{fighter} walks away at {record}. You fought the best and made them work for every round."
+        },
+        {
+          "id": "retirement.contender.02",
+          "title": "So Close to Gold",
+          "text": "You never got the belt, but you made the division better. That counts."
+        },
+        {
+          "id": "retirement.contender.03",
+          "title": "Respected",
+          "text": "Top contender, tough out, fan favorite. {fighter} retires with nothing left to prove."
+        }
+      ],
+      "journeyman": [
+        {
+          "id": "retirement.journeyman.01",
+          "title": "The Workhorse Retires",
+          "text": "{fighter} retires at {record}. You took the fights others wouldn't, and the {promotionShort} never forgot it."
+        },
+        {
+          "id": "retirement.journeyman.02",
+          "title": "Ironclad",
+          "text": "Short notice, bad matchups, long trips: you said yes to all of it. Tonight the gym says thank you."
+        },
+        {
+          "id": "retirement.journeyman.03",
+          "title": "Blue-Collar Career",
+          "text": "No belt, no regrets. {fights} fights, every one of them honest work."
+        }
+      ],
+      "shortCareer": [
+        {
+          "id": "retirement.shortCareer.01",
+          "title": "Calling It Early",
+          "text": "{fighter} hangs up the gloves at {record}. Some fighters know when it's time."
+        },
+        {
+          "id": "retirement.shortCareer.02",
+          "title": "New Chapter",
+          "text": "Not every story ends with a belt. You fought in the {promotionShort}, and most people never get that far."
+        },
+        {
+          "id": "retirement.shortCareer.03",
+          "title": "Done",
+          "text": "The fight game is hard. You gave it a real shot. Time for whatever comes next."
+        }
+      ]
+    }
+  }
+}

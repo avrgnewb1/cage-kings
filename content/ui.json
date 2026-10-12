@@ -1,0 +1,1103 @@
+{
+  "schemaVersion": 1,
+  "meta": {
+    "gameTitle": "CAGE KINGS",
+    "tagline": "Climb the ladder. Take the crown.",
+    "promotionName": "Apex Fighting League",
+    "promotionShort": "AFL",
+    "pressStart": "Press any key",
+    "tapToStart": "Tap to start",
+    "copyright": "All fighters and organizations are fictional."
+  },
+  "common": {
+    "ok": "OK",
+    "cancel": "Cancel",
+    "back": "Back",
+    "continue": "Continue",
+    "confirm": "Confirm",
+    "yes": "Yes",
+    "no": "No",
+    "next": "Next",
+    "skip": "Skip",
+    "done": "Done",
+    "save": "Save",
+    "loading": "Loading...",
+    "saving": "Saving...",
+    "saved": "Saved",
+    "random": "Random",
+    "locked": "Locked",
+    "comingSoon": "Coming soon",
+    "vs": "VS"
+  },
+  "mainMenu": {
+    "title": "CAGE KINGS",
+    "items": {
+      "continueCareer": "Continue Career",
+      "newCareer": "New Career",
+      "quickFight": "Quick Fight",
+      "tutorial": "Tutorial",
+      "settings": "Settings",
+      "credits": "Credits"
+    },
+    "hints": {
+      "continueCareer": "Pick up where you left off: {fighter}, {record}.",
+      "newCareer": "Start from nothing. Finish with a belt.",
+      "quickFight": "Jump straight into a fight.",
+      "tutorial": "Learn to strike, grapple, and finish.",
+      "settings": "Sound, controls, and display.",
+      "credits": "The team behind the cage."
+    }
+  },
+  "career": {
+    "createFighter": {
+      "title": "Create Your Fighter",
+      "steps": {
+        "name": "Name",
+        "look": "Look",
+        "weightClass": "Weight Class",
+        "discipline": "Discipline",
+        "approach": "Approach",
+        "review": "Review"
+      },
+      "firstNameLabel": "First name",
+      "lastNameLabel": "Last name",
+      "nicknameLabel": "Nickname (optional)",
+      "nicknamePlaceholder": "e.g. Night Shift",
+      "randomName": "Random name",
+      "lookHeads": "Head",
+      "lookBody": "Body",
+      "lookColors": "Shorts color",
+      "lookSkin": "Skin tone",
+      "lookHair": "Hair",
+      "weightClassHelp": "Lighter classes are faster. Heavier classes hit harder. Limits: 125 / 155 / 185 / 265 lb.",
+      "disciplineHelp": "Your base martial art. It unlocks signature moves.",
+      "approachHelp": "How you fight: it sets your starting stats and style.",
+      "reviewTitle": "Ready to Sign?",
+      "reviewText": "{fighter} | {weightClass} | {discipline} | {approach}",
+      "confirm": "Sign with the AFL",
+      "errors": {
+        "nameRequired": "Your fighter needs a first and last name.",
+        "nameTooLong": "Keep names under {max} characters.",
+        "nameReserved": "That name belongs to an AFL star. Pick your own."
+      }
+    },
+    "hub": {
+      "title": "Career",
+      "record": "Record",
+      "rank": "Rank",
+      "unranked": "Unranked",
+      "rankValue": "#{rank}",
+      "champion": "Champion",
+      "weightClass": "Division",
+      "earnings": "Earnings",
+      "fatigue": "Fatigue",
+      "nextFight": "Next Fight",
+      "noFightBooked": "No fight booked",
+      "weekOf": "Week {week} of {totalWeeks}",
+      "fightWeek": "Fight Week!",
+      "menu": {
+        "training": "Training",
+        "offers": "Fight Offers",
+        "rankings": "Rankings",
+        "fighter": "My Fighter",
+        "history": "Fight History",
+        "retire": "Retire"
+      }
+    },
+    "training": {
+      "title": "Training Camp",
+      "subtitle": "Pick this week's focus.",
+      "weekLabel": "Week {week} of {totalWeeks}",
+      "fatigueWarning": "You're worn down. A rest week would help.",
+      "fatigueHigh": "Fatigue is high: you'll start the fight tired.",
+      "confirm": "Train",
+      "raises": "Raises: {stats}",
+      "crossTraining": "Cross-training: {discipline}",
+      "crossTrainingProgress": "{move}: {progress}% learned",
+      "autoPlan": "Auto-Plan",
+      "autoPlanHelp": "Your coach fills the camp. Tap any week to change it.",
+      "noGrindNote": "Stats never decay. Train at your own pace."
+    },
+    "offers": {
+      "title": "Fight Offers",
+      "subtitle": "Pick one. The others go to someone else.",
+      "noOffers": "No offers right now. Train and check back.",
+      "card": {
+        "record": "Record",
+        "rank": "Rank",
+        "discipline": "Discipline",
+        "approach": "Approach",
+        "purse": "Purse",
+        "hype": "Hype",
+        "event": "Event",
+        "camp": "Camp",
+        "shortNotice": "SHORT NOTICE",
+        "mainEvent": "MAIN EVENT",
+        "titleFight": "TITLE FIGHT",
+        "rematch": "REMATCH",
+        "rankJump": "Rank Jump",
+        "rankJumpValue": "+{rankJump}",
+        "campLength": "Camp",
+        "campValue": "{weeksLabel}",
+        "halfCamp": "HALF CAMP",
+        "timesFaced": "Faced {count}x",
+        "rival": "RIVAL"
+      },
+      "accept": "Accept",
+      "decline": "Decline All",
+      "hypeLevels": [
+        "Undercard",
+        "Prelims",
+        "Main Card",
+        "Co-Main",
+        "Main Event"
+      ]
+    },
+    "rankings": {
+      "title": "{weightClass} Rankings",
+      "champion": "C",
+      "youMarker": "YOU",
+      "notRanked": "You're not ranked yet. Win to get noticed.",
+      "contenders": "Top 10 Contenders"
+    },
+    "fighter": {
+      "title": "My Fighter",
+      "stats": "Stats",
+      "moves": "Signature Moves",
+      "streak": "Streak",
+      "finishes": "Finishes",
+      "titleDefenses": "Title Defenses"
+    },
+    "history": {
+      "title": "Fight History",
+      "empty": "No fights yet. Your story starts with the first one.",
+      "row": "{result} vs. {opponent} | {method} | R{round} {time}"
+    },
+    "fightNight": {
+      "title": "Fight Night",
+      "walkout": "Walkout",
+      "start": "Enter the Cage"
+    }
+  },
+  "quickFight": {
+    "title": "Quick Fight",
+    "selectFighter": "Choose Your Fighter",
+    "selectOpponent": "Choose Opponent",
+    "randomOpponent": "Random Opponent",
+    "weightClassFilter": "Division",
+    "difficulty": "Difficulty",
+    "rounds": "Rounds",
+    "roundsOptions": {
+      "three": "3 Rounds",
+      "five": "5 Rounds (Title)"
+    },
+    "start": "Fight!",
+    "useCareerFighter": "Use my career fighter",
+    "crossDivisionWarning": "Different divisions: expect a size gap."
+  },
+  "settings": {
+    "title": "Settings",
+    "sections": {
+      "audio": "Audio",
+      "controls": "Controls",
+      "gameplay": "Gameplay",
+      "display": "Display",
+      "data": "Data"
+    },
+    "audio": {
+      "master": "Master Volume",
+      "music": "Music",
+      "sfx": "Sound Effects",
+      "crowd": "Crowd",
+      "announcer": "Ref & Announcer",
+      "mute": "Mute All"
+    },
+    "controls": {
+      "showTouchControls": "Touch Controls",
+      "buttonSize": "Button Size",
+      "buttonSizes": [
+        "Small",
+        "Medium",
+        "Large"
+      ],
+      "leftHanded": "Swap Sides (Left-Handed)",
+      "vibration": "Vibration",
+      "keyboardLayout": "Keyboard Controls",
+      "viewControls": "View Controls"
+    },
+    "gameplay": {
+      "aiDifficulty": "AI Difficulty",
+      "subMinigameAssist": "Submission Assist (slower rhythm)",
+      "showHints": "Show Button Hints"
+    },
+    "display": {
+      "callouts": "Announcer Callouts",
+      "screenShake": "Screen Shake",
+      "hitFlash": "Hit Flash",
+      "damageFaces": "Face Damage",
+      "reduceMotion": "Reduce Motion"
+    },
+    "data": {
+      "deleteSave": "Delete Career Save",
+      "resetSettings": "Reset Settings",
+      "saveStorageNote": "Your career is saved on this device only."
+    },
+    "on": "On",
+    "off": "Off"
+  },
+  "pause": {
+    "title": "Paused",
+    "resume": "Resume",
+    "restart": "Restart Fight",
+    "controls": "Controls",
+    "settings": "Settings",
+    "forfeit": "Forfeit",
+    "quit": "Quit to Menu",
+    "roundInfo": "Round {round} | {time}"
+  },
+  "results": {
+    "winnerTitle": "WINNER",
+    "drawTitle": "DRAW",
+    "youWin": "YOU WIN!",
+    "youLose": "YOU LOSE",
+    "methodLine": "{method} | Round {round} | {time}",
+    "byDecision": "Decision ({decisionType})",
+    "decisionTypes": {
+      "unanimous": "Unanimous",
+      "split": "Split",
+      "majority": "Majority",
+      "draw": "Draw",
+      "unanimousDraw": "Unanimous Draw",
+      "majorityDraw": "Majority Draw",
+      "splitDraw": "Split Draw"
+    },
+    "scorecards": "Scorecards",
+    "judgeLine": "Judge {judge}: {scoreA} - {scoreB}",
+    "judgeNames": [
+      "Judge A",
+      "Judge B",
+      "Judge C"
+    ],
+    "stats": {
+      "title": "Fight Stats",
+      "strikesLanded": "Strikes Landed",
+      "powerLanded": "Power Strikes",
+      "kicksLanded": "Kicks Landed",
+      "knockdowns": "Knockdowns",
+      "takedowns": "Takedowns",
+      "takedownAttempts": "Takedown Attempts",
+      "subAttempts": "Submission Attempts",
+      "perfectBlocks": "Perfect Blocks",
+      "controlTime": "Control Time",
+      "legDamage": "Leg Damage",
+      "kicksChecked": "Kicks Checked",
+      "refMeterPeak": "Closest to Stoppage"
+    },
+    "careerRewards": {
+      "purse": "Purse: {purse}",
+      "finishBonus": "Finish Bonus: {bonus}",
+      "rankChange": "Rank: #{oldRank} → #{rank}",
+      "newlyRanked": "Ranked: #{rank}",
+      "unchanged": "Rank unchanged"
+    },
+    "buttons": {
+      "rematch": "Rematch",
+      "continue": "Continue",
+      "mainMenu": "Main Menu",
+      "watchReplay": "Replay Finish",
+      "viewCards": "View Scorecards"
+    }
+  },
+  "confirmDialogs": {
+    "quitFight": {
+      "title": "Quit Fight?",
+      "text": "Progress in this fight will be lost.",
+      "confirm": "Quit",
+      "cancel": "Keep Fighting"
+    },
+    "forfeitCareer": {
+      "title": "Forfeit?",
+      "text": "Forfeiting counts as a loss on your record.",
+      "confirm": "Forfeit",
+      "cancel": "Keep Fighting"
+    },
+    "restartFight": {
+      "title": "Restart Fight?",
+      "text": "Start this fight over from round 1?",
+      "confirm": "Restart",
+      "cancel": "Cancel"
+    },
+    "newCareerOverwrite": {
+      "title": "Start a New Career?",
+      "text": "This will erase {fighter} ({record}). This can't be undone.",
+      "confirm": "Erase and Start",
+      "cancel": "Keep My Career"
+    },
+    "deleteSave": {
+      "title": "Delete Save?",
+      "text": "Your career will be gone for good.",
+      "confirm": "Delete",
+      "cancel": "Cancel"
+    },
+    "retire": {
+      "title": "Retire {fighter}?",
+      "text": "Your career ends at {record}. This can't be undone.",
+      "confirm": "Retire",
+      "cancel": "Not Yet"
+    },
+    "acceptOffer": {
+      "title": "Accept Fight?",
+      "text": "{fighter} vs. {opponent} at {eventName}. Purse: {purse}.",
+      "confirm": "Sign It",
+      "cancel": "Back"
+    },
+    "acceptShortNotice": {
+      "title": "Short Notice",
+      "text": "Only {weeksLabel} to prepare. You'll miss part of camp. Take it anyway?",
+      "confirm": "Take It",
+      "cancel": "Back"
+    },
+    "declineOffers": {
+      "title": "Decline All Offers?",
+      "text": "You'll spend another cycle training without a fight.",
+      "confirm": "Decline",
+      "cancel": "Back"
+    },
+    "skipTutorial": {
+      "title": "Skip Tutorial?",
+      "text": "You can replay it any time from the main menu.",
+      "confirm": "Skip",
+      "cancel": "Keep Learning"
+    },
+    "resetSettings": {
+      "title": "Reset Settings?",
+      "text": "Restore all settings to their defaults.",
+      "confirm": "Reset",
+      "cancel": "Cancel"
+    }
+  },
+  "hud": {
+    "round": "R{round}",
+    "roundOf": "Round {round}/{totalRounds}",
+    "stamina": "STAMINA",
+    "head": "HEAD",
+    "body": "BODY",
+    "leg": "LEG",
+    "positions": {
+      "standing": "Standing",
+      "clinch": "Clinch",
+      "thaiClinch": "Thai Clinch",
+      "guardTop": "Top (Guard)",
+      "guardBottom": "Guard",
+      "mountTop": "Mount",
+      "mountBottom": "Mounted",
+      "backTop": "Back Control",
+      "backBottom": "Back Taken"
+    },
+    "contextButtons": {
+      "standing": {
+        "j": "JAB",
+        "k": "POWER",
+        "l": "KICK",
+        "u": "GRAB"
+      },
+      "clinch": {
+        "j": "STRIKE",
+        "k": "ELBOW",
+        "l": "KNEE",
+        "u": "BREAK"
+      },
+      "guardTop": {
+        "j": "POUND",
+        "k": "ELBOW",
+        "l": "MOUNT",
+        "u": "-"
+      },
+      "guardBottom": {
+        "j": "STRIKE",
+        "k": "SWEEP",
+        "l": "GET UP",
+        "u": "SUBMIT"
+      },
+      "mountTop": {
+        "j": "POUND",
+        "k": "ELBOW",
+        "l": "TAKE BACK",
+        "u": "ARMBAR"
+      },
+      "mountBottom": {
+        "j": "HAND FIGHT",
+        "k": "BRIDGE",
+        "l": "-",
+        "u": "-"
+      },
+      "backTop": {
+        "j": "STRIKE",
+        "k": "-",
+        "l": "-",
+        "u": "CHOKE"
+      },
+      "backBottom": {
+        "j": "HAND FIGHT",
+        "k": "TURN",
+        "l": "-",
+        "u": "-"
+      }
+    },
+    "submissionMinigame": {
+      "title": "{submission}!",
+      "attackPrompt": "TAP {btnSubTug} IN RHYTHM!",
+      "defendPrompt": "TAP {btnSubTug} TO ESCAPE!",
+      "tight": "TIGHT!",
+      "slipping": "SLIPPING!"
+    },
+    "getUp": "GET UP!",
+    "contextButtonsNote": "PROPOSED labels: the design says only 'J/K/L/U by context'. Keys are input actions j/k/l/u (Button 1/2/3/Grab). Replace with whatever the engine binds; '-' = unused.",
+    "clock": "{mm}:{ss}",
+    "refMeter": "REF",
+    "stallWarning": "WORK!",
+    "standUp": "STAND-UP"
+  },
+  "labels": {
+    "weightClasses": {
+      "FLY": {
+        "label": "Flyweight",
+        "short": "FLY",
+        "blurb": "Fastest division. Low power, high pace.",
+        "lbs": 125,
+        "limitLabel": "125 lb"
+      },
+      "LW": {
+        "label": "Lightweight",
+        "short": "LW",
+        "blurb": "Fast and balanced.",
+        "lbs": 155,
+        "limitLabel": "155 lb"
+      },
+      "MW": {
+        "label": "Middleweight",
+        "short": "MW",
+        "blurb": "Balanced, with solid power.",
+        "lbs": 185,
+        "limitLabel": "185 lb"
+      },
+      "HW": {
+        "label": "Heavyweight",
+        "short": "HW",
+        "blurb": "Slow, huge power, low cardio. One shot changes everything.",
+        "lbs": 265,
+        "limitLabel": "265 lb"
+      }
+    },
+    "disciplines": {
+      "BOX": {
+        "label": "Boxing",
+        "blurb": "Best hands and head movement. Hook-uppercut power chain and a better perfect-block window. Weak kicks and ground game.",
+        "short": "Boxing"
+      },
+      "MT": {
+        "label": "Muay Thai",
+        "blurb": "Teep, leg kicks, elbows, knees, and the Thai clinch. The art of eight limbs.",
+        "short": "Muay Thai"
+      },
+      "WR": {
+        "label": "Wrestling",
+        "blurb": "Fast, hard-to-stop takedowns, chain re-shots, the best sprawl, and the easiest path to mount.",
+        "short": "Wrestling"
+      },
+      "BJJ": {
+        "label": "Brazilian Jiu-Jitsu",
+        "short": "BJJ",
+        "blurb": "Guard pulls, sweeps, fast back takes, and an edge in every submission. Weakest striking."
+      }
+    },
+    "approaches": {
+      "PRESSURE": {
+        "label": "Pressure Brawler",
+        "blurb": "Big chin, big power. Walks forward. Gasses out."
+      },
+      "COUNTER": {
+        "label": "Counter-Striker",
+        "blurb": "Wider perfect-block window and a counter bonus. Low output."
+      },
+      "VOLUME": {
+        "label": "Volume All-Rounder",
+        "blurb": "Elite cardio, steady output, no glaring holes."
+      },
+      "SMOTHER": {
+        "label": "Smother Grappler",
+        "blurb": "Strong and heavy. Chains takedowns and grinds out control."
+      },
+      "CREATIVE": {
+        "label": "Creative / Unorthodox",
+        "blurb": "Long reach, odd angles, spinning shots. Inconsistent defense."
+      }
+    },
+    "stats": {
+      "striking": {
+        "label": "Striking",
+        "blurb": "Speed and accuracy of your strikes."
+      },
+      "power": {
+        "label": "Power",
+        "blurb": "Damage per strike."
+      },
+      "grappling": {
+        "label": "Grappling",
+        "blurb": "Takedowns, ground control, and the submission tug-of-war."
+      },
+      "defense": {
+        "label": "Defense",
+        "blurb": "Blocking, head movement, and takedown defense."
+      },
+      "strength": {
+        "label": "Strength",
+        "blurb": "Clinch control, escapes, and holding position."
+      },
+      "cardio": {
+        "label": "Cardio",
+        "blurb": "Stamina pool and recovery."
+      },
+      "chin": {
+        "label": "Chin",
+        "blurb": "How much head damage you can take before going down."
+      }
+    },
+    "trainingActivities": {
+      "sparring": {
+        "label": "Sparring",
+        "blurb": "Live rounds. Sharpen your striking and defense."
+      },
+      "wrestling": {
+        "label": "Wrestling",
+        "blurb": "Shots, sprawls, and top control."
+      },
+      "bjj": {
+        "label": "BJJ",
+        "blurb": "Rolling, sweeps, and submissions."
+      },
+      "muayThaiPads": {
+        "label": "Muay Thai Pads",
+        "blurb": "Kicks, knees, elbows, and power."
+      },
+      "roadwork": {
+        "label": "Roadwork",
+        "blurb": "Running and conditioning."
+      },
+      "rest": {
+        "label": "Rest",
+        "blurb": "Recover. Lowers fatigue, no stat gains."
+      },
+      "autoPlan": {
+        "label": "Auto-Plan",
+        "blurb": "Let your coach plan the whole camp. You can change any week."
+      }
+    },
+    "difficulties": {
+      "easy": "Easy",
+      "normal": "Normal",
+      "hard": "Hard"
+    },
+    "finishMethods": {
+      "ko": "KO",
+      "tko": "TKO (Referee Stoppage)",
+      "tkoLegDamage": "TKO (Leg Damage)",
+      "tkoDidNotAnswerBell": "TKO (Did Not Answer the Bell)",
+      "submission": "Submission",
+      "decisionUnanimous": "Unanimous Decision",
+      "decisionSplit": "Split Decision",
+      "decisionMajority": "Majority Decision",
+      "draw": "Draw",
+      "forfeit": "Forfeit"
+    },
+    "methodsInline": {
+      "ko": "knockout",
+      "tko": "TKO",
+      "tkoLegDamage": "TKO from leg damage",
+      "tkoDidNotAnswerBell": "TKO when the bell rang and he stayed on the stool",
+      "guillotine": "guillotine",
+      "armbar": "armbar",
+      "triangle": "triangle choke",
+      "rnc": "rear-naked choke",
+      "decisionUnanimous": "unanimous decision",
+      "decisionSplit": "split decision",
+      "decisionMajority": "majority decision"
+    },
+    "submissions": {
+      "guillotine": "Guillotine",
+      "armbar": "Armbar",
+      "triangle": "Triangle",
+      "rnc": "Rear-Naked Choke"
+    },
+    "moves": {
+      "teep": "Teep",
+      "legKick": "Leg Kick",
+      "elbow": "Elbow",
+      "thaiClinch": "Thai Clinch",
+      "hookUppercutChain": "Hook-Uppercut Chain",
+      "chainReshot": "Chain Re-Shot",
+      "guardPull": "Guard Pull",
+      "sweep": "Sweep",
+      "backTake": "Back Take",
+      "kickCheck": "Kick Check",
+      "elbow126": "12-6 Elbow",
+      "bridgeEscape": "Bridge Escape",
+      "mount": "Mount"
+    },
+    "bodyParts": [
+      "shoulder",
+      "knee",
+      "ribs",
+      "hand",
+      "ankle",
+      "back",
+      "neck",
+      "elbow"
+    ],
+    "results": {
+      "win": "W",
+      "loss": "L",
+      "draw": "D"
+    },
+    "moveNotes": "Keys match CK.CONFIG.MOVES / SUB names where possible."
+  },
+  "controls": {
+    "notes": "Tokens like {btnJab} in tutorial text are replaced with the label for the active input device. Entries with proposed: true are context bindings not yet fixed in the design doc (it only says 'J/K/L/U by context'); confirm with Robert/Quinn.",
+    "tokens": {
+      "btnMove": {
+        "keyboard": "A / D",
+        "touch": "the left stick"
+      },
+      "btnForward": {
+        "keyboard": "toward your opponent (A/D)",
+        "touch": "the stick toward your opponent"
+      },
+      "btnLow": {
+        "keyboard": "S",
+        "touch": "stick down",
+        "note": "Low modifier / sprawl / kick check"
+      },
+      "btnJab": {
+        "keyboard": "J",
+        "touch": "Button 1"
+      },
+      "btnPower": {
+        "keyboard": "K",
+        "touch": "Button 2"
+      },
+      "btnKick": {
+        "keyboard": "L",
+        "touch": "Button 3"
+      },
+      "btnBlock": {
+        "keyboard": "Space",
+        "touch": "the Shield button"
+      },
+      "btnGrab": {
+        "keyboard": "U",
+        "touch": "the Grab button"
+      },
+      "btnTakedown": {
+        "keyboard": "I",
+        "touch": "a down-forward swipe"
+      },
+      "btnPause": {
+        "keyboard": "Esc",
+        "touch": "the Pause icon"
+      },
+      "btnClinchStrike": {
+        "keyboard": "J",
+        "touch": "Button 1",
+        "proposed": true
+      },
+      "btnClinchElbow": {
+        "keyboard": "K",
+        "touch": "Button 2",
+        "proposed": true
+      },
+      "btnClinchKnee": {
+        "keyboard": "L",
+        "touch": "Button 3",
+        "proposed": true
+      },
+      "btnClinchBreak": {
+        "keyboard": "U",
+        "touch": "the Grab button",
+        "proposed": true
+      },
+      "btnGroundStrike": {
+        "keyboard": "J",
+        "touch": "Button 1",
+        "proposed": true
+      },
+      "btnGroundElbow": {
+        "keyboard": "K",
+        "touch": "Button 2",
+        "proposed": true
+      },
+      "btnAdvance": {
+        "keyboard": "L",
+        "touch": "Button 3",
+        "proposed": true
+      },
+      "btnSweep": {
+        "keyboard": "K",
+        "touch": "Button 2",
+        "proposed": true
+      },
+      "btnScramble": {
+        "keyboard": "L",
+        "touch": "Button 3",
+        "proposed": true
+      },
+      "btnBridge": {
+        "keyboard": "K",
+        "touch": "Button 2",
+        "proposed": true
+      },
+      "btnSubmit": {
+        "keyboard": "U",
+        "touch": "the Grab button",
+        "proposed": true
+      },
+      "btnHandFight": {
+        "keyboard": "J",
+        "touch": "Button 1",
+        "proposed": true
+      },
+      "btnSubTug": {
+        "keyboard": "J",
+        "touch": "Button 1",
+        "proposed": true
+      }
+    },
+    "screen": {
+      "title": "Controls",
+      "keyboard": "Keyboard",
+      "touch": "Touch",
+      "rows": {
+        "move": "Move",
+        "low": "Low modifier / sprawl / check",
+        "jab": "Jab",
+        "power": "Power strike",
+        "kick": "Kick (forward = teep, low = leg kick)",
+        "block": "Block (hold)",
+        "grab": "Clinch / grab",
+        "takedown": "Takedown / guard pull (BJJ)",
+        "ground": "Ground: advance / sweep / escape / submit",
+        "pause": "Pause"
+      },
+      "contextNote": "Buttons change labels in the clinch and on the ground. Watch the button text."
+    }
+  },
+  "tutorial": {
+    "title": "Tutorial",
+    "stepCounter": "{step}/{totalSteps}",
+    "goalLabel": "Goal",
+    "goalComplete": "Nice!",
+    "skip": "Skip Tutorial",
+    "replay": "Replay Tutorial",
+    "practiceFreely": "Free Practice",
+    "steps": [
+      {
+        "id": "welcome",
+        "title": "Welcome to the Cage",
+        "text": "This is the AFL. Two fighters, one cage, three rounds. The clock shows 5:00 but runs fast: each round lasts one real minute. Let's learn how to win."
+      },
+      {
+        "id": "move",
+        "title": "Footwork",
+        "text": "Use {btnMove} to step in and out of range. Moving also lets your stamina recover.",
+        "goal": "Move forward and back."
+      },
+      {
+        "id": "jab",
+        "title": "The Jab",
+        "text": "Press {btnJab} to jab. It's fast and cheap on stamina. Use it to measure distance and keep your opponent honest.",
+        "goal": "Land 3 jabs."
+      },
+      {
+        "id": "power",
+        "title": "Power Strike",
+        "text": "Press {btnPower} for a power strike. Slow, big damage, big stamina cost. Don't throw it at air.",
+        "goal": "Land 2 power strikes."
+      },
+      {
+        "id": "kick",
+        "title": "Kicks",
+        "text": "Press {btnKick} to kick from range. Kicks reach far, but a body kick can be caught, and a caught kick gives your opponent a free takedown attempt.",
+        "goal": "Land 2 kicks."
+      },
+      {
+        "id": "lowStrikes",
+        "title": "Going Low",
+        "text": "Hold {btnLow} while you strike to go low. Low kicks build leg damage: a hurt leg moves slowly, kicks weakly, and can drop you.",
+        "goal": "Land a low kick."
+      },
+      {
+        "id": "teep",
+        "title": "Teep (Muay Thai)",
+        "text": "Muay Thai fighters can hold {btnForward} and press {btnKick} for a teep: a push kick that breaks pressure and drains stamina.",
+        "goal": "Land a teep."
+      },
+      {
+        "id": "block",
+        "title": "Blocking",
+        "text": "Hold {btnBlock} to guard high. Hold {btnBlock} + {btnLow} to guard low. Each blocked hit costs a little stamina.",
+        "goal": "Block 3 strikes."
+      },
+      {
+        "id": "kickCheck",
+        "title": "Check the Leg Kick",
+        "text": "Guard low ({btnBlock} + {btnLow}) against a leg kick to check it. The kicker hurts his own leg.",
+        "goal": "Check a leg kick."
+      },
+      {
+        "id": "perfectBlock",
+        "title": "Perfect Block",
+        "text": "Press {btnBlock} just before a strike lands for a perfect block. Your attacker staggers, and that's your opening. Perfect-block a body kick to catch it.",
+        "goal": "Land a perfect block."
+      },
+      {
+        "id": "stamina",
+        "title": "Stamina Is Everything",
+        "text": "Every action drains your stamina bar. Low stamina means slower strikes, weaker blocks, and easier takedowns. Stay idle or move to recover; you get a partial refill between rounds."
+      },
+      {
+        "id": "damage",
+        "title": "Damage",
+        "text": "Head damage builds toward a knockout. Body damage lowers your max stamina. Leg damage slows you down. Watch the face, body, and leg meters."
+      },
+      {
+        "id": "refMeter",
+        "title": "Fight Back or Get Stopped",
+        "text": "Eat clean shots without blocking, escaping, or hitting back and the referee's meter fills. When it's full, he stops the fight. Defend or answer to drain it."
+      },
+      {
+        "id": "clinch",
+        "title": "The Clinch",
+        "text": "Get close and press {btnGrab} to clinch. Inside, use {btnClinchStrike} for short strikes, {btnClinchKnee} for knees, or {btnClinchBreak} to break away. Escaping is a timing battle, and Strength helps.",
+        "goal": "Land a knee from the clinch."
+      },
+      {
+        "id": "takedown",
+        "title": "Takedowns",
+        "text": "From mid-range, press {btnTakedown} to shoot. Land it and you're on top in your opponent's guard.",
+        "goal": "Land a takedown."
+      },
+      {
+        "id": "takedownDefense",
+        "title": "Stopping Takedowns",
+        "text": "When they shoot, hold {btnLow} to sprawl, time a knee, or press {btnGrab} for a guillotine.",
+        "goal": "Stop a takedown."
+      },
+      {
+        "id": "groundLadder",
+        "title": "The Ground Ladder",
+        "text": "On the ground, position is a ladder: Guard, then Mount, then Back. The higher you climb on top, the more danger you put your opponent in. Buttons change on the ground, so watch their labels."
+      },
+      {
+        "id": "guardTop",
+        "title": "Top in Guard",
+        "text": "From top guard, {btnGroundStrike} for ground and pound, {btnGroundElbow} for elbows, or {btnAdvance} to pass to mount. Strikes from inside the guard do less damage.",
+        "goal": "Advance to mount."
+      },
+      {
+        "id": "guardBottom",
+        "title": "Bottom in Guard",
+        "text": "From guard: block, {btnScramble} to get up, {btnSweep} to sweep to top, or {btnSubmit} for an armbar or triangle.",
+        "goal": "Sweep your opponent."
+      },
+      {
+        "id": "mount",
+        "title": "Mount",
+        "text": "Mount is the heaviest ground and pound, 12-6 elbows included. Press {btnSubmit} for an armbar, or {btnAdvance} to take the back when your opponent turns away. Stuck on the bottom? Press {btnBridge} to bridge back to guard.",
+        "goal": "Land ground and pound from mount."
+      },
+      {
+        "id": "groundBack",
+        "title": "Back Control",
+        "text": "On the back, {btnSubmit} goes for the rear-naked choke. If your back is taken, use {btnHandFight} to fight the hands and escape to guard.",
+        "goal": "Escape from back control."
+      },
+      {
+        "id": "stall",
+        "title": "Keep Working",
+        "text": "Stall on the ground and the referee yells \"Work!\" Keep stalling and he stands you both up."
+      },
+      {
+        "id": "submissions",
+        "title": "Submissions",
+        "text": "Every submission is a tug-of-war. Tap {btnSubTug} in rhythm to win it. Grappling and stamina tip the scale.",
+        "goal": "Win a submission tug-of-war."
+      },
+      {
+        "id": "finishes",
+        "title": "How Fights End",
+        "text": "KO: head health hits zero. TKO: the referee's meter fills, or a fighter is too hurt to answer the bell. Submission: they tap. Otherwise, three judges score every round: damage first, then aggression, then control."
+      },
+      {
+        "id": "corner",
+        "title": "Your Corner",
+        "text": "Between rounds, your corner shows your stamina, damage, a scorecard estimate, and one tip. Tap to skip it."
+      },
+      {
+        "id": "disciplines",
+        "title": "Your Discipline",
+        "text": "Each discipline adds signature moves: Boxing chains hooks and uppercuts, Muay Thai adds teeps, elbows, and the Thai clinch, Wrestling shoots faster and climbs to mount easier, and BJJ can pull guard with {btnTakedown}."
+      },
+      {
+        "id": "pause",
+        "title": "Take a Breath",
+        "text": "Press {btnPause} any time to pause and review the controls."
+      },
+      {
+        "id": "done",
+        "title": "You're Ready",
+        "text": "That's the basics. Fight smart, manage your stamina, and finish when you see the opening. Good luck, champ."
+      }
+    ],
+    "disciplineTips": {
+      "BOX": "Your power strike chains hooks and uppercuts, and your perfect-block window is wider. Win on the feet; stay off the mat.",
+      "MT": "Teep to stop pressure, chop the legs, and look for elbows up close. In the clinch, your knees are deadly.",
+      "WR": "Your takedowns are fast and hard to stop, and you climb to mount easier than anyone. If a shot fails, shoot again.",
+      "BJJ": "Pull guard with {btnTakedown}, sweep, take the back, and win every submission battle. Don't trade on the feet."
+    },
+    "careerIntro": [
+      {
+        "id": "careerWelcome",
+        "title": "Welcome to the AFL",
+        "text": "You're an unknown with a gym bag and a dream. Win fights, climb the rankings, and take the belt."
+      },
+      {
+        "id": "careerTraining",
+        "title": "Training Camp",
+        "text": "Between fights you get about six weeks of camp. Each week, tap one focus, or let Auto-Plan do it. Training raises stats but adds fatigue, so rest when you need it. Stats never decay."
+      },
+      {
+        "id": "careerCrossTrain",
+        "title": "Cross-Training",
+        "text": "Train another discipline's sessions to unlock one of its signature moves."
+      },
+      {
+        "id": "careerOffers",
+        "title": "Fight Offers",
+        "text": "Each cycle brings two or three offers. Every card shows the opponent, purse, possible rank jump, hype, and camp length. Short-notice fights mean half a camp, but more hype and money."
+      },
+      {
+        "id": "careerRivals",
+        "title": "Rivals Remember",
+        "text": "The AFL's star fighters remember how your fights ended. Beat one close, and they'll be back for a rematch."
+      },
+      {
+        "id": "careerRankings",
+        "title": "Rankings",
+        "text": "Each division has a champion and a top 10. Ranked wins and finishes move you up faster. Losses move you down."
+      },
+      {
+        "id": "careerTitle",
+        "title": "The Title",
+        "text": "Reach #1, or #3 on a finishing streak, to earn a five-round title fight. Win it, defend it, and retire a king."
+      }
+    ]
+  },
+  "loadingTips": [
+    "Stamina is everything. Swing wild and you gas out.",
+    "A perfect block staggers your attacker. Make them pay.",
+    "Leg kicks add up. Enough of them and your opponent can't stand.",
+    "Body damage lowers max stamina. Go to the body early.",
+    "Kicks can be caught. Mix them up.",
+    "Sprawl by blocking low when they shoot.",
+    "Time a knee as they shoot for a takedown.",
+    "Never give up your back to a BJJ fighter.",
+    "Eat unanswered shots and the ref will stop it. Block, move, or hit back.",
+    "Judges score damage first, then aggression, then control.",
+    "Rest weeks matter. Tired fighters lose.",
+    "Short-notice fights pay more, but you'll have less time to prepare.",
+    "Finishes move you up the rankings faster than decisions.",
+    "Title fights are five rounds. Train your cardio.",
+    "Low stamina makes you easier to take down.",
+    "Check leg kicks by guarding low. The kicker pays for it.",
+    "Stall on the ground and the ref will stand you up.",
+    "Mount means heavy ground and pound. Bridge out fast.",
+    "12-6 elbows are legal on the ground."
+  ],
+  "credits": {
+    "title": "Credits",
+    "roles": {
+      "engine": "Engine & Lead",
+      "design": "Design",
+      "art": "Art",
+      "sound": "Sound",
+      "qa": "QA",
+      "writing": "Writing & Creative Direction"
+    },
+    "disclaimer": "CAGE KINGS is a work of fiction. All fighters, nicknames, and organizations, including the Apex Fighting League, are invented. Any resemblance to real people is coincidental."
+  },
+  "corner": {
+    "title": "Corner",
+    "roundBreak": "End of Round {round}",
+    "skip": "Tap to skip",
+    "nextRound": "Round {nextRound}",
+    "readout": {
+      "stamina": "Stamina",
+      "head": "Head",
+      "body": "Body",
+      "leg": "Leg",
+      "fresh": "Fresh",
+      "tired": "Tired",
+      "gassed": "Gassed",
+      "ok": "OK",
+      "hurt": "Hurt",
+      "badlyHurt": "Badly Hurt"
+    },
+    "scoreEstimate": "Your corner's card: {scoreFor}-{scoreAgainst}",
+    "scoreEstimateLabels": {
+      "ahead": "You're ahead",
+      "behind": "You're behind",
+      "even": "Too close to call"
+    },
+    "tipLabel": "Coach says:",
+    "championshipRounds": "Championship rounds"
+  },
+  "placeholders": {
+    "fighter": "Player's full name.",
+    "record": "W-L-D.",
+    "rank": "Rank number (text adds #).",
+    "oldRank": "Previous rank number.",
+    "weightClass": "Weight class label.",
+    "discipline": "Discipline label.",
+    "approach": "Approach label.",
+    "week": "Current camp week.",
+    "totalWeeks": "Camp length in weeks.",
+    "weeksLabel": "Pre-formatted, pluralized weeks.",
+    "purse": "Pre-formatted money.",
+    "bonus": "Pre-formatted money.",
+    "opponent": "Opponent full name.",
+    "eventName": "Event name.",
+    "round": "Round number.",
+    "nextRound": "Next round number.",
+    "totalRounds": "3 or 5.",
+    "time": "Clock m:ss (5:00 display clock).",
+    "mm": "Clock minutes.",
+    "ss": "Clock seconds, 2 digits.",
+    "method": "Finish method label.",
+    "result": "W/L/D label.",
+    "decisionType": "Label from results.decisionTypes.",
+    "judge": "Judge number or name.",
+    "scoreA": "Score for fighter A.",
+    "scoreB": "Score for fighter B.",
+    "scoreFor": "Corner's estimated total for the player.",
+    "scoreAgainst": "Corner's estimated total for the opponent.",
+    "rankJump": "Number of spots.",
+    "stats": "Comma-separated stat labels.",
+    "move": "Move label.",
+    "progress": "0-100.",
+    "submission": "Submission label.",
+    "count": "Number.",
+    "max": "Max characters.",
+    "step": "Tutorial step number.",
+    "totalSteps": "Tutorial step count",
+    "btnTokens": "Any {btn...} token. Input tokens: see controls.tokens; replace with the active device's label."
+  }
+}

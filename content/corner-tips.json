@@ -1,0 +1,552 @@
+{
+  "schemaVersion": 1,
+  "notes": "facing<FighterId> situations key off the opponent's signature fighter id and outrank the generic opponent-style ones. Between-round corner screen (3-5s, skippable) shows one tip. Evaluate every situation whose trigger matches the round that just ended, take the highest priority, and pick a random tip from it (avoid repeating a tip in the same fight). Situations with scope 'later' depend on post-MVP systems; skip them until those exist.",
+  "placeholders": {},
+  "situations": {
+    "hurtLastRound": {
+      "priority": 100,
+      "trigger": "Player was knocked down, or head health ended the round low, or the ref-stoppage meter got high.",
+      "tips": [
+        {
+          "id": "hurtLastRound.01",
+          "text": "You got rocked. Clinch or tie him up if he swarms, and buy time."
+        },
+        {
+          "id": "hurtLastRound.02",
+          "text": "Guard up, move your feet. Don't trade until your legs come back."
+        },
+        {
+          "id": "hurtLastRound.03",
+          "text": "He smells blood. Take a breath, reset, and make him miss."
+        }
+      ]
+    },
+    "refMeterClose": {
+      "priority": 95,
+      "trigger": "Player's ref-stoppage meter peaked high but no stoppage.",
+      "tips": [
+        {
+          "id": "refMeterClose.01",
+          "text": "The ref was about to jump in! If you're hit, fight back or cover up."
+        },
+        {
+          "id": "refMeterClose.02",
+          "text": "Never stand there and take it. Block, move, or throw something back."
+        }
+      ]
+    },
+    "gassed": {
+      "priority": 90,
+      "trigger": "Player stamina below the 'gassed' threshold at the bell.",
+      "tips": [
+        {
+          "id": "gassed.01",
+          "text": "You're gassed. Jab and move, no wild swings this round."
+        },
+        {
+          "id": "gassed.02",
+          "text": "Breathe. Stay off the cage, keep it light, and let your tank refill."
+        },
+        {
+          "id": "gassed.03",
+          "text": "Stop chasing the knockout. Pick your shots and rest in between."
+        }
+      ]
+    },
+    "ownLegHurt": {
+      "priority": 85,
+      "trigger": "Player leg health low.",
+      "tips": [
+        {
+          "id": "ownLegHurt.01",
+          "text": "That leg's in trouble. Check the kicks: block low when he throws them."
+        },
+        {
+          "id": "ownLegHurt.02",
+          "text": "Close the distance. He can't kick you if you're in his face."
+        },
+        {
+          "id": "ownLegHurt.03",
+          "text": "Change it up: shoot a takedown and take his kicks away."
+        }
+      ]
+    },
+    "cut": {
+      "priority": 80,
+      "trigger": "Player has a cut (cuts are post-MVP).",
+      "scope": "later",
+      "tips": [
+        {
+          "id": "cut.01",
+          "text": "The cut is bad. Hands high, protect that eye."
+        },
+        {
+          "id": "cut.02",
+          "text": "Don't brawl with that cut. Move, jab, and stay out of the pocket."
+        }
+      ]
+    },
+    "behindOnCards": {
+      "priority": 75,
+      "trigger": "Corner scorecard estimate has the player losing.",
+      "tips": [
+        {
+          "id": "behindOnCards.01",
+          "text": "You're down on the cards. You need this round. Go get it!"
+        },
+        {
+          "id": "behindOnCards.02",
+          "text": "We need damage, not just activity. Land the big ones."
+        },
+        {
+          "id": "behindOnCards.03",
+          "text": "Behind on points. Time to take a risk: push the pace and hunt the finish."
+        }
+      ]
+    },
+    "finalRoundClose": {
+      "priority": 72,
+      "trigger": "Next round is the last and the corner estimate is close.",
+      "tips": [
+        {
+          "id": "finalRoundClose.01",
+          "text": "It's close. Whoever wins this round wins the fight. Leave it all out there."
+        },
+        {
+          "id": "finalRoundClose.02",
+          "text": "Last round, coin flip on the cards. Be the busier fighter, and do damage."
+        }
+      ]
+    },
+    "aheadOnCards": {
+      "priority": 70,
+      "trigger": "Corner scorecard estimate has the player winning.",
+      "tips": [
+        {
+          "id": "aheadOnCards.01",
+          "text": "You're up on the cards. Stay smart. Don't give him anything easy."
+        },
+        {
+          "id": "aheadOnCards.02",
+          "text": "Winning rounds. Keep doing what you're doing. Don't get sloppy."
+        },
+        {
+          "id": "aheadOnCards.03",
+          "text": "You're ahead. Defense first, and take the openings he gives you."
+        }
+      ]
+    },
+    "stuckOnBottom": {
+      "priority": 65,
+      "trigger": "Player spent most of the round on bottom (guard, mounted, or back taken).",
+      "tips": [
+        {
+          "id": "stuckOnBottom.01",
+          "text": "Stop playing on your back! Sprawl when he shoots, then get up."
+        },
+        {
+          "id": "stuckOnBottom.02",
+          "text": "When he mounts you, bridge right away. Don't wait."
+        },
+        {
+          "id": "stuckOnBottom.03",
+          "text": "From guard, sweep or scramble. Don't just lie there; the judges see it."
+        }
+      ]
+    },
+    "facingAslanov": {
+      "priority": 58,
+      "trigger": "Opponent is aslanov (LW champion).",
+      "tips": [
+        {
+          "id": "facingAslanov.01",
+          "text": "He wants the clinch and that first body lock. Stuff his first entry and he has to rethink everything."
+        },
+        {
+          "id": "facingAslanov.02",
+          "text": "Hips back and hands inside in the clinch. If he locks his hands behind you, you're getting thrown."
+        },
+        {
+          "id": "facingAslanov.03",
+          "text": "Break the clinch and circle off the fence. When he reaches and misses, knee him on the way in!"
+        }
+      ]
+    },
+    "facingVale": {
+      "priority": 58,
+      "trigger": "Opponent is vale (HW champion).",
+      "tips": [
+        {
+          "id": "facingVale.01",
+          "text": "He spins when he's frustrated. When he misses, step in and punish his back."
+        },
+        {
+          "id": "facingVale.02",
+          "text": "Don't stand at the end of those long arms. Get inside or get out."
+        },
+        {
+          "id": "facingVale.03",
+          "text": "Watch his hips. If they turn, something's spinning. Block, then counter."
+        }
+      ]
+    },
+    "facingDorsey": {
+      "priority": 58,
+      "trigger": "Opponent is dorsey (MW champion).",
+      "tips": [
+        {
+          "id": "facingDorsey.01",
+          "text": "He's old and his gas tank is older. Make him work every minute."
+        },
+        {
+          "id": "facingDorsey.02",
+          "text": "Stay off the fence! That's where his hooks live. Circle out and make him follow."
+        },
+        {
+          "id": "facingDorsey.03",
+          "text": "Pressure him late. His jab gets slower every round."
+        }
+      ]
+    },
+    "facingReyes": {
+      "priority": 58,
+      "trigger": "Opponent is reyes (FLY champion).",
+      "tips": [
+        {
+          "id": "facingReyes.01",
+          "text": "Don't play guard with him! If he pulls, stand up and make him strike."
+        },
+        {
+          "id": "facingReyes.02",
+          "text": "Keep it standing. Every scramble is his chance to take your back."
+        },
+        {
+          "id": "facingReyes.03",
+          "text": "If you end up on the mat, turn into him and get up. Never give him your back."
+        }
+      ]
+    },
+    "facingOkafor": {
+      "priority": 57,
+      "trigger": "Opponent is okafor.",
+      "tips": [
+        {
+          "id": "facingOkafor.01",
+          "text": "Check those leg kicks! Guard low and make his shins pay."
+        },
+        {
+          "id": "facingOkafor.02",
+          "text": "He walks forward with his chin. Step off the line and counter."
+        },
+        {
+          "id": "facingOkafor.03",
+          "text": "Take him down. He can't kick you from his back."
+        }
+      ]
+    },
+    "facingMarchetti": {
+      "priority": 56,
+      "trigger": "Opponent is marchetti.",
+      "tips": [
+        {
+          "id": "facingMarchetti.01",
+          "text": "Don't charge straight in. He pivots off and hooks you on the way past."
+        },
+        {
+          "id": "facingMarchetti.02",
+          "text": "He's a southpaw. Win the outside angle on his lead foot and never walk straight at him."
+        },
+        {
+          "id": "facingMarchetti.03",
+          "text": "Make him lead. Feint, and when he waits, take him down."
+        }
+      ]
+    },
+    "facingLind": {
+      "priority": 56,
+      "trigger": "Opponent is lind.",
+      "tips": [
+        {
+          "id": "facingLind.01",
+          "text": "He's short and heavy. Keep him on the end of your jab and don't let him lock up."
+        },
+        {
+          "id": "facingLind.02",
+          "text": "Every time he grabs you, break and circle. Don't stand still in his grip."
+        }
+      ]
+    },
+    "facingHollander": {
+      "priority": 55,
+      "trigger": "Opponent is hollander.",
+      "tips": [
+        {
+          "id": "facingHollander.01",
+          "text": "Keep your head up when you shoot. He's hunting that guillotine."
+        },
+        {
+          "id": "facingHollander.02",
+          "text": "He throws in long combos. Block the start, then counter before he resets."
+        }
+      ]
+    },
+    "facingSalgado": {
+      "priority": 55,
+      "trigger": "Opponent is salgado.",
+      "tips": [
+        {
+          "id": "facingSalgado.01",
+          "text": "The kid shoots fast. Hips back, hands down, and sprawl."
+        },
+        {
+          "id": "facingSalgado.02",
+          "text": "He's young and wild in scrambles. Stay calm and make him make the mistake."
+        }
+      ]
+    },
+    "facingTorres": {
+      "priority": 55,
+      "trigger": "Opponent is torres.",
+      "tips": [
+        {
+          "id": "facingTorres.01",
+          "text": "He throws in bunches. Block the flurry, then answer before he steps out."
+        },
+        {
+          "id": "facingTorres.02",
+          "text": "Take him down. He's all hands."
+        }
+      ]
+    },
+    "losingOnFeet": {
+      "priority": 60,
+      "trigger": "Player took clearly more striking damage than he dealt this round.",
+      "tips": [
+        {
+          "id": "losingOnFeet.01",
+          "text": "He's beating you on the feet. Change levels and take him down."
+        },
+        {
+          "id": "losingOnFeet.02",
+          "text": "You're getting outstruck. Tighten up the guard and counter him."
+        },
+        {
+          "id": "losingOnFeet.03",
+          "text": "Stop trading with him. Clinch, knees, then get out."
+        }
+      ]
+    },
+    "winningOnFeet": {
+      "priority": 55,
+      "trigger": "Player out-landed the opponent on the feet.",
+      "tips": [
+        {
+          "id": "winningOnFeet.01",
+          "text": "Your hands are better than his. Keep it standing and keep the pressure."
+        },
+        {
+          "id": "winningOnFeet.02",
+          "text": "He can't handle the jab. Double it up and follow with the power."
+        }
+      ]
+    },
+    "opponentGassed": {
+      "priority": 52,
+      "trigger": "Opponent stamina low at the bell.",
+      "tips": [
+        {
+          "id": "opponentGassed.01",
+          "text": "He's tired! Push the pace now, before he catches his breath."
+        },
+        {
+          "id": "opponentGassed.02",
+          "text": "He's breathing through his mouth. Take him down; he can't sprawl like that."
+        }
+      ]
+    },
+    "opponentLegHurt": {
+      "priority": 50,
+      "trigger": "Opponent leg health low.",
+      "tips": [
+        {
+          "id": "opponentLegHurt.01",
+          "text": "His leg is gone. Keep chopping it and he'll fall."
+        },
+        {
+          "id": "opponentLegHurt.02",
+          "text": "He's limping! Kick the same spot. Same leg, every time."
+        }
+      ]
+    },
+    "opponentBodyHurt": {
+      "priority": 48,
+      "trigger": "Opponent body health low.",
+      "tips": [
+        {
+          "id": "opponentBodyHurt.01",
+          "text": "The body shots are working. Go downstairs again and drain his tank."
+        }
+      ]
+    },
+    "opponentWrestler": {
+      "priority": 45,
+      "trigger": "Opponent discipline is Wrestling or approach is Smother Grappler.",
+      "tips": [
+        {
+          "id": "opponentWrestler.01",
+          "text": "He wants to wrestle. Keep your feet back and sprawl on every shot."
+        },
+        {
+          "id": "opponentWrestler.02",
+          "text": "Time the knee when he shoots. Make him pay for coming in low."
+        },
+        {
+          "id": "opponentWrestler.03",
+          "text": "Stay off the cage and keep him on the end of your jab."
+        }
+      ]
+    },
+    "opponentBjj": {
+      "priority": 44,
+      "trigger": "Opponent discipline is BJJ.",
+      "tips": [
+        {
+          "id": "opponentBjj.01",
+          "text": "Don't follow him to the ground. If he pulls guard, stand back up."
+        },
+        {
+          "id": "opponentBjj.02",
+          "text": "Never give him your back. Turn into him in every scramble."
+        },
+        {
+          "id": "opponentBjj.03",
+          "text": "Keep it standing. His hands are the weakest part of his game."
+        }
+      ]
+    },
+    "opponentKicker": {
+      "priority": 42,
+      "trigger": "Opponent is Muay Thai or landed several kicks.",
+      "tips": [
+        {
+          "id": "opponentKicker.01",
+          "text": "He drops his hands after kicks. Counter right over the top!"
+        },
+        {
+          "id": "opponentKicker.02",
+          "text": "Check those leg kicks. Make his shins hurt."
+        },
+        {
+          "id": "opponentKicker.03",
+          "text": "Catch the body kick and take him down."
+        }
+      ]
+    },
+    "opponentBoxer": {
+      "priority": 41,
+      "trigger": "Opponent discipline is Boxing.",
+      "tips": [
+        {
+          "id": "opponentBoxer.01",
+          "text": "His hands are fast. Kick from range and take him down."
+        },
+        {
+          "id": "opponentBoxer.02",
+          "text": "Don't stand in the pocket with him. Make it a grappling fight."
+        }
+      ]
+    },
+    "opponentPressure": {
+      "priority": 40,
+      "trigger": "Opponent approach is Pressure Brawler.",
+      "tips": [
+        {
+          "id": "opponentPressure.01",
+          "text": "He walks forward with his chin. Step off the line and counter."
+        },
+        {
+          "id": "opponentPressure.02",
+          "text": "Teep him, circle out, and make him work. He'll fade."
+        }
+      ]
+    },
+    "opponentCounter": {
+      "priority": 39,
+      "trigger": "Opponent approach is Counter-Striker.",
+      "tips": [
+        {
+          "id": "opponentCounter.01",
+          "text": "He's waiting for you to swing. Feint first, then throw."
+        },
+        {
+          "id": "opponentCounter.02",
+          "text": "Don't lead with the big shot. Jab, then take him down."
+        }
+      ]
+    },
+    "opponentCreative": {
+      "priority": 38,
+      "trigger": "Opponent approach is Creative / Unorthodox.",
+      "tips": [
+        {
+          "id": "opponentCreative.01",
+          "text": "He throws weird stuff, but his defense has holes. Pressure him."
+        },
+        {
+          "id": "opponentCreative.02",
+          "text": "Close the distance. He can't do the spinning stuff up close."
+        }
+      ]
+    },
+    "stallWarning": {
+      "priority": 35,
+      "trigger": "Player got a 'Work!' warning or stand-up this round.",
+      "tips": [
+        {
+          "id": "stallWarning.01",
+          "text": "The ref stood you up. Hold top position and actually work, or lose it."
+        },
+        {
+          "id": "stallWarning.02",
+          "text": "Lying on him doesn't score. Strike or advance."
+        }
+      ]
+    },
+    "subAttemptSurvived": {
+      "priority": 34,
+      "trigger": "Player escaped a submission attempt.",
+      "tips": [
+        {
+          "id": "subAttemptSurvived.01",
+          "text": "That was close! Hands in tight, chin down, and don't get careless on the mat."
+        }
+      ]
+    },
+    "general": {
+      "priority": 0,
+      "trigger": "Fallback when nothing else matches.",
+      "tips": [
+        {
+          "id": "general.01",
+          "text": "Keep your hands up and your feet moving."
+        },
+        {
+          "id": "general.02",
+          "text": "Breathe. Win this round."
+        },
+        {
+          "id": "general.03",
+          "text": "Jab to get in, jab to get out."
+        },
+        {
+          "id": "general.04",
+          "text": "Mix it up: high, low, then take him down."
+        },
+        {
+          "id": "general.05",
+          "text": "Make him miss. Make him pay."
+        }
+      ]
+    }
+  }
+}

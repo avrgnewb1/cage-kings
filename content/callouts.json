@@ -1,0 +1,1082 @@
+{
+  "schemaVersion": 1,
+  "notes": "Short announcer callouts shown as big on-screen text. Mostly 1-4 words, uppercase. Pick a random variant per trigger, avoiding the last one used in that category.",
+  "placeholders": {
+    "round": "Current round number.",
+    "targetLast": "Last name of the fighter the callout is about (e.g. the fighter who got knocked down), uppercased by the engine.",
+    "winnerLast": "Last name of the winner, uppercased by the engine."
+  },
+  "laterScope": {
+    "categories": [
+      "refWarning",
+      "refPointDeduction"
+    ],
+    "note": "Fouls and point deductions are post-MVP in design v3. Text is ready; the engine can ignore these until fouls exist."
+  },
+  "callouts": {
+    "fightStart": [
+      {
+        "id": "fightStart.01",
+        "text": "FIGHT!"
+      },
+      {
+        "id": "fightStart.02",
+        "text": "LET'S GO!"
+      },
+      {
+        "id": "fightStart.03",
+        "text": "TOUCH GLOVES!"
+      },
+      {
+        "id": "fightStart.04",
+        "text": "HERE WE GO!"
+      },
+      {
+        "id": "fightStart.05",
+        "text": "IT'S TIME!"
+      }
+    ],
+    "roundStart": [
+      {
+        "id": "roundStart.01",
+        "text": "ROUND {round}!"
+      },
+      {
+        "id": "roundStart.02",
+        "text": "ROUND {round}! FIGHT!"
+      },
+      {
+        "id": "roundStart.03",
+        "text": "BACK TO WORK!"
+      },
+      {
+        "id": "roundStart.04",
+        "text": "SECONDS OUT!"
+      },
+      {
+        "id": "roundStart.05",
+        "text": "ROUND {round}, GO!"
+      }
+    ],
+    "finalRound": [
+      {
+        "id": "finalRound.01",
+        "text": "FINAL ROUND!"
+      },
+      {
+        "id": "finalRound.02",
+        "text": "LAST ROUND!"
+      },
+      {
+        "id": "finalRound.03",
+        "text": "ONE MORE ROUND!"
+      },
+      {
+        "id": "finalRound.04",
+        "text": "EMPTY THE TANK!"
+      },
+      {
+        "id": "finalRound.05",
+        "text": "THIS IS IT!"
+      }
+    ],
+    "championshipRound": [
+      {
+        "id": "championshipRound.01",
+        "text": "CHAMPIONSHIP ROUNDS!"
+      },
+      {
+        "id": "championshipRound.02",
+        "text": "ROUND {round}! DEEP WATERS!"
+      },
+      {
+        "id": "championshipRound.03",
+        "text": "INTO THE DEEP END!"
+      },
+      {
+        "id": "championshipRound.04",
+        "text": "GOLD ON THE LINE!"
+      }
+    ],
+    "roundEnd": [
+      {
+        "id": "roundEnd.01",
+        "text": "END OF ROUND {round}!"
+      },
+      {
+        "id": "roundEnd.02",
+        "text": "THERE'S THE BELL!"
+      },
+      {
+        "id": "roundEnd.03",
+        "text": "THAT'S THE ROUND!"
+      },
+      {
+        "id": "roundEnd.04",
+        "text": "BACK TO THE CORNERS!"
+      },
+      {
+        "id": "roundEnd.05",
+        "text": "BREATHE!"
+      }
+    ],
+    "tenSeconds": [
+      {
+        "id": "tenSeconds.01",
+        "text": "10 SECONDS!"
+      },
+      {
+        "id": "tenSeconds.02",
+        "text": "TEN SECONDS LEFT!"
+      },
+      {
+        "id": "tenSeconds.03",
+        "text": "FINISH STRONG!"
+      }
+    ],
+    "knockdown": [
+      {
+        "id": "knockdown.01",
+        "text": "KNOCKDOWN!"
+      },
+      {
+        "id": "knockdown.02",
+        "text": "HE'S DOWN!"
+      },
+      {
+        "id": "knockdown.03",
+        "text": "DROPPED HIM!"
+      },
+      {
+        "id": "knockdown.04",
+        "text": "TIMBER!"
+      },
+      {
+        "id": "knockdown.05",
+        "text": "DOWN GOES {targetLast}!"
+      },
+      {
+        "id": "knockdown.06",
+        "text": "FLASH KNOCKDOWN!"
+      }
+    ],
+    "ko": [
+      {
+        "id": "ko.01",
+        "text": "KNOCKOUT!"
+      },
+      {
+        "id": "ko.02",
+        "text": "LIGHTS OUT!"
+      },
+      {
+        "id": "ko.03",
+        "text": "GOODNIGHT!"
+      },
+      {
+        "id": "ko.04",
+        "text": "OUT COLD!"
+      },
+      {
+        "id": "ko.05",
+        "text": "IT'S ALL OVER!"
+      },
+      {
+        "id": "ko.06",
+        "text": "SLEEP TIME!"
+      }
+    ],
+    "tko": [
+      {
+        "id": "tko.01",
+        "text": "TKO!"
+      },
+      {
+        "id": "tko.02",
+        "text": "THE REF STOPS IT!"
+      },
+      {
+        "id": "tko.03",
+        "text": "WAVED OFF!"
+      },
+      {
+        "id": "tko.04",
+        "text": "IT'S OVER!"
+      },
+      {
+        "id": "tko.05",
+        "text": "NO MORE!"
+      },
+      {
+        "id": "tko.06",
+        "text": "REF STEPS IN!"
+      }
+    ],
+    "tkoLegDamage": [
+      {
+        "id": "tkoLegDamage.01",
+        "text": "CAN'T STAND!"
+      },
+      {
+        "id": "tkoLegDamage.02",
+        "text": "LEG IS GONE!"
+      },
+      {
+        "id": "tkoLegDamage.03",
+        "text": "CHOPPED DOWN!"
+      },
+      {
+        "id": "tkoLegDamage.04",
+        "text": "THE LEG GAVE OUT!"
+      }
+    ],
+    "didNotAnswerBell": [
+      {
+        "id": "didNotAnswerBell.01",
+        "text": "HE CAN'T CONTINUE!"
+      },
+      {
+        "id": "didNotAnswerBell.02",
+        "text": "DIDN'T ANSWER THE BELL!"
+      },
+      {
+        "id": "didNotAnswerBell.03",
+        "text": "STAYING ON THE STOOL!"
+      },
+      {
+        "id": "didNotAnswerBell.04",
+        "text": "THE CORNER SAYS NO!"
+      }
+    ],
+    "refMeterDanger": [
+      {
+        "id": "refMeterDanger.01",
+        "text": "FIGHT BACK!"
+      },
+      {
+        "id": "refMeterDanger.02",
+        "text": "DEFEND YOURSELF!"
+      },
+      {
+        "id": "refMeterDanger.03",
+        "text": "THE REF IS WATCHING!"
+      },
+      {
+        "id": "refMeterDanger.04",
+        "text": "HE NEEDS TO ANSWER!"
+      }
+    ],
+    "submission": [
+      {
+        "id": "submission.01",
+        "text": "TAP! TAP! TAP!"
+      },
+      {
+        "id": "submission.02",
+        "text": "HE TAPS!"
+      },
+      {
+        "id": "submission.03",
+        "text": "SUBMISSION!"
+      },
+      {
+        "id": "submission.04",
+        "text": "HE'S GOT IT!"
+      },
+      {
+        "id": "submission.05",
+        "text": "TAPPED OUT!"
+      },
+      {
+        "id": "submission.06",
+        "text": "GOT HIM!"
+      }
+    ],
+    "nearSubmission": [
+      {
+        "id": "nearSubmission.01",
+        "text": "IT'S DEEP!"
+      },
+      {
+        "id": "nearSubmission.02",
+        "text": "IS IT OVER?!"
+      },
+      {
+        "id": "nearSubmission.03",
+        "text": "HE'S IN TROUBLE!"
+      },
+      {
+        "id": "nearSubmission.04",
+        "text": "SQUEEZE!"
+      },
+      {
+        "id": "nearSubmission.05",
+        "text": "HOLD ON!"
+      },
+      {
+        "id": "nearSubmission.06",
+        "text": "IT'S TIGHT!"
+      }
+    ],
+    "submissionEscape": [
+      {
+        "id": "submissionEscape.01",
+        "text": "HE'S OUT!"
+      },
+      {
+        "id": "submissionEscape.02",
+        "text": "ESCAPED!"
+      },
+      {
+        "id": "submissionEscape.03",
+        "text": "SLIPPED FREE!"
+      },
+      {
+        "id": "submissionEscape.04",
+        "text": "WHAT A SAVE!"
+      },
+      {
+        "id": "submissionEscape.05",
+        "text": "NOT TODAY!"
+      }
+    ],
+    "submissionAttempt": [
+      {
+        "id": "submissionAttempt.01",
+        "text": "GUILLOTINE!"
+      },
+      {
+        "id": "submissionAttempt.02",
+        "text": "ARMBAR!"
+      },
+      {
+        "id": "submissionAttempt.03",
+        "text": "TRIANGLE!"
+      },
+      {
+        "id": "submissionAttempt.04",
+        "text": "CHOKE!"
+      },
+      {
+        "id": "submissionAttempt.05",
+        "text": "LOCKED IN!"
+      }
+    ],
+    "bigShot": [
+      {
+        "id": "bigShot.01",
+        "text": "BIG SHOT!"
+      },
+      {
+        "id": "bigShot.02",
+        "text": "BANG!"
+      },
+      {
+        "id": "bigShot.03",
+        "text": "WHAT A SHOT!"
+      },
+      {
+        "id": "bigShot.04",
+        "text": "HE FELT THAT!"
+      },
+      {
+        "id": "bigShot.05",
+        "text": "ROCKED HIM!"
+      },
+      {
+        "id": "bigShot.06",
+        "text": "WOBBLED!"
+      },
+      {
+        "id": "bigShot.07",
+        "text": "BOOM!"
+      }
+    ],
+    "legKick": [
+      {
+        "id": "legKick.01",
+        "text": "CHOP!"
+      },
+      {
+        "id": "legKick.02",
+        "text": "LEG KICK!"
+      },
+      {
+        "id": "legKick.03",
+        "text": "TIMBERRR!"
+      },
+      {
+        "id": "legKick.04",
+        "text": "THAT'S GONNA BRUISE!"
+      }
+    ],
+    "kickChecked": [
+      {
+        "id": "kickChecked.01",
+        "text": "CHECKED!"
+      },
+      {
+        "id": "kickChecked.02",
+        "text": "SHIN ON SHIN!"
+      },
+      {
+        "id": "kickChecked.03",
+        "text": "THAT HURT HIM MORE!"
+      },
+      {
+        "id": "kickChecked.04",
+        "text": "KICK CHECKED!"
+      }
+    ],
+    "kickCaught": [
+      {
+        "id": "kickCaught.01",
+        "text": "CAUGHT THE KICK!"
+      },
+      {
+        "id": "kickCaught.02",
+        "text": "GOT THE LEG!"
+      },
+      {
+        "id": "kickCaught.03",
+        "text": "KICK CAUGHT!"
+      },
+      {
+        "id": "kickCaught.04",
+        "text": "BAD IDEA!"
+      }
+    ],
+    "legHurt": [
+      {
+        "id": "legHurt.01",
+        "text": "HE'S LIMPING!"
+      },
+      {
+        "id": "legHurt.02",
+        "text": "THE LEG IS HURT!"
+      },
+      {
+        "id": "legHurt.03",
+        "text": "SWITCHING STANCES!"
+      },
+      {
+        "id": "legHurt.04",
+        "text": "COMPROMISED!"
+      }
+    ],
+    "elbow": [
+      {
+        "id": "elbow.01",
+        "text": "ELBOW!"
+      },
+      {
+        "id": "elbow.02",
+        "text": "SHARP ELBOW!"
+      },
+      {
+        "id": "elbow.03",
+        "text": "SLICED!"
+      },
+      {
+        "id": "elbow.04",
+        "text": "OUCH!"
+      }
+    ],
+    "perfectBlock": [
+      {
+        "id": "perfectBlock.01",
+        "text": "PERFECT BLOCK!"
+      },
+      {
+        "id": "perfectBlock.02",
+        "text": "READ IT!"
+      },
+      {
+        "id": "perfectBlock.03",
+        "text": "DENIED!"
+      },
+      {
+        "id": "perfectBlock.04",
+        "text": "NOTHING THERE!"
+      },
+      {
+        "id": "perfectBlock.05",
+        "text": "BLOCKED!"
+      }
+    ],
+    "counter": [
+      {
+        "id": "counter.01",
+        "text": "COUNTER!"
+      },
+      {
+        "id": "counter.02",
+        "text": "CAUGHT HIM COMING IN!"
+      },
+      {
+        "id": "counter.03",
+        "text": "MAKE HIM PAY!"
+      },
+      {
+        "id": "counter.04",
+        "text": "SNAPPED BACK!"
+      }
+    ],
+    "clinch": [
+      {
+        "id": "clinch.01",
+        "text": "CLINCH!"
+      },
+      {
+        "id": "clinch.02",
+        "text": "TIED UP!"
+      },
+      {
+        "id": "clinch.03",
+        "text": "THAI CLINCH!"
+      },
+      {
+        "id": "clinch.04",
+        "text": "KNEES!"
+      },
+      {
+        "id": "clinch.05",
+        "text": "CLOSE QUARTERS!"
+      }
+    ],
+    "takedown": [
+      {
+        "id": "takedown.01",
+        "text": "TAKEDOWN!"
+      },
+      {
+        "id": "takedown.02",
+        "text": "ON HIS BACK!"
+      },
+      {
+        "id": "takedown.03",
+        "text": "BIG SLAM!"
+      },
+      {
+        "id": "takedown.04",
+        "text": "DOUBLE-LEG!"
+      },
+      {
+        "id": "takedown.05",
+        "text": "TO THE MAT!"
+      },
+      {
+        "id": "takedown.06",
+        "text": "PLANTED!"
+      }
+    ],
+    "takedownDefended": [
+      {
+        "id": "takedownDefended.01",
+        "text": "SPRAWL!"
+      },
+      {
+        "id": "takedownDefended.02",
+        "text": "STUFFED!"
+      },
+      {
+        "id": "takedownDefended.03",
+        "text": "NO TAKEDOWN!"
+      },
+      {
+        "id": "takedownDefended.04",
+        "text": "SHUT IT DOWN!"
+      },
+      {
+        "id": "takedownDefended.05",
+        "text": "NOPE!"
+      }
+    ],
+    "takedownCountered": [
+      {
+        "id": "takedownCountered.01",
+        "text": "KNEE ON THE SHOT!"
+      },
+      {
+        "id": "takedownCountered.02",
+        "text": "TIMED IT!"
+      },
+      {
+        "id": "takedownCountered.03",
+        "text": "COUNTERED!"
+      },
+      {
+        "id": "takedownCountered.04",
+        "text": "GUILLOTINE ON THE SHOT!"
+      }
+    ],
+    "guardPull": [
+      {
+        "id": "guardPull.01",
+        "text": "PULLS GUARD!"
+      },
+      {
+        "id": "guardPull.02",
+        "text": "WELCOME TO MY WORLD!"
+      },
+      {
+        "id": "guardPull.03",
+        "text": "DOWN IT GOES!"
+      }
+    ],
+    "reversal": [
+      {
+        "id": "reversal.01",
+        "text": "REVERSAL!"
+      },
+      {
+        "id": "reversal.02",
+        "text": "SWEEP!"
+      },
+      {
+        "id": "reversal.03",
+        "text": "SWITCHED IT!"
+      },
+      {
+        "id": "reversal.04",
+        "text": "TABLES TURNED!"
+      },
+      {
+        "id": "reversal.05",
+        "text": "ON TOP NOW!"
+      },
+      {
+        "id": "reversal.06",
+        "text": "FLIPPED HIM!"
+      }
+    ],
+    "mount": [
+      {
+        "id": "mount.01",
+        "text": "FULL MOUNT!"
+      },
+      {
+        "id": "mount.02",
+        "text": "HE'S IN MOUNT!"
+      },
+      {
+        "id": "mount.03",
+        "text": "MOUNTED!"
+      },
+      {
+        "id": "mount.04",
+        "text": "BAD SPOT!"
+      }
+    ],
+    "bridgeEscape": [
+      {
+        "id": "bridgeEscape.01",
+        "text": "BRIDGE!"
+      },
+      {
+        "id": "bridgeEscape.02",
+        "text": "BUCKED HIM OFF!"
+      },
+      {
+        "id": "bridgeEscape.03",
+        "text": "ESCAPES THE MOUNT!"
+      },
+      {
+        "id": "bridgeEscape.04",
+        "text": "BACK TO GUARD!"
+      }
+    ],
+    "backTake": [
+      {
+        "id": "backTake.01",
+        "text": "TAKES THE BACK!"
+      },
+      {
+        "id": "backTake.02",
+        "text": "HE'S BEHIND HIM!"
+      },
+      {
+        "id": "backTake.03",
+        "text": "BACK TAKE!"
+      },
+      {
+        "id": "backTake.04",
+        "text": "DANGER!"
+      }
+    ],
+    "scramble": [
+      {
+        "id": "scramble.01",
+        "text": "SCRAMBLE!"
+      },
+      {
+        "id": "scramble.02",
+        "text": "BACK UP!"
+      },
+      {
+        "id": "scramble.03",
+        "text": "HE'S UP!"
+      },
+      {
+        "id": "scramble.04",
+        "text": "ON THE FEET!"
+      }
+    ],
+    "groundAndPound": [
+      {
+        "id": "groundAndPound.01",
+        "text": "GROUND AND POUND!"
+      },
+      {
+        "id": "groundAndPound.02",
+        "text": "RAINING DOWN!"
+      },
+      {
+        "id": "groundAndPound.03",
+        "text": "ELBOWS!"
+      },
+      {
+        "id": "groundAndPound.04",
+        "text": "12-6 ELBOW!"
+      },
+      {
+        "id": "groundAndPound.05",
+        "text": "HEAVY HANDS!"
+      }
+    ],
+    "crowdPop": [
+      {
+        "id": "crowdPop.01",
+        "text": "THE CROWD ERUPTS!"
+      },
+      {
+        "id": "crowdPop.02",
+        "text": "LISTEN TO THIS CROWD!"
+      },
+      {
+        "id": "crowdPop.03",
+        "text": "WHAT A FIGHT!"
+      },
+      {
+        "id": "crowdPop.04",
+        "text": "ON THEIR FEET!"
+      },
+      {
+        "id": "crowdPop.05",
+        "text": "UNBELIEVABLE!"
+      },
+      {
+        "id": "crowdPop.06",
+        "text": "WHAT AN EXCHANGE!"
+      }
+    ],
+    "lowStamina": [
+      {
+        "id": "lowStamina.01",
+        "text": "HE'S GASSED!"
+      },
+      {
+        "id": "lowStamina.02",
+        "text": "RUNNING ON EMPTY!"
+      },
+      {
+        "id": "lowStamina.03",
+        "text": "TANK'S DRY!"
+      },
+      {
+        "id": "lowStamina.04",
+        "text": "HANDS ARE DROPPING!"
+      },
+      {
+        "id": "lowStamina.05",
+        "text": "BREATHING HEAVY!"
+      },
+      {
+        "id": "lowStamina.06",
+        "text": "SLOWING DOWN!"
+      }
+    ],
+    "decision": [
+      {
+        "id": "decision.01",
+        "text": "TO THE JUDGES!"
+      },
+      {
+        "id": "decision.02",
+        "text": "THE DISTANCE!"
+      },
+      {
+        "id": "decision.03",
+        "text": "WE GO TO THE SCORECARDS!"
+      },
+      {
+        "id": "decision.04",
+        "text": "HERE ARE THE CARDS..."
+      }
+    ],
+    "unanimousDecision": [
+      {
+        "id": "unanimousDecision.01",
+        "text": "UNANIMOUS DECISION!"
+      },
+      {
+        "id": "unanimousDecision.02",
+        "text": "ALL THREE JUDGES!"
+      },
+      {
+        "id": "unanimousDecision.03",
+        "text": "CLEAR WINNER!"
+      }
+    ],
+    "splitDecision": [
+      {
+        "id": "splitDecision.01",
+        "text": "SPLIT DECISION!"
+      },
+      {
+        "id": "splitDecision.02",
+        "text": "RAZOR CLOSE!"
+      },
+      {
+        "id": "splitDecision.03",
+        "text": "IT COULD'VE GONE EITHER WAY!"
+      },
+      {
+        "id": "splitDecision.04",
+        "text": "2 TO 1!"
+      }
+    ],
+    "majorityDecision": [
+      {
+        "id": "majorityDecision.01",
+        "text": "MAJORITY DECISION!"
+      },
+      {
+        "id": "majorityDecision.02",
+        "text": "TWO JUDGES AGREE!"
+      },
+      {
+        "id": "majorityDecision.03",
+        "text": "CLOSE CALL!"
+      }
+    ],
+    "draw": [
+      {
+        "id": "draw.01",
+        "text": "IT'S A DRAW!"
+      },
+      {
+        "id": "draw.02",
+        "text": "DEAD EVEN!"
+      },
+      {
+        "id": "draw.03",
+        "text": "NO WINNER!"
+      },
+      {
+        "id": "draw.04",
+        "text": "ALL SQUARE!"
+      }
+    ],
+    "newChampion": [
+      {
+        "id": "newChampion.01",
+        "text": "AND NEW!"
+      },
+      {
+        "id": "newChampion.02",
+        "text": "NEW CHAMPION!"
+      },
+      {
+        "id": "newChampion.03",
+        "text": "A NEW KING!"
+      },
+      {
+        "id": "newChampion.04",
+        "text": "CROWNED!"
+      }
+    ],
+    "titleRetained": [
+      {
+        "id": "titleRetained.01",
+        "text": "AND STILL!"
+      },
+      {
+        "id": "titleRetained.02",
+        "text": "STILL CHAMPION!"
+      },
+      {
+        "id": "titleRetained.03",
+        "text": "THE KING STAYS!"
+      },
+      {
+        "id": "titleRetained.04",
+        "text": "BELT STAYS HOME!"
+      }
+    ],
+    "refFight": [
+      {
+        "id": "refFight.01",
+        "text": "FIGHT!"
+      },
+      {
+        "id": "refFight.02",
+        "text": "LET'S GO!"
+      },
+      {
+        "id": "refFight.03",
+        "text": "FIGHT ON!"
+      }
+    ],
+    "refTouchGloves": [
+      {
+        "id": "refTouchGloves.01",
+        "text": "TOUCH GLOVES!"
+      },
+      {
+        "id": "refTouchGloves.02",
+        "text": "PROTECT YOURSELVES!"
+      },
+      {
+        "id": "refTouchGloves.03",
+        "text": "LET'S HAVE A CLEAN FIGHT!"
+      }
+    ],
+    "refWork": [
+      {
+        "id": "refWork.01",
+        "text": "WORK!"
+      },
+      {
+        "id": "refWork.02",
+        "text": "LET'S WORK!"
+      },
+      {
+        "id": "refWork.03",
+        "text": "DO SOMETHING!"
+      },
+      {
+        "id": "refWork.04",
+        "text": "IMPROVE OR I STAND YOU UP!"
+      }
+    ],
+    "refStandUp": [
+      {
+        "id": "refStandUp.01",
+        "text": "STAND 'EM UP!"
+      },
+      {
+        "id": "refStandUp.02",
+        "text": "ON YOUR FEET!"
+      },
+      {
+        "id": "refStandUp.03",
+        "text": "BACK TO THE FEET!"
+      },
+      {
+        "id": "refStandUp.04",
+        "text": "RESTART!"
+      }
+    ],
+    "refBreak": [
+      {
+        "id": "refBreak.01",
+        "text": "BREAK!"
+      },
+      {
+        "id": "refBreak.02",
+        "text": "SEPARATE!"
+      },
+      {
+        "id": "refBreak.03",
+        "text": "STEP BACK!"
+      },
+      {
+        "id": "refBreak.04",
+        "text": "WORK OR BREAK!"
+      }
+    ],
+    "refStop": [
+      {
+        "id": "refStop.01",
+        "text": "STOP!"
+      },
+      {
+        "id": "refStop.02",
+        "text": "THAT'S IT!"
+      },
+      {
+        "id": "refStop.03",
+        "text": "IT'S OVER!"
+      },
+      {
+        "id": "refStop.04",
+        "text": "ENOUGH!"
+      }
+    ],
+    "refTime": [
+      {
+        "id": "refTime.01",
+        "text": "TIME!"
+      },
+      {
+        "id": "refTime.02",
+        "text": "THAT'S TIME!"
+      },
+      {
+        "id": "refTime.03",
+        "text": "CORNERS!"
+      }
+    ],
+    "refWarning": [
+      {
+        "id": "refWarning.01",
+        "text": "WATCH IT!"
+      },
+      {
+        "id": "refWarning.02",
+        "text": "THAT'S A WARNING!"
+      },
+      {
+        "id": "refWarning.03",
+        "text": "KEEP IT CLEAN!"
+      },
+      {
+        "id": "refWarning.04",
+        "text": "LAST WARNING!"
+      }
+    ],
+    "refPointDeduction": [
+      {
+        "id": "refPointDeduction.01",
+        "text": "POINT DEDUCTED!"
+      },
+      {
+        "id": "refPointDeduction.02",
+        "text": "TAKING A POINT!"
+      },
+      {
+        "id": "refPointDeduction.03",
+        "text": "THAT COSTS A POINT!"
+      }
+    ],
+    "winner": [
+      {
+        "id": "winner.01",
+        "text": "WINNER!"
+      },
+      {
+        "id": "winner.02",
+        "text": "VICTORY!"
+      },
+      {
+        "id": "winner.03",
+        "text": "YOUR HAND IS RAISED!"
+      },
+      {
+        "id": "winner.04",
+        "text": "{winnerLast} WINS!"
+      }
+    ]
+  }
+}

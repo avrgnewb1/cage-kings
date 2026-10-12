@@ -1,0 +1,664 @@
+{
+  "schemaVersion": 1,
+  "notes": "Rivals (design v3, MVP-light). Each signature fighter stores how his last fight with the player ended. Before a rematch, show one preFight line from byFighter[fighterId][outcome] (fall back to generic[outcome]). Outcomes are from the RIVAL's side. Offer a rematch (rematchOffers) when the rival lost close or it was a draw; titleRematch and revenge are optional extras. Rematch offers obey the engine's opponent repeat cap: offer one only if the player has faced that fighter fewer than 2 times before his first title shot (titleRematch after a title fight is exempt, since title fights sit outside the pre-title cap). Rival memory is one stored outcome per signature fighter (the most recent), so no extra save fields are needed.",
+  "outcomes": {
+    "lostByFinish": "Player beat the rival by KO or TKO.",
+    "lostBySubmission": "Player beat the rival by submission.",
+    "lostByDecision": "Player beat the rival by unanimous decision.",
+    "lostClose": "Player beat the rival by split or majority decision (triggers a rematch offer).",
+    "beatPlayer": "Rival beat the player by any method.",
+    "draw": "Fight was a draw (triggers a rematch offer)."
+  },
+  "placeholders": {
+    "fighter": "Player's full name.",
+    "fighterLast": "Player's last name.",
+    "rival": "Rival's full name, e.g. \"Lucien Marchetti\".",
+    "lastMethod": "Lowercase method of their last fight (ui.json labels.methodsInline), e.g. \"split decision\".",
+    "lastEventName": "Event name of their last fight.",
+    "eventName": "Event name of the offered rematch.",
+    "purse": "Pre-formatted purse.",
+    "weeksLabel": "Pre-formatted camp length.",
+    "promotionShort": "\"AFL\"."
+  },
+  "preFight": {
+    "generic": {
+      "lostByFinish": [
+        {
+          "id": "generic.lostByFinish.01",
+          "text": "Last time you got lucky, {fighterLast}. Lightning doesn't strike twice."
+        },
+        {
+          "id": "generic.lostByFinish.02",
+          "text": "I've watched that knockout a hundred times. I know exactly what I did wrong."
+        },
+        {
+          "id": "generic.lostByFinish.03",
+          "text": "You put me to sleep once. I've been awake ever since."
+        }
+      ],
+      "lostBySubmission": [
+        {
+          "id": "generic.lostBySubmission.01",
+          "text": "You caught me last time. I've spent every day since learning that escape."
+        },
+        {
+          "id": "generic.lostBySubmission.02",
+          "text": "I tapped once. It won't happen again."
+        },
+        {
+          "id": "generic.lostBySubmission.03",
+          "text": "You got my neck last time. This time you get nothing."
+        }
+      ],
+      "lostByDecision": [
+        {
+          "id": "generic.lostByDecision.01",
+          "text": "The judges gave it to you. I'm not leaving it to them this time."
+        },
+        {
+          "id": "generic.lostByDecision.02",
+          "text": "You won on points. I'm here to take points off your face."
+        },
+        {
+          "id": "generic.lostByDecision.03",
+          "text": "Three judges liked you. Nobody else did."
+        }
+      ],
+      "lostClose": [
+        {
+          "id": "generic.lostClose.01",
+          "text": "Everybody watching knows I won that fight."
+        },
+        {
+          "id": "generic.lostClose.02",
+          "text": "Split decision? Let's make it a clean one this time."
+        },
+        {
+          "id": "generic.lostClose.03",
+          "text": "One judge got it right. Tonight, I'll make it obvious."
+        }
+      ],
+      "beatPlayer": [
+        {
+          "id": "generic.beatPlayer.01",
+          "text": "I beat you once. I'll do it again, just faster."
+        },
+        {
+          "id": "generic.beatPlayer.02",
+          "text": "You really want another round of that?"
+        },
+        {
+          "id": "generic.beatPlayer.03",
+          "text": "I remember you. You remember me too. I can tell."
+        }
+      ],
+      "draw": [
+        {
+          "id": "generic.draw.01",
+          "text": "Nobody won last time. That changes tonight."
+        },
+        {
+          "id": "generic.draw.02",
+          "text": "Half a win doesn't feel like anything. Let's finish it."
+        },
+        {
+          "id": "generic.draw.03",
+          "text": "We go again, and this time somebody leaves with it."
+        }
+      ]
+    },
+    "byFighter": {
+      "okafor": {
+        "lostByFinish": [
+          {
+            "id": "okafor.lostByFinish.01",
+            "text": "You dropped me. Fine. Tonight I'm taking your legs first."
+          }
+        ],
+        "lostBySubmission": [
+          {
+            "id": "okafor.lostBySubmission.01",
+            "text": "You choked me. Tonight, you can't grapple if you can't stand."
+          }
+        ],
+        "lostByDecision": [
+          {
+            "id": "okafor.lostByDecision.01",
+            "text": "You ran for three rounds. Stand still this time."
+          }
+        ],
+        "lostClose": [
+          {
+            "id": "okafor.lostClose.01",
+            "text": "My shins remember you. So will your legs."
+          }
+        ],
+        "beatPlayer": [
+          {
+            "id": "okafor.beatPlayer.01",
+            "text": "How's the leg? Still limping? Good. Now get out of my way. Aslanov owes me a rematch."
+          }
+        ],
+        "draw": [
+          {
+            "id": "okafor.draw.01",
+            "text": "A draw is a fight nobody finished. I finish things."
+          }
+        ]
+      },
+      "hollander": {
+        "lostByFinish": [
+          {
+            "id": "hollander.lostByFinish.01",
+            "text": "You clocked me early. I'm working a full shift tonight."
+          }
+        ],
+        "lostBySubmission": [
+          {
+            "id": "hollander.lostBySubmission.01",
+            "text": "You got the tap. I've got a guillotine with your name on it."
+          }
+        ],
+        "lostByDecision": [
+          {
+            "id": "hollander.lostByDecision.01",
+            "text": "I'll throw twice as many this time. Count 'em."
+          }
+        ],
+        "lostClose": [
+          {
+            "id": "hollander.lostClose.01",
+            "text": "I out-worked you and you know it. Let's run the shift back."
+          }
+        ],
+        "beatPlayer": [
+          {
+            "id": "hollander.beatPlayer.01",
+            "text": "Remember the guillotine? Go ahead and shoot again."
+          }
+        ],
+        "draw": [
+          {
+            "id": "hollander.draw.01",
+            "text": "Overtime shift. I'm used to those."
+          }
+        ]
+      },
+      "aslanov": {
+        "lostByFinish": [
+          {
+            "id": "aslanov.lostByFinish.01",
+            "text": "You know, the last man who beat me, I beat in the rematch. Just so you know how this goes."
+          }
+        ],
+        "lostBySubmission": [
+          {
+            "id": "aslanov.lostBySubmission.01",
+            "text": "You caught me. Very good! I laughed the whole drive home. Then I trained."
+          }
+        ],
+        "lostByDecision": [
+          {
+            "id": "aslanov.lostByDecision.01",
+            "text": "Brandsma beat me on points once too. Ask him how the rematch went."
+          }
+        ],
+        "lostClose": [
+          {
+            "id": "aslanov.lostClose.01",
+            "text": "Close fight, nice fight, I bought you a coffee. Now I want my belt back."
+          }
+        ],
+        "beatPlayer": [
+          {
+            "id": "aslanov.beatPlayer.01",
+            "text": "Last time you saw the lights. Okafor and Marchetti can tell you, they're nice lights."
+          }
+        ],
+        "draw": [
+          {
+            "id": "aslanov.draw.01",
+            "text": "A draw? In the harbor we call that unfinished work."
+          }
+        ]
+      },
+      "marchetti": {
+        "lostByFinish": [
+          {
+            "id": "marchetti.lostByFinish.01",
+            "text": "You caught me clean. Genuinely impressive. I'd hate for it to become a habit."
+          }
+        ],
+        "lostBySubmission": [
+          {
+            "id": "marchetti.lostBySubmission.01",
+            "text": "Rolling on the floor again. I've had quite enough of that from Aslanov, thank you."
+          }
+        ],
+        "lostByDecision": [
+          {
+            "id": "marchetti.lostByDecision.01",
+            "text": "The judges preferred you. They're entitled to their opinion. I'll correct it."
+          }
+        ],
+        "lostClose": [
+          {
+            "id": "marchetti.lostClose.01",
+            "text": "Two judges saw it your way. Lovely people. I sent them flowers. Rematch?"
+          }
+        ],
+        "beatPlayer": [
+          {
+            "id": "marchetti.beatPlayer.01",
+            "text": "Welcome back. Please, rush me the same way. I've been looking forward to it."
+          }
+        ],
+        "draw": [
+          {
+            "id": "marchetti.draw.01",
+            "text": "A draw. How civilized. Shall we be uncivilized this time?"
+          }
+        ]
+      },
+      "lind": {
+        "lostByFinish": [
+          {
+            "id": "lind.lostByFinish.01",
+            "text": "You caught me coming in. I'm still coming in. Just lower."
+          }
+        ],
+        "lostBySubmission": [
+          {
+            "id": "lind.lostBySubmission.01",
+            "text": "You tied me up. Nobody ties me up. I'll be heavier this time."
+          }
+        ],
+        "lostByDecision": [
+          {
+            "id": "lind.lostByDecision.01",
+            "text": "You ran for three rounds. Heavyweights shouldn't run. It's embarrassing for both of us."
+          }
+        ],
+        "lostClose": [
+          {
+            "id": "lind.lostClose.01",
+            "text": "One more grip and it was mine. This time I don't let go."
+          }
+        ],
+        "beatPlayer": [
+          {
+            "id": "lind.beatPlayer.01",
+            "text": "Remember the body lock? Your back does."
+          }
+        ],
+        "draw": [
+          {
+            "id": "lind.draw.01",
+            "text": "Even? Fine. Then we grind until somebody isn't."
+          }
+        ]
+      },
+      "dorsey": {
+        "lostByFinish": [
+          {
+            "id": "dorsey.lostByFinish.01",
+            "text": "You found the chin. Took you long enough. I've hidden it better."
+          }
+        ],
+        "lostBySubmission": [
+          {
+            "id": "dorsey.lostBySubmission.01",
+            "text": "You tied an old man in a knot. Won't fall for that twice."
+          }
+        ],
+        "lostByDecision": [
+          {
+            "id": "dorsey.lostByDecision.01",
+            "text": "Judges like dancing. I'll just keep walking you down."
+          }
+        ],
+        "lostClose": [
+          {
+            "id": "dorsey.lostClose.01",
+            "text": "You got the nod, kid. I got the long walk forward. Again."
+          }
+        ],
+        "beatPlayer": [
+          {
+            "id": "dorsey.beatPlayer.01",
+            "text": "I've got more jabs in this left hand than you've got answers."
+          }
+        ],
+        "draw": [
+          {
+            "id": "dorsey.draw.01",
+            "text": "Even? At my age, I'll take that as a win. But I'd like a real one."
+          }
+        ]
+      },
+      "vale": {
+        "lostByFinish": [
+          {
+            "id": "vale.lostByFinish.01",
+            "text": "You got inside once. I've made my arms longer. Just kidding. Kind of."
+          }
+        ],
+        "lostBySubmission": [
+          {
+            "id": "vale.lostBySubmission.01",
+            "text": "You pulled me down to your level. Tonight I stay up here."
+          }
+        ],
+        "lostByDecision": [
+          {
+            "id": "vale.lostByDecision.01",
+            "text": "You survived the distance. That's all you did."
+          }
+        ],
+        "lostClose": [
+          {
+            "id": "vale.lostClose.01",
+            "text": "Close fights don't count up here. I'm finishing this one."
+          }
+        ],
+        "beatPlayer": [
+          {
+            "id": "vale.beatPlayer.01",
+            "text": "Still need that ladder?"
+          }
+        ],
+        "draw": [
+          {
+            "id": "vale.draw.01",
+            "text": "We split it down the middle. My half is longer."
+          }
+        ]
+      },
+      "reyes": {
+        "lostByFinish": [
+          {
+            "id": "reyes.lostByFinish.01",
+            "text": "You hit hard. But tonight, I'm behind you. You can't hit behind you."
+          }
+        ],
+        "lostBySubmission": [
+          {
+            "id": "reyes.lostBySubmission.01",
+            "text": "You submitted me. Nobody does that. I want to know how you did it, and then I want it back."
+          }
+        ],
+        "lostByDecision": [
+          {
+            "id": "reyes.lostByDecision.01",
+            "text": "You kept me off your back. Can you do it again?"
+          }
+        ],
+        "lostClose": [
+          {
+            "id": "reyes.lostClose.01",
+            "text": "One more scramble and it was mine. Tonight we scramble all night."
+          }
+        ],
+        "beatPlayer": [
+          {
+            "id": "reyes.beatPlayer.01",
+            "text": "Your neck remembers me. So will the kid's, when Salgado finally gets his shot."
+          }
+        ],
+        "draw": [
+          {
+            "id": "reyes.draw.01",
+            "text": "The coil never finished squeezing. Tonight it does."
+          }
+        ]
+      },
+      "torres": {
+        "lostByFinish": [
+          {
+            "id": "torres.lostByFinish.01",
+            "text": "You caught me once. I've gotten faster since. Way faster."
+          }
+        ],
+        "lostBySubmission": [
+          {
+            "id": "torres.lostBySubmission.01",
+            "text": "You took me down and caught me. Tonight you won't catch anything."
+          }
+        ],
+        "lostByDecision": [
+          {
+            "id": "torres.lostByDecision.01",
+            "text": "The judges didn't count right. I'm throwing a thousand this time."
+          }
+        ],
+        "lostClose": [
+          {
+            "id": "torres.lostClose.01",
+            "text": "I'm twenty-one. I've got all the time in the world to beat you."
+          }
+        ],
+        "beatPlayer": [
+          {
+            "id": "torres.beatPlayer.01",
+            "text": "Did you count them last time? 'Cause I didn't."
+          }
+        ],
+        "draw": [
+          {
+            "id": "torres.draw.01",
+            "text": "A tie? Nah. I need a winner and I know who."
+          }
+        ]
+      },
+      "salgado": {
+        "lostByFinish": [
+          {
+            "id": "salgado.lostByFinish.01",
+            "text": "You knocked me out and my mom yelled at me. Now I'm mad. Reyes is next, right after you."
+          }
+        ],
+        "lostBySubmission": [
+          {
+            "id": "salgado.lostBySubmission.01",
+            "text": "You tapped me. I learned that move on the drive home."
+          }
+        ],
+        "lostByDecision": [
+          {
+            "id": "salgado.lostByDecision.01",
+            "text": "You beat me on points. I'm still a teenager. I'm getting better every week."
+          }
+        ],
+        "lostClose": [
+          {
+            "id": "salgado.lostClose.01",
+            "text": "Split decision? I'm writing my rematch essay right now."
+          }
+        ],
+        "beatPlayer": [
+          {
+            "id": "salgado.beatPlayer.01",
+            "text": "Tapped by a kid. How was your summer?"
+          }
+        ],
+        "draw": [
+          {
+            "id": "salgado.draw.01",
+            "text": "A draw? That's like getting a C. I want an A."
+          }
+        ]
+      }
+    }
+  },
+  "rematchOffers": {
+    "lostClose": [
+      {
+        "id": "rematch.lostClose.01",
+        "title": "Rematch Demanded",
+        "text": "{rival} hasn't stopped talking about the {lastMethod} at {lastEventName}. The {promotionShort} wants to run it back at {eventName}. Purse: {purse}."
+      },
+      {
+        "id": "rematch.lostClose.02",
+        "title": "Unfinished Business",
+        "text": "\"I won that fight,\" says {rival}. The fans want to see it again, and so does the {promotionShort}. {eventName}, {weeksLabel} out."
+      },
+      {
+        "id": "rematch.lostClose.03",
+        "title": "Run It Back",
+        "text": "Your {lastMethod} over {rival} split the fans down the middle. Settle it at {eventName}."
+      }
+    ],
+    "draw": [
+      {
+        "id": "rematch.draw.01",
+        "title": "Settle It",
+        "text": "Nobody won at {lastEventName}. {rival} wants a winner this time. {eventName}, purse {purse}."
+      },
+      {
+        "id": "rematch.draw.02",
+        "title": "Tiebreaker",
+        "text": "The {promotionShort} is booking the tiebreaker: {fighter} vs. {rival} II at {eventName}."
+      }
+    ],
+    "titleRematch": [
+      {
+        "id": "rematch.titleRematch.01",
+        "title": "Immediate Rematch",
+        "text": "{rival} wants the belt back, and the {promotionShort} agrees. Title rematch at {eventName}."
+      },
+      {
+        "id": "rematch.titleRematch.02",
+        "title": "Second Chance",
+        "text": "You took the title from {rival} by {lastMethod}. Now {rival} gets one shot to take it back."
+      }
+    ],
+    "revenge": [
+      {
+        "id": "rematch.revenge.01",
+        "title": "Revenge Opportunity",
+        "text": "{rival} beat you by {lastMethod} at {lastEventName}. Want it back? {eventName}, purse {purse}."
+      },
+      {
+        "id": "rematch.revenge.02",
+        "title": "Payback",
+        "text": "{rival} is on the card at {eventName}, and the {promotionShort} remembers your last fight. So do you."
+      }
+    ],
+    "rivalDeclines": [
+      {
+        "id": "rematch.rivalDeclines.01",
+        "title": "Not Interested",
+        "text": "{rival} says he's moved on. Your manager says that means he's scared."
+      },
+      {
+        "id": "rematch.rivalDeclines.02",
+        "title": "No Rematch",
+        "text": "{rival}'s team turned down the rematch. Keep winning and they won't have a choice."
+      }
+    ]
+  },
+  "grudgesNote": "Static storyline between signature fighters (not player memory). Show a grudge line as flavor when the player is booked against either fighter in a pair, in the build-up to a title fight against the champion in that pair, or after the player beats one of them (the other reacts). Needs no new save data. The prefix (OKAFOR:, etc.) names the speaker; strip it if the UI shows a portrait.",
+  "grudges": {
+    "aslanovOkafor": {
+      "fighters": [
+        "aslanov",
+        "okafor"
+      ],
+      "history": "Aslanov beat Okafor by unanimous decision, throwing him from the clinch every round. Okafor wants the rematch.",
+      "lines": [
+        {
+          "id": "grudge.aslanovOkafor.01",
+          "text": "OKAFOR: Every time I kicked, he caught me in the clinch and threw me. I've been drilling the break ever since."
+        },
+        {
+          "id": "grudge.aslanovOkafor.02",
+          "text": "ASLANOV: Dante kicks very hard. I know because I was holding the leg."
+        },
+        {
+          "id": "grudge.aslanovOkafor.03",
+          "text": "OKAFOR: Beat him for me. Or beat me, then I'll do it myself."
+        },
+        {
+          "id": "grudge.aslanovOkafor.04",
+          "text": "OKAFOR: He lost once and won the rematch. That's exactly what I plan to do to him."
+        }
+      ]
+    },
+    "aslanovMarchetti": {
+      "fighters": [
+        "aslanov",
+        "marchetti"
+      ],
+      "history": "Aslanov threw Marchetti from a body lock and submitted him from top. Marchetti hasn't forgiven the mat.",
+      "lines": [
+        {
+          "id": "grudge.aslanovMarchetti.01",
+          "text": "MARCHETTI: Timur is a lovely man. I would simply prefer never to be underneath him again."
+        },
+        {
+          "id": "grudge.aslanovMarchetti.02",
+          "text": "ASLANOV: Lucien talks so politely, even when he taps."
+        },
+        {
+          "id": "grudge.aslanovMarchetti.03",
+          "text": "MARCHETTI: If you see a way past the body lock, do write it down for me."
+        }
+      ]
+    },
+    "reyesSalgado": {
+      "fighters": [
+        "reyes",
+        "salgado"
+      ],
+      "history": "Salgado is the teen contender hunting veteran champion Reyes. They haven't fought yet.",
+      "lines": [
+        {
+          "id": "grudge.reyesSalgado.01",
+          "text": "SALGADO: Reyes is great. Was great. Past tense is coming."
+        },
+        {
+          "id": "grudge.reyesSalgado.02",
+          "text": "REYES: The kid is very talented. He should enjoy being nineteen. It goes quickly."
+        },
+        {
+          "id": "grudge.reyesSalgado.03",
+          "text": "SALGADO: Beat him before I do? Sure. Then I beat you."
+        }
+      ]
+    },
+    "dorseyHollander": {
+      "fighters": [
+        "dorsey",
+        "hollander"
+      ],
+      "history": "Hollander thinks Dorsey has held the middleweight belt too long.",
+      "lines": [
+        {
+          "id": "grudge.dorseyHollander.01",
+          "text": "HOLLANDER: Hank's had that belt since before phones had cameras. Time to share."
+        },
+        {
+          "id": "grudge.dorseyHollander.02",
+          "text": "DORSEY: The kid can call me old all he wants. I'm still here, aren't I?"
+        }
+      ]
+    },
+    "valeLind": {
+      "fighters": [
+        "vale",
+        "lind"
+      ],
+      "history": "Reach vs. grip: tall, spinning striker Vale against squat wrestler-brawler Lind.",
+      "lines": [
+        {
+          "id": "grudge.valeLind.01",
+          "text": "LIND: He spins a lot. Eventually he spins into my arms."
+        },
+        {
+          "id": "grudge.valeLind.02",
+          "text": "VALE: Oskar's built like a mailbox. I'll kick it over."
+        }
+      ]
+    }
+  }
+}
